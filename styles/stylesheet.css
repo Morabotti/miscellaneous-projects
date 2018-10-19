@@ -1,0 +1,339 @@
+body {
+	margin: 0;
+	background-color:#4D3F5B;
+	font-family:Verdana,sans-serif;
+	color:#FFFFFF;
+	height: 100%;
+}
+
+#multisponssi
+{
+	margin-left: 15px;
+}
+
+.colorcontainer{
+	position: fixed;
+	overflow: auto;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(77, 63, 91,0.93);
+    z-index: 0;
+}
+
+#bgvid
+{
+	position: fixed;
+	right: 0; 
+	bottom: 0;
+	min-width: 100%; 
+	min-height: 100%;
+	width: auto; 
+	height: auto;
+	z-index: -100;
+}
+
+.backbutton{
+	overflow: hidden;
+	top: 0;
+	position: fixed;
+	z-index:9999;
+	float:right;
+	right:0;
+	margin-right: 15px;
+	margin-top: 7px;
+	display:none;
+}
+
+.wcstable{
+	border-collapse: collapse;
+    width: 100%;
+}
+
+.centerbox{
+	width: 960px;
+	margin: auto;
+	margin-top: 120px;
+}
+
+.hiddenpage{
+	display:none;
+	width: 1070px;
+	margin: auto;
+	margin-top: 50px;
+	background-color: #1a1a1a;
+	border-radius: 10px;
+	padding:10px;
+	overflow:auto;
+	margin-bottom: 10px;
+	margin-bottom: 50px;
+}
+
+#middlesection
+{
+	width: 70%;
+	text-align: center;
+	margin:50px auto auto;
+	border-bottom: white thin solid;
+	opacity: 0;
+	font-weight: bold;
+	transition: all 0.3s;
+}
+
+.centerbox-header{
+	height: 150px;
+	text-align:center;
+}
+
+.centerbox-content{
+	max-height: 230px;
+	margin-top: 90px;
+	width:100%;
+}
+
+.buttons{
+	flex-basis: 18%;
+    width: 241.26px;
+    height: 40px;
+	border:3px solid #FFFFFF;
+	/*border: 3px solid #000000;*/
+    border-radius: 5px;
+	letter-spacing: 1px;
+    text-align: center;
+    font-weight: 800;
+    outline: none;
+    position: relative;
+	display:inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+	padding-top:20px;
+	margin-right:5px;
+	opacity:0;
+	overflow:hidden;
+	transition: all 0.3s;
+}
+
+.buttons-large{
+	flex-basis: 18%;
+    width: 400px;
+    height: 40px;
+	border:3px solid #FFFFFF;
+	/*border: 3px solid #000000;*/
+    border-radius: 5px;
+	transition: all 0.3s;
+	letter-spacing: 1px;
+    text-align: center;
+    font-weight: 800;
+    outline: none;
+    position: relative;
+	display:inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+	padding-top:20px;
+	opacity:0;
+	overflow: hidden;
+}
+
+.buttons-large:hover{
+	background-image:url(../img/bg01.jpg);
+	background-position:left;
+}
+
+a.buttons-large:link, a.buttons-large:visited, a.buttons-large:hover, a.buttons-large:active {
+	text-decoration: none;
+	color:#FFFFFF;
+	/*color:#551A8B;*/
+}
+
+.content-upper{
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.buttons:link {
+    text-decoration: none;
+}
+
+.text-header{
+	text-align: center;
+}
+
+.buttons:visited {
+	text-decoration: none;
+}
+
+.buttons:hover{
+	background-image:url(../img/bg01.jpg);
+	background-position:left;
+}
+
+a.buttons:link, a.buttons:visited, a.buttons:hover, a.buttons:active {
+	text-decoration: none;
+	color:#FFFFFF;
+}
+
+.content-inner{
+	padding-bottom:50px;
+	padding-top:50px;
+	padding-left:10%;
+	padding-right:10%;
+}
+
+.formtext{
+	font-size: 22px;
+	font-weight: bold;
+	transition: all 0.4s;
+}
+
+.input-box{
+	height: 40px;
+	font-size: 24px;
+	text-align: center;
+	border: 1px solid #000000;
+}
+
+#formi{
+	width: 600px;
+	margin: 20px auto auto;
+	text-align: center;
+}
+
+.content-u{
+	width: 100%;
+	margin-top: 5px;
+	text-align:center;
+}
+
+#content-under{
+	width: 100%;
+	margin-top: 25px;
+	text-align:center;
+	opacity:0;
+	transition: all 0.3s;
+}
+
+#button-box{
+	flex-basis: 18%;
+    width: 230px;
+    height: 40px;
+	border: 1px solid #000000;
+    border-radius: 5px;
+	transition: all 0.3s;
+	letter-spacing: 1px;
+    text-align: center;
+    font-weight: 800;
+    outline: none;
+    position: relative;
+	display: inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+	margin-top: 20px;
+	padding-top:5px;
+	color: black;
+	background-color: #FFF;
+	align-items:center;
+}
+
+#page-items
+{
+	
+}
+
+#aikataulu{
+	border-collapse: collapse;
+    width: 100%;
+}
+
+#aikataulu th {
+    background-color: #463556 !important;
+    color: white;
+}
+
+#aikataulu th,#aikataulu td {
+    text-align: left;
+    padding: 8px;
+}
+
+
+#aikataulu tr:nth-child(odd){background-color: #1a1a1a}
+#aikataulu tr:nth-child(even){background-color: #0d0d0d}
+
+
+@media only screen and (max-device-width: 768px){
+	.hiddenpage{
+		width: 99.4%;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		overflow-x:hidden;
+		padding: 3px;
+	}
+	
+	body, html{
+		margin:0px;
+		font-size: 24px;
+		overflow-x:hidden;
+	}
+	
+	body{
+		position: relative;
+	}
+	
+	#bgvid
+	{
+		left: 50%;
+    	transform: translateX(-50%);
+		
+	}
+	
+	.buttons{
+		font-size: 24px;
+		width: 100%;
+		margin-bottom: 2px;
+	}
+	
+	.buttons-large{
+		font-size: 24px;
+		width: 100%;
+		margin-bottom: 2px;
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+		.hiddenpage{
+		width: 99.4%;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		overflow-x:hidden;
+		padding: 3px;
+	}
+	
+	body, html{
+		margin:0px;
+		font-size: 24px;
+		overflow-x:hidden;
+	}
+	
+	body{
+		position: relative;
+	}
+	
+	#bgvid
+	{
+		left: 50%;
+    	transform: translateX(-50%);
+		
+	}
+	
+	.buttons{
+		font-size: 24px;
+		width: 100%;
+		margin-bottom: 2px;
+	}
+	
+	.buttons-large{
+		font-size: 24px;
+		width: 100%;
+		margin-bottom: 2px;
+	}	
+}
