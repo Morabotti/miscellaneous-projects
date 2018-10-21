@@ -6,6 +6,7 @@ This site was created for LyskaLAN 2017 Session 5. This is plain HTML/CSS/JS pro
 Pictures
 ------
 Home page
+
 ![](https://i.imgur.com/3TMTRZF.gif)
 
 NOTE
