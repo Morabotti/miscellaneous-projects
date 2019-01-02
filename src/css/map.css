@@ -1,0 +1,113 @@
+.wrapperStyles{
+    width: 100%;
+    margin: 0 auto
+}
+
+.wrapperStyles svg{
+    height: 940px;
+    border: 1px solid black
+}
+
+
+.Menu{
+    position: absolute;
+    left:50%;
+    margin-left: -100px;
+    box-sizing: border-box;
+}
+
+.MenuTime{
+    position: absolute;
+    margin-left: 15px;
+    margin-top: 20px;
+    top: 0;
+    font-size: 24px;
+    cursor: default;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.MenuCenter{
+    width: 200px;
+    height: 70px;
+}
+
+.MenuTime{
+    position: absolute;
+    top: 0;
+}
+
+.Resetbutton {
+    margin: 10px;
+    display: flex;
+    width: 100%;
+    -moz-box-shadow:inset 0px 1px 0px 0px #660066;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #660066;
+    box-shadow:inset 0px 1px 0px 0px #660066;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cc00cc), color-stop(1, #660066));
+    background:-moz-linear-gradient(top, #cc00cc 5%, #660066 100%);
+    background:-webkit-linear-gradient(top, #cc00cc 5%, #660066 100%);
+    background:-o-linear-gradient(top, #cc00cc 5%, #660066 100%);
+    background:-ms-linear-gradient(top, #cc00cc 5%, #660066 100%);
+    background:linear-gradient(to bottom, #cc00cc 5%, #660066 100%);
+    background-color:#cc00cc;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    border:1px solid #990099;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    text-align: center;
+    font-family:Arial;
+    font-size: 1.5rem;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #660066;
+}
+.Resetbutton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #660066), color-stop(1, #800080));
+    background:-moz-linear-gradient(top, #660066 5%, #800080 100%);
+    background:-webkit-linear-gradient(top, #660066 5%, #800080 100%);
+    background:-o-linear-gradient(top, #660066 5%, #800080 100%);
+    background:-ms-linear-gradient(top, #660066 5%, #800080 100%);
+    background:linear-gradient(to bottom, #660066 5%, #800080 100%);
+    background-color:#660066;
+}
+.Resetbutton:active {
+    position:relative;
+    top:1px;
+}
+
+:focus {
+    outline: none !important;
+}
+
+.wsdm-tooltip {
+    display: none;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 3px;
+    pointer-events: none;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  .wsdm-tooltip:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 95%;
+    left: 50%;
+    margin-left: -0.5rem;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.5rem solid rgba(255, 255, 255, 0.95);
+  }
+
+#ResetBtn{
+    display: none;
+}
