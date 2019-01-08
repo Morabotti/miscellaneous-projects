@@ -10,7 +10,7 @@
     "rest": "copyfiles -u 1 src/**/*.webmanifest dist && copyfiles -u 1 src/**/*.xml dist",
     "image": "gulp default",
     "build": "npm run clean && npm run babel && npm run css && npm run html && npm run rest && npm run image",
-    "serve": "serve -s src"
+    "serve": "serve -s dist"
   },
   "author": "",
   "license": "ISC",
