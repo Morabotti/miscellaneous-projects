@@ -16,7 +16,7 @@ THours.innerText = Math.floor((distance % (day)) / (hour)),
 TMinutes.innerText = Math.floor((distance % (hour)) / (minute)),
 TSeconds.innerText = Math.floor((distance % (minute)) / second);
 
-x = setInterval(function() {
+let Timer = setInterval(function() {
     let now = new Date().getTime(),
     distance = countDown - now;
 
