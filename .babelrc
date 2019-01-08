@@ -1,0 +1,4 @@
+{
+    "presets": ["es2015", ["minify", {"mangle": true, "simplify": true}]],
+    "plugins": ["remove-comments"]
+}
