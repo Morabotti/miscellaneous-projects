@@ -1,4 +1,4 @@
-let countDown = new Date('2019-03-01').getTime();
+let countDown = new Date('2019-03-01T15:00:00Z').getTime();
 var TDays = document.getElementById("days");
 var THours = document.getElementById("hours");
 var TMinutes = document.getElementById("minutes");
