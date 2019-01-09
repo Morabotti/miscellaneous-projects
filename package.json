@@ -28,5 +28,9 @@
     "gulp-json-minify": "^1.2.2",
     "gulp-util": "^3.0.8",
     "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "serve": "^10.1.1",
+    "server": "^1.0.18"
   }
 }
