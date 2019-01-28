@@ -136,6 +136,66 @@ html{
     overflow: hidden;
 }
 
+.kysymykset{
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.kysymys p{
+    margin: 0 !important;
+    padding: 2em 3em 2em 2em !important;
+    font-weight: 700;
+    position: relative;
+    cursor: pointer;
+    color: #484848 !important;
+}
+
+.avattu .vastaus{
+    overflow: auto;
+    height: auto;
+    margin-bottom: 1.0em;
+}
+
+.kysymys:not(.avattu) p::after{
+    transform: none;
+}
+
+.kysymys p::after{
+    content: '';
+    background: url(../img/down-carot.svg) center no-repeat;
+    background-size: contain;
+    width: 1.5em;
+    height: .95455em;
+    position: absolute;
+    right: .5em;
+    top: calc(50% - (7 / 22 * 1.5em));
+    transition: transform .2s ease-in-out;
+    transform: rotateX(180deg);
+    color:red;
+}
+
+.kysymys {
+    border-bottom: 1px dashed #dadada;
+    color: #484848;
+    font-size: 1.125em;
+}
+
+.vastaus{
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    margin-bottom: 0;
+    padding: 0 3em 0 2em;
+}
+
 
 .bg-change-third{
     width: 0;
@@ -150,12 +210,21 @@ html{
     overflow: hidden;
 }
 
+.bg-change-forth{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4000px 130px 0;
+    border-color: #fff #38ADEC #fff #fff    ;
+    background-image: linear-gradient(#38ADEC, #000); 
+}
+
 .bg-change-fifth{
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 0 4000px 130px 0;
-    border-color: #000 #38ADEC #000 #000    ;
+    border-color: #000 #fff #000 #000    ;
     background-image: linear-gradient(#38ADEC, #000); 
 }
 

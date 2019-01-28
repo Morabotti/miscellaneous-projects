@@ -123,3 +123,36 @@ function TOGGLESLIDER(){
         DIV.classList.add("hidden");
     }
 }
+
+//UKK
+
+console.log(document.location.hash);
+if(document.location.hash == "#ukk") {
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#ScrollFAQ").offset().top
+    }, 1300);
+}
+
+let kysymykset = document.getElementsByClassName("kysymys");
+for(let i = 0; i < kysymykset.length; i++) {
+    kysymykset[i].addEventListener("click", HandleDropDown(), false);
+}
+
+function HandleDropDown() {
+    return function(event) {
+        let ParentElement = event.target.parentElement;
+        if(ParentElement.classList.contains("avattu")) {
+            if(ParentElement.classList.contains("kysymykset")) {
+                event.target.classList.remove("avattu");
+            } else {
+                ParentElement.classList.remove("avattu");
+            }
+        } else {
+            if(ParentElement.classList.contains("kysymykset")) {
+                event.target.classList.remove("avattu");
+            } else {
+                ParentElement.classList.add("avattu");
+            }
+        }
+    }
+}
