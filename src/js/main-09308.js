@@ -101,6 +101,13 @@ $(document).ready(function() {
     });
 });
 
+//AJAX => hommataan data
+$(document).ready(function() {
+    $.getJSON("https://cors.io/?https://liput.io/e/16/ticketsale-status", function(json) {
+        document.getElementById("paikat").innerText = json.sold + "/" + json.total + " paikkaa jäljellä!"
+    });
+});
+
 
 $("#godown").click(function() {
     if(!document.getElementById("dropdown-disc").classList.contains("hidden")){
@@ -125,8 +132,6 @@ function TOGGLESLIDER(){
 }
 
 //UKK
-
-console.log(document.location.hash);
 if(document.location.hash == "#ukk") {
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#ScrollFAQ").offset().top
@@ -156,3 +161,4 @@ function HandleDropDown() {
         }
     }
 }
+
