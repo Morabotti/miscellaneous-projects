@@ -104,7 +104,7 @@ $(document).ready(function() {
 //AJAX => hommataan data
 $(document).ready(function() {
     $.getJSON("https://cors.io/?https://liput.io/e/16/ticketsale-status", function(json) {
-        document.getElementById("paikat").innerText = json.sold + "/" + json.total + " paikkaa jäljellä!"
+        document.getElementById("paikat").innerText = json.sold + "/" + json.total + " paikkaa varattu!"
     });
 });
 
