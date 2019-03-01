@@ -1,4 +1,4 @@
-let countDown = new Date('2019-03-01T15:00:00Z').getTime();
+let countDown = new Date('2019-03-01T16:00:00Z').getTime();
 var TDays = document.getElementById("days");
 var THours = document.getElementById("hours");
 var TMinutes = document.getElementById("minutes");
@@ -11,10 +11,11 @@ const second = 1000,
 let now = new Date().getTime(),
 distance = countDown - now;
 
-TDays.innerText = Math.floor(distance / (day)),
-THours.innerText = Math.floor((distance % (day)) / (hour)),
-TMinutes.innerText = Math.floor((distance % (hour)) / (minute)),
-TSeconds.innerText = Math.floor((distance % (minute)) / second);
+TDays.innerText = "00";
+THours.innerText = "00";
+TMinutes.innerText = "00";
+TSeconds.innerText = "00";
+
 
 let Timer = setInterval(function() {
     let now = new Date().getTime(),
@@ -24,14 +25,14 @@ let Timer = setInterval(function() {
     THours.innerText = Math.floor((distance % (day)) / (hour)),
     TMinutes.innerText = Math.floor((distance % (hour)) / (minute)),
     TSeconds.innerText = Math.floor((distance % (minute)) / second);
-        
-    if(dispatchEvent < 0){
-        clearInterval(x)
+
+    if(distance < 0){
+        clearInterval(Timer)
         TDays.innerText = "00";
         THours.innerText = "00";
         TMinutes.innerText = "00";
         TSeconds.innerText = "00";
-    }
+    }   
 }, second)
 
 document.getElementById("godown").addEventListener("click", MouseEffect, false);
@@ -104,7 +105,7 @@ $(document).ready(function() {
 //AJAX => hommataan data
 $(document).ready(function() {
     $.getJSON("https://cors.io/?https://liput.io/e/16/ticketsale-status", function(json) {
-        document.getElementById("paikat").innerText = json.sold + "/" + json.total + " paikkaa jäljellä!"
+        document.getElementById("paikat").innerText = json.sold + "/" + json.total + " paikkaa varattu!"
     });
 });
 
