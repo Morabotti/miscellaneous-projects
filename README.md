@@ -21,6 +21,12 @@ DISCORD_AUTH=Bot token
 5. Run `npm run build`
 6. Run `npm run production`
 
+## How to use
+
+1. When you have added the bot, type `!osrs-updates` to any channel
+NOTE: There is no auth so anybody can type that. Pref that only admins can write to this channel
+2. When the difference goes over `SCRAPE_DIFFERENCE`, application sends message to discord.
+
 ## How to create discord bot
 
 [Here is a guide for creating discod bot](https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/)
