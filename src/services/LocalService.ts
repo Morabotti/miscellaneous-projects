@@ -1,20 +1,17 @@
 import * as jsonfile from 'jsonfile'
 
-import config from '../config'
-
-export const getData = () => {
+export const getData = (path: string) => {
   return new Promise((resolve, reject) => {
-    jsonfile.readFile(config.dbServersPath, (err, obj) => {
+    jsonfile.readFile(path, (err, obj) => {
       if(err) reject(err)
-      resolve(obj.data)
+      resolve(obj)
     })
   })
 }
 
-export const setData = (data: any) => {
-  const settableData = {data: data}
+export const setData = (path: string, data: any) => {
   return new Promise((resolve, reject) => {
-    jsonfile.writeFile(config.dbServersPath, settableData, (err) => {
+    jsonfile.writeFile(path, data, (err) => {
       if (err) reject(err)
       resolve()
     })

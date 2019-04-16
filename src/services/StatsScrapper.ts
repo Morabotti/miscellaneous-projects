@@ -3,20 +3,24 @@ import * as cheerio from 'cheerio'
 
 import config from '../config'
 import { setData, getData } from './LocalService'
+import { sendWarning } from './DiscordService'
 
-export const init = async () => {
+export const initScrapper = async () => {
   console.log('[SCRAPE]: Init started')
   const data = await scrape()
-  await setData(data)
+  await setData(config.dbServersPath, data)
 }
 
 export const routineScrape = async () => {
-  const oldData = await getData()
+  const oldData = await getData(config.dbServersPath)
   const newData = await scrape()
 
   let outputData: any[] = []
   Object.keys(newData).forEach(i => {
     const { server, players, type } = newData[i]
+    const playerDiff = players - oldData[i].players
+    if(playerDiff >= config.scrapeDiff)
+      sendWarning(server, players, playerDiff)
     outputData.push({
       server,
       players,
@@ -24,7 +28,7 @@ export const routineScrape = async () => {
       diff: players - oldData[i].players
     })
   })
-  await setData(newData)
+  await setData(config.dbServersPath, newData)
   return outputData
 }
 
