@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "paths": { "*": ["types/*"] },
+    "target": "es2015",
+    "module": "commonJS",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": true,
+    "lib": [
+      "es2016",
+      "es2015"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "baseUrl": "./src/",
+    "outDir": "./dist/",
+    "moduleResolution": "node",
+    "experimentalDecorators":true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

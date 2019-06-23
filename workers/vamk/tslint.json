@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "no-duplicate-imports": false,
+    "curly": false
+  }
+}
