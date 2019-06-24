@@ -1,4 +1,5 @@
 {
+  "extends": ["tslint-config-prettier"],
   "rules": {
     "no-duplicate-imports": false,
     "curly": false
