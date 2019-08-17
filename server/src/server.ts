@@ -1,46 +1,37 @@
-import {
-  ServerLoader,
-  ServerSettings,
-  GlobalAcceptMimesMiddleware,
-  IErrorsSettings
-} from '@tsed/common'
-
-import * as cookieParser from 'cookie-parser'
-import * as bodyParser from 'body-parser'
-import * as compress from 'compression'
-import * as methodOverride from 'method-override'
-
+import * as express from 'express'
+import * as path from 'path'
+import * as schedule from './services/ScheduleService'
 import config from './config'
+import { RecurrenceRule, Range, scheduleJob } from 'node-schedule'
+import { ScheduleController } from './controllers'
 
-const rootDir = __dirname
+import { Request, Response, Application } from 'express'
 
-@ServerSettings({
-  rootDir,
-  port: config.port,
-  acceptMimes: ['application/json'],
-  mount: {
-    '/api': '${rootDir}/controllers/**/*.ts'
-  },
-  statics: {
-    '/': `${rootDir}/../client/build`
+
+const app: Application = express()
+
+app.use(express.json())
+app.use(express.static('../client/build'))
+
+app.use('/assets', express.static(path.join(__dirname, '../assets')))
+
+app.use('/api', ScheduleController)
+
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.resolve('..', 'client', 'build', 'index.html'))
+})
+
+const rule = new RecurrenceRule()
+rule.dayOfWeek = [new Range(0, 6)]
+rule.hour = [1, 9, 18]
+rule.minute = 0
+rule.second = 0
+
+scheduleJob(rule, async () => {
+  if(config.env !== 'DEVELOPMENT') {
+    await schedule.getSchedule()
   }
 })
-export class Server extends ServerLoader {
 
-  public $onMountingMiddlewares(): void|Promise<any> {
-    this.use(GlobalAcceptMimesMiddleware)
-      .use(cookieParser())
-      .use(compress({}))
-      .use(methodOverride())
-      .use(bodyParser.json())
-      .use(bodyParser.urlencoded({ extended: true }))
-  }
 
-  public $onReady() {
-    console.log('Server started...')
-  }
-
-  public $onServerInitError(err: IErrorsSettings) {
-    console.error(err)
-  }
-}
+export default app

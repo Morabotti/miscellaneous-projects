@@ -21,7 +21,8 @@ module.exports = {
   output: {
     pathinfo: true,
     filename: '[name]/bundle.js',
-    path: resolve('build')
+    path: resolve('build'),
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -71,6 +72,9 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
+        target: 'http://localhost:8080'
+      },
+      '/assets': {
         target: 'http://localhost:8080'
       }
     },

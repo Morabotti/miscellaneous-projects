@@ -1,11 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
 
-import { App } from './components'
-
-import 'material-icons'
-import 'typeface-roboto'
-import './index.less'
+import App from './components/App'
 
 const mount = document.getElementById('mount')
 const render = () => {
@@ -14,11 +11,11 @@ const render = () => {
     return
   }
 
-  ReactDOM.render(<App />, mount)
+  ReactDOM.render(<AppContainer><App /></AppContainer>, mount)
 }
 
 render()
 
 if (module.hot) {
-  module.hot.accept('./components', render)
+  module.hot.accept('./components/App', render)
 }

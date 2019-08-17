@@ -1,34 +1,21 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { hot } from 'react-hot-loader'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import { Container } from '@material-ui/core'
 
-import reducer from '../reducer'
-import { HelloWorld } from './'
+import { EntryMain } from './entry'
+import { ScheduleMain } from './schedule'
 
-const store = createStore(
-  reducer,
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__
-    && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-)
-const replace = () => {
-  const nextReducer: any = require('../reducer')
-  store.replaceReducer(nextReducer)
-}
+import '../index.less'
 
-if (module.hot) {
-  module.hot.accept('../reducer', replace)
-}
-
-class App extends React.PureComponent<{}> {
+class App extends PureComponent<{}> {
   render () {
     return (
-      <Provider store={store}>
-        <Container>
-          <HelloWorld />
-        </Container>
-      </Provider>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/' exact component={EntryMain} />
+          <Route path='/schedule/:department/:id' component={ScheduleMain} />
+        </Switch>
+      </BrowserRouter>
     )
   }
 }

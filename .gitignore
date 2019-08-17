@@ -4,3 +4,8 @@
 *.env
 *.vscode
 *.notes.txt
+*.log
+
+chromedriver.exe
+
+server/db/**/*.json

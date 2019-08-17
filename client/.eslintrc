@@ -3,7 +3,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "rules": {
-    "quotes": [ 1, "single" ]
+  "globals": {
+    "fetch": false
   }
 }
