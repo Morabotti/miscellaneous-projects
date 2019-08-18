@@ -18,8 +18,7 @@ app.use('/assets', express.static(path.join(__dirname, '../assets')))
 app.use('/api', ScheduleController)
 
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(__dirname + '/client/build/index.html');
-  //res.sendFile(path.resolve('..', 'client', 'build', 'index.html'))
+  res.sendFile(path.resolve('..', 'client', 'build', 'index.html'))
 })
 
 const rule = new RecurrenceRule()
