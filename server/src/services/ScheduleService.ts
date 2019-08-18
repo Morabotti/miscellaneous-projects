@@ -1,6 +1,7 @@
 import * as jsonfile from 'jsonfile'
+import { ScheduleEvent, Week } from '../types'
 import config from '../config'
-import * as fs from 'fs'
+import * as analyze from '../helpers/data'
 import * as webdriver from 'selenium-webdriver'
 
 const By = webdriver.By
@@ -42,32 +43,38 @@ function getWeekNumber(d: any) {
     const weekNo = Math.ceil((((d - yearStart) / 86400000) + 3) / 7)
     return [d.getUTCFullYear(), weekNo]
 }
-
-function calcDay(OBJ: any, KEY: any, I: any) {
-    let value = KEY
-    let Fix = 0
-    let NewFix = 0
-    let Fetching = true
-    OBJ.forEach(elem => {
-        if (elem.Paiva <= value && Number(elem.Pituus) - 1 + elem.Klo >= I && elem.Klo < I) {
+/** 
+ * * Calculate day with past data
+ * @param events old events from same week
+ * @param column initial column of the event (day), defaults to (-1)
+ * @param row row of the item, defaults to (-2)
+ */
+const calcDay = (events: ScheduleEvent[], column: number, row: number) => {
+    // TODO: Make this better => alot better
+    // const value = events.filter(e => e.day === value && e.length - 1 + e.time >= row && e.time < row)
+    let value = column
+    let fix = 0
+    let fetching = true
+    for (const event of events) {
+        if (event.day === value && event.length - 1 + event.time >= row && event.time < row) {
             value++
         }
-    })
+    }
 
-    while (Fetching) {
-        let Orginal = Fix
-        OBJ.forEach(elem => {
-            if (elem.Paiva == (value + Fix) && elem.Klo <= I && Number(elem.Pituus) - 1 + elem.Klo >= I) {
-                Fix++
+    while (fetching) {
+        let orginal = fix
+        for (const event of events) {
+            if (event.day == (value + fix) && event.time <= row && event.length - 1 + event.time >= row) {
+                fix++
             }
-        })
-        if (Orginal !== Fix) {
-            Fetching = true
+        }
+        if (orginal !== fix) {
+            fetching = true
         } else {
-            Fetching = false
+            fetching = false
         }
     }
-    return value + Fix
+    return value + fix
 }
 
 async function getSchedule() {
@@ -104,50 +111,54 @@ async function getSchedule() {
             let ObjData: any = []
             let file = await "./db/schedule/tekniikka/" + FileName + ".json"
             for (var CW = StartPos; CW <= EndPoint; CW++) {
-                //console.log("[NEWWEEK]: " + CW)
-                let IsLastWeek = (CW == EndPoint ? true : false)
-                let WeekData: any = await []
-                let WeekURL
+                // console.log("[NEWWEEK]: " + CW)
+                const IsLastWeek = CW === EndPoint
+                let weekData: ScheduleEvent[] = []
+                let weekUrl
                 await driver.getCurrentUrl().then(data => {
                     if (data.indexOf("secure.puv.fi/") !== -1) {
                         let ph = data.substring(data.indexOf("secure.puv.fi/"), data.length)
-                        WeekURL = "https://" + ph
+                        weekUrl = "https://" + ph
                     } else {
-                        WeekURL = "http://www.puv.fi/fi/study/lukuvuosi/tyojarjestykset/"
+                        weekUrl = "http://www.puv.fi/fi/study/lukuvuosi/tyojarjestykset/"
                     }
                 })
 
                 for (var i = TableMinTr; i <= TableMaxTr; i++) {
                     await new Promise(resolve => setTimeout(resolve, 3))
-                    let Row = await driver.findElement(By.xpath('/html/body/font/center/font/table/tbody/tr[' + i + ']'))
-                    let num = await Row.findElements(By.xpath("td"))
+                    let row = await driver.findElement(By.xpath('/html/body/font/center/font/table/tbody/tr[' + i + ']'))
+                    let num = await row.findElements(By.xpath("td"))
                     for (var x = TableMinTd; x <= TableMaxTd; x++) {
                         if (num[x] != undefined) {
                             await new Promise(resolve => setTimeout(resolve, 4))
-                            let BGCOLOR = await num[x].getAttribute("bgcolor")
+                            const BGCOLOR = await num[x].getAttribute("bgcolor")
                             if (BGCOLOR === '#ffffcc' || BGCOLOR === '#ffdab9') {
-                                let Otsikko = await num[x].findElement(By.tagName("b")).getText()
-                                let KokoTeksti = await num[x].getText()
-                                let TunninPituus = await num[x].getAttribute("rowspan")
-                                let CurrentDay = calcDay(WeekData, x, i)
-                                let NewData: any = {
-                                    title: Otsikko,
-                                    day: CurrentDay,
-                                    time: i,
-                                    length: Number(TunninPituus) != 0 ? Number(TunninPituus) : 1,
-                                    text: KokoTeksti
+                                const title = await num[x].findElement(By.tagName("b")).getText()
+                                const text = await num[x].getText()
+                                const eventLength = await num[x].getAttribute("rowspan")
+                                const day = calcDay(weekData, x, i)
+
+                                const data = text.split('\n')
+                                const teacher = analyze.getTeacher(data)
+                                const room = analyze.getRoom(data)
+                                const groups = analyze.getGroups(data)
+
+                                const newEvent: ScheduleEvent = {
+                                    title, day, text, teacher, room, groups, time: i,
+                                    length: Number(eventLength) != 0 ? Number(eventLength) : 1,
                                 }
-                                await WeekData.push(NewData)
+                                weekData = [ ...weekData, newEvent ]
                             }
                         }
                     }
                 }
-                let NewWeek: any = {
+                const newWeek: Week = {
+                    group: FileName,
                     weekNum: CW,
-                    weekUrl: WeekURL,
-                    weekData: WeekData
+                    weekUrl: weekUrl,
+                    weekData: weekData
                 }
-                await ObjData.push(NewWeek)
+                await ObjData.push(newWeek)
                 if (!IsLastWeek) {
                     await driver.findElement(By.xpath("/html/body/font/center/font/table/tbody/tr[2]/td[1]/font/b/a[3]")).click()
                 }

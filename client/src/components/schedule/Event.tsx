@@ -3,24 +3,28 @@ import { ScheduleStyle, ScheduleEvent } from '../../types'
 
 interface Props {
   event: ScheduleEvent,
-  style: ScheduleStyle
+  style: ScheduleStyle,
+  onSelect: (event: ScheduleEvent) => void
 }
 
 export default ({
-  event: { day, length, time, title },
-  style
+  event,
+  style,
+  onSelect
 }: Props) => (
   <div
     className={`event ${style}`}
     style={{
-      gridColumn: `${day} / span 1`,
-      gridRow: `${time - 2} / span ${length}`
+      gridColumn: `${event.day} / span 1`,
+      gridRow: `${event.time - 2} / span ${event.length}`
     }}
+    onClick={() => onSelect(event)}
   >
     <div className='event-top'>
-      {title}
+      {event.title}
     </div>
-    <div className='event-bottom' />
-    <div className='event-align' />
+    <div className='event-bottom'>
+      <span>{event.room}</span>
+    </div>
   </div>
 )

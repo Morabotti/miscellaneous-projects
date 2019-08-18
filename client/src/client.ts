@@ -1,4 +1,4 @@
-import { Classes, Week } from './types'
+import { Classes, Week, Teacher, Room } from './types'
 
 const checkResponse = (res: Response): Response => {
   if (!res.ok) {
@@ -34,6 +34,30 @@ export const fetchSchedule = (
   id: string
 ): Promise<Week[]> => fetch(
   `/api/schedule/${department}/${id}`,
+  {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  }
+)
+  .then(checkResponse)
+  .then((res) => res.json())
+
+export const fetchTeacher = (
+  teacher: string
+): Promise<Teacher> => fetch(
+  `/api/teacher/${teacher}`,
+  {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  }
+)
+  .then(checkResponse)
+  .then((res) => res.json())
+
+export const fetchRoom = (
+  room: string
+): Promise<Room> => fetch(
+  `/api/location/${room}`,
   {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }

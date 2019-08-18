@@ -34,7 +34,7 @@ export default () => {
             onSelect={value => changeSettings('style', value)}
           />
           <SettingsGroup
-            header='Teema'
+            header='Teema (disabled)'
             options={['default', 'dark']}
             selected={settings.theme}
             onSelect={value => changeSettings('theme', value)}
@@ -42,8 +42,8 @@ export default () => {
           <SettingsGroup
             header='Näytä kartta'
             options={['true', 'false']}
-            selected={settings.theme ? 'true' : 'false'}
-            onSelect={value => changeSettings('theme', value === 'true')}
+            selected={settings.useMap ? 'true' : 'false'}
+            onSelect={value => changeSettings('useMap', value === 'true')}
           />
         </>
       ) : <h2>Loading...</h2> }

@@ -8,7 +8,20 @@ export interface Classes {
   fileName: string
 }
 
+export interface Teacher {
+  id: string,
+  name: string
+}
+
+export interface Room {
+  name: string,
+  floor: string,
+  y: number,
+  x: number
+}
+
 export interface Week {
+  group: string,
   weekNum: number,
   weekUrl: string,
   weekData: ScheduleEvent[]
@@ -19,7 +32,10 @@ export interface ScheduleEvent {
   day: number,
   time: number,
   length: number,
-  text: string
+  text: string,
+  teacher: string | null,
+  room: string | null,
+  groups: string[]
 }
 
 export interface TimeData {

@@ -4,6 +4,7 @@ import Navigation from './Navigation'
 import TableOutlines from './TableOutlines'
 import BottomBar from './BottomBar'
 import Event from './Event'
+import EventModal from './EventModal'
 
 export {
   ScheduleMain,
@@ -11,5 +12,6 @@ export {
   Navigation,
   TableOutlines,
   BottomBar,
-  Event
+  Event,
+  EventModal
 }
