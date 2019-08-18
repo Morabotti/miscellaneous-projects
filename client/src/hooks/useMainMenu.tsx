@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import * as client from '../client'
 import { Classes } from '../types'
+import { DEPARTMENT, GROUP } from '../enum'
 
 interface MainMenuContext {
   schools: string[],
@@ -38,12 +39,16 @@ export const useMainMenu = (): MainMenuContext => {
   }
 
   useEffect(() => {
-    client.fetchDepartments()
-      .then(dep => {
-        setDepartments(dep)
-        return client.fetchClasses(selectedDepartment)
-      })
-      .then(setClasses)
+    const dep = localStorage.getItem(DEPARTMENT)
+    const id = localStorage.getItem(GROUP)
+    if (!dep || !id) {
+      client.fetchDepartments()
+        .then(dep => {
+          setDepartments(dep)
+          return client.fetchClasses(selectedDepartment)
+        })
+        .then(setClasses)
+    }
   }, [])
 
   return {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import * as client from '../client'
 import { Week } from '../types'
-import { getWeekNumber } from '../helpers/week'
+import { getWeekNumber } from '../helpers/time'
 
 interface ScheduleContext {
   activeSchedule: Week | null,
@@ -29,13 +29,22 @@ export const useSchedule = (
           ) < Math.abs(
             prev.weekNum - date.week
           ) ? curr : prev)
+        console.log(closestWeek)
         setActiveSchedule(closestWeek)
         setLoading(false)
       })
   }, [])
 
-  const changeWeek = () => {
+  const changeWeek = (week: number) => {
+    if (fullSchedule === null) {
+      return
+    }
 
+    const newWeek = fullSchedule.find(i => i.weekNum === week)
+
+    if (newWeek) {
+      setActiveSchedule(newWeek)
+    }
   }
 
   return {

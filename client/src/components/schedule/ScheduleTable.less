@@ -1,0 +1,125 @@
+.grid-container {
+  display: grid;
+  padding-top: 49px;
+  padding-bottom: 49px;
+  border: 1px solid black;
+  grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 45px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "Header Header Header Header Header Header Header"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data"
+    "TimeCont Data Data Data Data Data Data";
+
+    &.extra-day {
+      grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+
+  @media screen and (min-height: 860px){
+      height: 100vh;
+  }
+}
+
+.grid-header{
+  grid-area: Header;  
+  display: grid; 
+  grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr;
+  font-size: 1em;
+  border: solid black 1px;
+  background-color: white;
+
+  &.extra-day {
+    grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr 1fr;
+
+    .day.la {
+      display: block
+    }
+  }
+
+  .day {
+    text-align: center;
+    border: 1px solid black;
+    &.la{
+      display: none;
+    }
+  }
+}
+
+.grid-time{
+  grid-area: TimeCont;
+  display: grid;
+  margin-right: 1px;
+
+  .time{
+    font-size: 0.8em;
+    box-sizing: border-box;
+    min-height: 55px;
+    height: auto;
+    font-weight: bold;
+    line-height: 1.95em;
+    padding-top: 3px;
+    color: black;
+    outline: 1px solid black;
+    background-color: white;
+
+    @media screen and (min-height: 860px){
+        line-height: 3vh
+    }
+  }
+}
+
+.grid-outlines{
+  display: inline-grid;
+  grid-area: Data;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  &.extra-day {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  z-index: -10;
+
+  &.default{
+    border: 0;
+    background-color: white;
+  }
+
+  &.classic div{
+    border: 1px solid #808080;
+    background-color: white;
+  }
+
+  &.vertical div{
+    border: 0;
+    border-bottom: 1px solid #808080;
+    border-top: 1px solid #808080;
+    background-color: white;
+  }
+
+  div{
+    padding-top: 1px;
+    text-align: center;
+  }
+}
+
+.grid-data{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-area: Data;
+
+  &.extra-day {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}

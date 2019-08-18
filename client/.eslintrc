@@ -4,6 +4,7 @@
     "project": "./tsconfig.json"
   },
   "globals": {
-    "fetch": false
+    "fetch": false,
+    "localStorage": false
   }
 }

@@ -1,8 +1,17 @@
-import React from 'react'
-import { useMainMenu, useRouter } from '../../hooks'
+import React, { useEffect } from 'react'
+import { useMainMenu, useRouter, useAppContext } from '../../hooks'
 import { firstLetterUpperCase } from '../../helpers/letters'
 
 export default () => {
+  const { history } = useRouter()
+  const { department, group, updateGroup } = useAppContext()
+
+  useEffect(() => {
+    if (department && group) {
+      history.push(`/schedule/${department}/${group}/`)
+    }
+  }, [])
+
   const {
     departments,
     classes,
@@ -12,9 +21,9 @@ export default () => {
     changeClass,
     changeDepartment
   } = useMainMenu()
-  const { history } = useRouter()
 
   const openSchedule = () => {
+    updateGroup(selectedDepartment, selectedClass)
     history.push(`/schedule/${selectedDepartment}/${selectedClass}/`)
   }
 

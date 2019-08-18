@@ -1,3 +1,6 @@
+export type ScheduleStyle = 'default' | 'vertical' | 'classic'
+export type ScheduleThemes = 'default' | 'dark'
+
 export interface Classes {
   id: number,
   fileShort: string,
@@ -17,4 +20,19 @@ export interface ScheduleEvent {
   time: number,
   length: number,
   text: string
+}
+
+export interface TimeData {
+  fullYear: number,
+  year: number,
+  week: number,
+  date: number,
+  month: number,
+  day: number
+}
+
+export interface Settings {
+  style: ScheduleStyle,
+  theme: ScheduleThemes,
+  useMap: boolean
 }

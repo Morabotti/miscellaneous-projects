@@ -1,4 +1,8 @@
 @import "components/entry/**.less";
+@import "components/schedule/**.less";
+@import "components/settings/**.less";
+@import "components/common/**.less";
+@import "components/info/**.less";
 
 *{
   box-sizing: border-box;
@@ -7,6 +11,38 @@
 body, html{
   font-family: 'Roboto', sans-serif;
   margin: 0;
+}
+
+button {
+  -webkit-appearance: none;
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: pointer;
+  background-color: inherit;
+  box-sizing: border-box;
+  margin: inherit;
+  font: inherit;
+  padding: inherit;
+  border-width: inherit;
+  border-style: none;
+  border-color: inherit;
+  border-image: inherit;
+
+  &:focus {
+    outline:0;
+  }
+}
+
+.background-set(@zIndex){
+  z-index: @zIndex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: none;
 }
 
 @background-color: #B9DBFF;

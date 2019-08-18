@@ -1,5 +1,11 @@
-import React from 'react'
-import { useSchedule } from '../../hooks'
+import React, { useEffect } from 'react'
+import { useSchedule, useTime, useAppContext } from '../../hooks'
+
+import {
+  ScheduleTable,
+  Navigation,
+  BottomBar
+} from '.'
 
 interface Props {
   match: {
@@ -16,10 +22,30 @@ export default ({
   const {
     activeSchedule,
     fullSchedule,
-    changeWeek,
-    loading
+    changeWeek
   } = useSchedule(department, id)
+  const time = useTime()
+  const { updateGroup } = useAppContext()
+
+  useEffect(() => {
+    updateGroup(department, id)
+  }, [])
+
   return (
-    <div />
+    <div>
+      <Navigation
+        activeWeek={activeSchedule}
+        changeWeek={changeWeek}
+        fullYear={time.fullYear}
+        fullWeeks={fullSchedule}
+      />
+      <ScheduleTable
+        activeWeek={activeSchedule}
+        fullYear={time.fullYear}
+      />
+      <BottomBar
+        group={id}
+      />
+    </div>
   )
 }
