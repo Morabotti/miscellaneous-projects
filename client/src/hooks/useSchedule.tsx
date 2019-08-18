@@ -29,7 +29,6 @@ export const useSchedule = (
           ) < Math.abs(
             prev.weekNum - date.week
           ) ? curr : prev)
-        console.log(closestWeek)
         setActiveSchedule(closestWeek)
         setLoading(false)
       })
