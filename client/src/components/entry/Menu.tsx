@@ -43,7 +43,6 @@ export default () => {
             <option
               value={e}
               key={i}
-              disabled={e !== 'tekniikka'}
             >{firstLetterUpperCase(e)}</option>
           ))}
         </select>
@@ -57,7 +56,7 @@ export default () => {
             <option
               value={e.fileShort}
               key={e.id}
-            >{e.tableName}</option>
+            >{e.fileShort}: {e.fileName}</option>
           ))}
         </select>
         <p className='margin-default notification'>Käyttämällä sivua hyväksyt evästeiden käytön.</p>

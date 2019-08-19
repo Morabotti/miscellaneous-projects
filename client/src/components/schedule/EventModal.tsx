@@ -28,6 +28,8 @@ export default ({
   const [room, setRoom] = useState<null | Room>(null)
   const { settings } = useSettings()
 
+  console.log(event)
+
   useEffect(() => {
     if (event && event.teacher) {
       fetchTeacher(event.teacher)
@@ -37,10 +39,15 @@ export default ({
 
   useEffect(() => {
     if (event.room !== null && settings !== null && settings.useMap) {
-      fetchRoom(event.room)
+      fetchRoom(event.room.substring(0, 5))
         .then(setRoom)
     }
   }, [event.room, settings])
+
+  const timeStart = times[event.time - 3].from
+  const timeEnd = times[event.length - 1 + event.time - 3] === undefined
+    ? times[times.length - 1].to
+    : times[event.length - 1 + event.time - 3].to
 
   return (
     <div
@@ -68,7 +75,7 @@ export default ({
           </div>
           <div className='modal-container'>
             <h3>
-              <ClockIcon /> <span>{times[event.time - 3].from} - {times[event.length - 1 + event.time - 3].to}</span>
+              <ClockIcon /> <span>{timeStart} - {timeEnd}</span>
             </h3>
             {event.groups.length !== 0 && (
               <div className='modal-section'>
@@ -118,15 +125,6 @@ export default ({
                       <MapMarkerIcon /><span>Kerros {room.floor}: {event.room}</span>
                     </h2>
                   </div>
-                  {/*
-                    <a
-                      className='map-zoom'
-                      href={url}
-                      target='_blank'
-                    >
-                      <CopyIcon />
-                    </a>
-                  */}
                 </div>
               </div>
             )}

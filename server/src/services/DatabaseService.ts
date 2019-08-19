@@ -3,7 +3,7 @@ import { Classes, Week, Teacher, Room } from '../types'
 import { getTeacherFromVamk } from './TeacherService'
 
 export const getDepartments = async () => {
-  return ['tekniikka']
+  return ['tekniikka', 'sosiaali', 'liiketalous']
 }
 
 export const getClasses = (

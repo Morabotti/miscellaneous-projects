@@ -1,6 +1,8 @@
 import * as express from 'express'
 import * as path from 'path'
-import * as schedule from './services/ScheduleService'
+import * as scheduleTech from './services/ScheduleTechService'
+import * as scheduleSocial from './services/ScheduleSocialService'
+
 import config from './config'
 import { RecurrenceRule, Range, scheduleJob } from 'node-schedule'
 import { ScheduleController } from './controllers'
@@ -29,7 +31,8 @@ rule.second = 0
 
 scheduleJob(rule, async () => {
   if(config.env !== 'DEVELOPMENT') {
-    await schedule.getSchedule()
+    await scheduleTech.getSchedule()
+    await scheduleSocial.getSchedule()
   }
 })
 

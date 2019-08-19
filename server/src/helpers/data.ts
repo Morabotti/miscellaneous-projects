@@ -1,3 +1,5 @@
+import { ScheduleEvent } from '../types'
+
 export const hasNumber = (string: string) => {
   return /\d/.test(string)
 }
@@ -66,4 +68,36 @@ export const getRoom = (
   }
 
   return null
+}
+
+/** 
+ * * Calculate day with past data
+ * @param events old events from same week
+ * @param column initial column of the event (day), defaults to (-1)
+ * @param row row of the item, defaults to (-2)
+ */
+export const calcDay = (events: ScheduleEvent[], column: number, row: number) => {
+  let value = column
+  let fix = 0
+  let fetching = true
+  for (const event of events) {
+      if (event.day === value && event.length - 1 + event.time >= row && event.time < row) {
+          value++
+      }
+  }
+
+  while (fetching) {
+      let orginal = fix
+      for (const event of events) {
+          if (event.day == (value + fix) && event.time <= row && event.length - 1 + event.time >= row) {
+              fix++
+          }
+      }
+      if (orginal !== fix) {
+          fetching = true
+      } else {
+          fetching = false
+      }
+  }
+  return value + fix
 }

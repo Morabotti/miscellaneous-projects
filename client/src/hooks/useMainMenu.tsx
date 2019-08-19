@@ -31,7 +31,12 @@ export const useMainMenu = (): MainMenuContext => {
     const value = e.currentTarget.value
     setSelectedDepartment(value)
     client.fetchClasses(value)
-      .then(setClasses)
+      .then(classes => {
+        setClasses(classes)
+        if (classes[0]) {
+          setSelectedClass(classes[0].fileShort)
+        }
+      })
   }
 
   const changeClass = (e: ChangeEvent<HTMLSelectElement>) => {

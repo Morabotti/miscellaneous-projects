@@ -3,12 +3,13 @@ import { ScheduleEvent, Week } from '../types'
 import config from '../config'
 import * as analyze from '../helpers/data'
 import * as webdriver from 'selenium-webdriver'
+import { getWeekNumber } from '../helpers/date'
 
 const By = webdriver.By
 
 const buf = Buffer.from(config.key, 'base64')
 const buffed = Buffer.from(config.secret, 'base64')
-const url = "https://" + buf + ":" + buffed + "@secure.puv.fi/bet/schedule/2018-2019/S19/mfw.htm"
+const url = "https://" + buf + ":" + buffed + "@secure.puv.fi/bet/schedule/2019-2020/S19/mfw.htm"
 
 const chromeCapabilities = webdriver.Capabilities.chrome()
 const chromeOptions = { 'args': ['--disable-notifications', '--no-sandbox', '--headless', '--disable-gpu'] }
@@ -36,48 +37,7 @@ const TableMaxTr = 15
 const TableMinTd = 1
 const TableMaxTd = 7
 
-function getWeekNumber(d: any) {
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7))
-    const yearStart: any = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
-    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 3) / 7)
-    return [d.getUTCFullYear(), weekNo]
-}
-/** 
- * * Calculate day with past data
- * @param events old events from same week
- * @param column initial column of the event (day), defaults to (-1)
- * @param row row of the item, defaults to (-2)
- */
-const calcDay = (events: ScheduleEvent[], column: number, row: number) => {
-    // TODO: Make this better => alot better
-    // const value = events.filter(e => e.day === value && e.length - 1 + e.time >= row && e.time < row)
-    let value = column
-    let fix = 0
-    let fetching = true
-    for (const event of events) {
-        if (event.day === value && event.length - 1 + event.time >= row && event.time < row) {
-            value++
-        }
-    }
-
-    while (fetching) {
-        let orginal = fix
-        for (const event of events) {
-            if (event.day == (value + fix) && event.time <= row && event.length - 1 + event.time >= row) {
-                fix++
-            }
-        }
-        if (orginal !== fix) {
-            fetching = true
-        } else {
-            fetching = false
-        }
-    }
-    return value + fix
-}
-
-async function getSchedule() {
+export const getSchedule = async () => {
     let driver = new webdriver.Builder().withCapabilities(chromeCapabilities).build()
     console.log("[SCRAPPER] Started scrapping tech at: " + new Date())
     await driver.get(url)
@@ -136,7 +96,7 @@ async function getSchedule() {
                                 const title = await num[x].findElement(By.tagName("b")).getText()
                                 const text = await num[x].getText()
                                 const eventLength = await num[x].getAttribute("rowspan")
-                                const day = calcDay(weekData, x, i)
+                                const day = analyze.calcDay(weekData, x, i)
 
                                 const data = text.split('\n')
                                 const teacher = analyze.getTeacher(data)
@@ -178,7 +138,7 @@ async function getSchedule() {
     await driver.quit()
 }
 
-async function getClasses() {
+export const getClasses = async () => {
     let driver = new webdriver.Builder().withCapabilities(chromeCapabilities).build()
     let i = 0
     let Obj: any = []
@@ -199,13 +159,13 @@ async function getClasses() {
             else if (TimeTableName.indexOf('Gr') !== -1) { FileName = await TimeTableName.substring(TimeTableName.indexOf(':') + 1, TimeTableName.indexOf('Gr') - 1) }
             else { FileName = await TimeTableName.substring(TimeTableName.indexOf(':') + 1, TimeTableName.length) }
 
-            await Obj.push({
+            Obj.push({
                 id: i,
                 fileShort: FileShort,
                 tableName: TimeTableName,
                 fileName: FileName
             })
-            await i++
+            i++
         }
     }
     let file = "./db/departments/tekniikka.json"
@@ -215,10 +175,4 @@ async function getClasses() {
 
         driver.quit()
     })
-}
-
-
-export {
-    getClasses,
-    getSchedule
 }
