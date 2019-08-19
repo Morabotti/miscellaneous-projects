@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="fi">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, height=device-height">
@@ -40,10 +40,28 @@
     <meta name="msapplication-square150x150logo" content="/assets/favicon/favicon-192x192.png">
     <meta name="msapplication-wide310x150logo" content="/assets/favicon/favicon-192x192.png">
     <meta name="msapplication-square310x310logo" content="/assets/favicon/favicon-192x192.png">
-    <title>VAMK Lukujärjestys</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131129716-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-131129716-1');
+    </script>
+    <title>VAMK Lukkari</title>
   </head>
-  <body>
+  <body lang="fi">
     <div id="mount"></div>
+    <noscript>Javascript is needed in order to run this app</noscript>
+    <script>
+      window.addEventListener('fetch', function(event) {})
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function(reg){})
+          .catch(function(err){});
+      }
+    </script>
   </body>
 </html>
 

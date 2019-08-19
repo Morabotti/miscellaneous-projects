@@ -9,7 +9,6 @@ import { ScheduleController } from './controllers'
 
 import { Request, Response, Application } from 'express'
 
-
 const app: Application = express()
 
 app.use(express.json())
