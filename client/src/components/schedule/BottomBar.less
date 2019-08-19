@@ -9,12 +9,14 @@
   box-sizing: border-box;
   font-weight: bold;
   z-index: 10;
-  transition: 300ms;
-  background-color: #a91580;
-  color: white;
+  transition: 300ms bottom;
 
   &.open{
     bottom: 60px;
+
+    .bottom-button svg {
+      transform: rotateX(180deg);
+    }
   }
 
   .bottom-button{
@@ -33,7 +35,7 @@
 
     svg{
       align-self: center;
-      transition: 300ms;
+      transition: 400ms transform
     }
   }
 
@@ -49,18 +51,11 @@
     box-sizing: content-box;
     z-index: 9;
     grid-template-columns: 1fr 1fr 1fr;
-    background-color: #f1f1f1;
-    color: #03001b;
 
     .bottom-grid{
       text-align: center;
       padding-top: 5px;
       cursor: pointer;
-
-      &:hover{
-        background-color: grey; 
-        color: #f1f1f1;
-      }
 
       p{
         margin: 0;

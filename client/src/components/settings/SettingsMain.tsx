@@ -1,13 +1,12 @@
 import React from 'react'
 import CogIcon from 'mdi-react/CogIcon'
-import { useSettings, useRouter, useAppContext } from '../../hooks'
+import { useRouter, useAppContext } from '../../hooks'
 import { TabNavigation } from '../common'
 import { styles } from '../../enum'
 import { SettingsGroup } from '.'
 
 export default () => {
-  const { settings, changeSettings } = useSettings()
-  const { department, group } = useAppContext()
+  const { department, group, settings, changeSettings } = useAppContext()
   const { history } = useRouter()
 
   const goBack = () => {
@@ -34,7 +33,7 @@ export default () => {
             onSelect={value => changeSettings('style', value)}
           />
           <SettingsGroup
-            header='Teema (disabled)'
+            header='Teema'
             options={['default', 'dark']}
             selected={settings.theme}
             onSelect={value => changeSettings('theme', value)}

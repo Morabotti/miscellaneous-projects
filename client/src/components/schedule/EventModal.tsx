@@ -28,8 +28,6 @@ export default ({
   const [room, setRoom] = useState<null | Room>(null)
   const { settings } = useAppContext()
 
-  console.log(event)
-
   useEffect(() => {
     if (event && event.teacher) {
       fetchTeacher(event.teacher)

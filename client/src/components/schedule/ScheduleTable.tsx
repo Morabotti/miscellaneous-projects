@@ -4,14 +4,17 @@ import { Week, ScheduleEvent } from '../../types'
 import { TableOutlines, Event, EventModal } from '.'
 import { dateFromDay } from '../../helpers/time'
 import { useAppContext } from '../../hooks'
+import { SwipeableHandlers } from 'react-swipeable/types'
 
 interface Props {
   activeWeek: Week | null,
-  fullYear: number
+  fullYear: number,
+  swiper: SwipeableHandlers
 }
 export default ({
   activeWeek,
-  fullYear
+  fullYear,
+  swiper
 }: Props) => {
   const { settings } = useAppContext()
   const [ activeClass, setActiveClass ] = useState<null | ScheduleEvent>(null)
@@ -30,7 +33,7 @@ export default ({
 
   return (
     <>
-      <div className={`grid-container ${hasExtraDay}`}>
+      <div {...swiper} className={`grid-container ${hasExtraDay}`}>
         <div className={`grid-header ${hasExtraDay}`}>
           <div className='day settings' />
           {days.map((d, i) => {

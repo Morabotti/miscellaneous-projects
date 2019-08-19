@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSchedule, useTime, useAppContext } from '../../hooks'
+import { useSwipeable } from 'react-swipeable'
 
 import {
   ScheduleTable,
@@ -27,6 +28,17 @@ export default ({
   const time = useTime()
   const { updateGroup } = useAppContext()
 
+  const swiper = useSwipeable({ onSwipedRight: () => {
+    if (activeSchedule) {
+      changeWeek(activeSchedule.weekNum - 1)
+    }
+  },
+  onSwipedLeft: () => {
+    if (activeSchedule) {
+      changeWeek(activeSchedule.weekNum + 1)
+    }
+  } })
+
   useEffect(() => {
     updateGroup(department, id)
   }, [])
@@ -40,6 +52,7 @@ export default ({
         fullWeeks={fullSchedule}
       />
       <ScheduleTable
+        swiper={swiper}
         activeWeek={activeSchedule}
         fullYear={time.fullYear}
       />

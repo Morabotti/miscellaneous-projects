@@ -7,14 +7,16 @@ interface AppContext {
   department: string | null,
   group: string | null,
   settings: null | Settings,
-  updateGroup: (department: string|null, group: string|null) => void
+  updateGroup: (department: string|null, group: string|null) => void,
+  changeSettings: (key: string, value: string | boolean) => void
 }
 
 export const __AppContext = React.createContext<AppContext>({
   department: localStorage.getItem(DEPARTMENT),
   group: localStorage.getItem(GROUP),
   settings: null,
-  updateGroup: () => {}
+  updateGroup: () => {},
+  changeSettings: () => {}
 })
 
 interface Props {
@@ -22,7 +24,7 @@ interface Props {
 }
 
 export const AppProvider = ({ children }: Props) => {
-  const { settings } = useSettings()
+  const { settings, changeSettings } = useSettings()
   const [department, setDepartment] = useState(localStorage.getItem(DEPARTMENT))
   const [group, setGroup] = useState(localStorage.getItem(GROUP))
 
@@ -46,10 +48,11 @@ export const AppProvider = ({ children }: Props) => {
         department,
         group,
         updateGroup,
-        settings
+        settings,
+        changeSettings
       }}
     >
-      <div className={settings ? settings.theme : ''}>
+      <div className={`theme ${settings ? settings.theme : ''}`}>
         {children}
       </div>
     </__AppContext.Provider>

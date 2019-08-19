@@ -51,6 +51,7 @@
     "react-dom": "16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-swipeable": "^5.4.0",
     "style-loader": "0.23.1",
     "typescript": "3.2.1",
     "webpack": "4.32.1",

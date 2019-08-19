@@ -45,4 +45,373 @@ button {
   display: none;
 }
 
-@background-color: #B9DBFF;
+.theme {
+	&.default {
+		.main-container h1 { color: white; }
+		.main-title span{ color: #e6007d; }
+
+		.submit-box .submit-button {
+			background-color: #C41895;
+			background-image: linear-gradient(to bottom, #C41895, #700E55);
+			color: #FFFFFF;
+		}
+
+		.moon {
+			background: #ffffb2;
+
+			.crater1, .crater2, .crater3{
+				display: none;
+			}
+			
+			&.moon-shadow{
+				box-shadow: 0 0 55px 4px #ffde5b;
+			}
+		}
+
+		.background-main { background-color: #B9DBFF; }
+
+		.bottom-bar {
+			background-color: #a91580;
+			color: white;
+			.bottom-content {
+				background-color: #f1f1f1;
+				color: #03001b;
+				.bottom-grid:hover {
+					background-color: grey; 
+					color: #f1f1f1;
+				}
+			}
+		}
+
+		.event {
+			background-color: #009fe4;
+			color: white;
+			&:hover {
+				background-color: #0094d4;
+				color: white;
+			}
+
+			&.default{
+				margin: 0;
+				border-radius: 8px;
+				border: 1px solid white;
+			}
+	
+			&.classic{
+				margin: 1px;
+				border: 0;
+				border-radius: 0;
+			}
+		}
+
+		.modal {
+			.modal-content { background-color: white; }
+			.modal-header {
+				border-bottom: 2px solid #460b35;
+				background: #780f5b;
+				color: white;
+			}
+			.modal-container {
+				background-color: #E8E8E8;
+				color: black;
+			}
+			.map-wrap {
+				.circle { background-color: red; }
+				.circle span { color: white; }
+				.map-zoom { background-color: #780f5b; }
+				.map-zoom svg { color: white; }
+			}
+		}
+
+		.top-bar {
+			background-color: #a91580;
+			color: white;
+
+			.current-week p { color: white; }
+		}
+
+		.weeks-option {
+			background:#f1f1f1;
+			color:#000;
+			
+			.selection {
+				&.selected{
+					background-color: #009fe4;
+					border-bottom: 2px solid #007db3;
+				}
+
+				&:hover{
+					background-color: #66d1ff;
+					border-bottom: 2px solid #007db3;
+				}
+			}
+		}
+		
+		.grid-container {
+			border: 1px solid black;
+		}
+		
+		.grid-header {
+			border: solid black 1px;
+			background-color: white;
+			.day { border: 1px solid black; }
+		}
+		
+		.loader-container .custom-loader {
+			border-top: 20px solid #3498db;
+			border: 20px solid #b61889;
+		}
+
+		.grid-time .time {
+			color: black;
+			outline: 1px solid black;
+			background-color: white;
+		}
+
+		.grid-outlines {
+			&.default{
+				border: 0;
+				background-color: white;
+			}
+			
+			&.classic div{
+				border: 1px solid #808080;
+				background-color: white;
+			}
+			
+			&.vertical div{
+				border: 0;
+				border-bottom: 1px solid #808080;
+				border-top: 1px solid #808080;
+				background-color: white;
+			}
+		}
+
+		.btn-group .btn {
+			border-color: #ccc;
+			color: #333;
+			background-color: #fff;
+			border: 1px solid black;
+			&.selected{
+				background-color: #009fe4;
+				color: white;
+			}
+	
+			&:hover{
+				background-color: #0094d4;
+				color: white;
+			}
+		}
+
+		.tab-container {
+			background-color: #f1f1f1;
+			color: black;
+		}
+
+		.tab-header {
+			background-color: #780f5b;
+			color: white;
+		}
+	}
+
+	// ! Dark Mode
+	&.dark {
+		.main-container h1 { color: white; }
+		.main-title span{ color:#284e8b; }
+
+		.selection1, .selection2{
+			-webkit-filter: grayscale(98%);
+			filter: grayscale(98%);
+		}
+
+		.clouds .cloud{
+			animation: 0;
+		}
+
+		.submit-box .submit-button {
+			background-color: #8ab4f8;
+			background-image: linear-gradient(to bottom, #8ab4f8, #284e8b);
+			color: #FFFFFF;
+		}
+
+		.moon {
+			background: #e5e5ff;
+			.crater1, .crater2, .crater3{
+				background: #ccccff;
+			}
+
+			&.moon-shadow{
+				box-shadow: 0 0 55px 4px #b2b2ff;
+			}
+		}
+
+		.background-main { background-color: #353535; }
+
+		.bottom-bar {
+			background-color: #3c4043;
+			color: white;
+			.bottom-content {
+				background-color: #323639;
+				color: #fff;
+				.bottom-grid:hover {
+					background-color: #63686f; 
+					color: #bdc1c6;
+				}
+			}
+		}
+
+		.event {
+			background-color: #585d64;
+			color: #bdc1c6;
+
+			&:hover{
+				background-color: #9499a0;
+				color: #fff;
+			}
+
+			&.default{
+				margin: 0;
+				border: 1px solid #323639;
+				border-radius: 8px;
+			}
+	
+			&.classic{
+				margin: 1px;
+				border: 0;
+				border-radius: 0;
+			}
+	
+			&.vertical{
+				border: 0;
+				margin-bottom: 1px;
+				margin-top: 1px;
+				border-left: 1px solid #282828;
+				border-right: 1px solid #282828;
+			}
+		}
+
+		.modal {
+			.modal-content { background-color: #585d64; }
+			.modal-header {
+				border-bottom: 2px solid rgb(66, 71, 77);
+				background: #282c2f;
+				color: white;
+			}
+			.modal-container {
+				background-color: #585d64;
+				color: white;
+
+				span, svg, span{
+					color: #bdc1c6;
+				}
+				h3{
+						color: #fff;
+				}
+
+			}
+			.map-wrap {
+				.circle { background-color: #8ab4f8; }
+				.circle span { color: white; }
+				.map-zoom { background-color: #284e8b; }
+				.map-zoom svg { color: white; }
+			}
+		}
+
+		.top-bar {
+			background-color: #3c4043;
+			color: white;
+
+			.current-week p { color: white; }
+		}
+
+		.weeks-option {
+			background:#323639;
+			color:#bdc1c6;
+			
+			.selection {
+				&.selected{
+					background-color: #585d64;
+					border-bottom: 2px solid #686e75;
+				}
+
+				&:hover{
+					background-color: #63686f;
+					border-bottom: 2px solid #686e75;
+				}
+			}
+		}
+		
+		.grid-container {
+			border: 1px solid black;
+		}
+
+		.grid-header {
+			border: solid black 1px;
+			background-color: #323639;
+			.day {
+				color: #bdc1c6;
+				border: 1px solid black;
+			}
+		}
+		
+		.loader-container {
+			background-color: #323639;
+			.custom-loader {
+				border-top: 20px solid #315185;
+				border: 20px solid #686e75;
+			}
+		}
+
+		.grid-time .time {
+			color: #bdc1c6;
+			outline: 1px solid black;
+			background-color: #323639;
+		}
+
+		.grid-outlines {
+			&.default{
+				border: 0;
+				background-color: #323639;
+			}
+
+			&.classic div{
+				border: 1px solid #282828;
+				background-color: #323639;
+			}
+
+			&.vertical div{
+				border: 0;
+				border-bottom: 1px solid #282828;
+				border-top: 1px solid #282828;
+				background-color: #323639;
+			}
+		}
+
+		.btn-group .btn {
+			border-color: #ccc;
+			color: #bdc1c6;
+			background-color: #3f4346;
+			border: 1px solid #282828;
+
+			&.selected{
+				background-color: #282c2f;
+				color: white;
+			}
+
+			&:hover{
+				background-color: #1d2022;
+				color: white;
+			}
+		}
+
+		.tab-container {
+			background-color: #585d64;
+			color: #bdc1c6;
+		}
+
+		.tab-header {
+			background-color: #282c2f;
+			color: white;
+		}
+	}
+}

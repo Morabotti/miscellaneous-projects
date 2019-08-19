@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { updateTheme } from '../helpers/dom'
 import { Settings } from '../types'
 import { SETTINGS } from '../enum'
 
@@ -33,6 +34,7 @@ export const useSettings = (): SettingsContext => {
     }
     const updated = { ...settings, [key]: value }
     setSettings(updated)
+    updateTheme(updated.theme)
     localStorage.setItem(SETTINGS, JSON.stringify(updated))
   }
 
