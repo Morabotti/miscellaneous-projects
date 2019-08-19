@@ -3,7 +3,7 @@ import { days, times, PREFIX } from '../../enum'
 import { Week, ScheduleEvent } from '../../types'
 import { TableOutlines, Event, EventModal } from '.'
 import { dateFromDay } from '../../helpers/time'
-import { useSettings } from '../../hooks'
+import { useAppContext } from '../../hooks'
 
 interface Props {
   activeWeek: Week | null,
@@ -13,7 +13,7 @@ export default ({
   activeWeek,
   fullYear
 }: Props) => {
-  const { settings } = useSettings()
+  const { settings } = useAppContext()
   const [ activeClass, setActiveClass ] = useState<null | ScheduleEvent>(null)
 
   if (activeWeek === null) {

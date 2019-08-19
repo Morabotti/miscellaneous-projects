@@ -1,15 +1,19 @@
 import React, { useContext, useState, ReactNode } from 'react'
+import { Settings } from '../types'
 import { DEPARTMENT, GROUP } from '../enum'
+import { useSettings } from '.'
 
 interface AppContext {
   department: string | null,
   group: string | null,
+  settings: null | Settings,
   updateGroup: (department: string|null, group: string|null) => void
 }
 
 export const __AppContext = React.createContext<AppContext>({
   department: localStorage.getItem(DEPARTMENT),
   group: localStorage.getItem(GROUP),
+  settings: null,
   updateGroup: () => {}
 })
 
@@ -18,6 +22,7 @@ interface Props {
 }
 
 export const AppProvider = ({ children }: Props) => {
+  const { settings } = useSettings()
   const [department, setDepartment] = useState(localStorage.getItem(DEPARTMENT))
   const [group, setGroup] = useState(localStorage.getItem(GROUP))
 
@@ -40,10 +45,13 @@ export const AppProvider = ({ children }: Props) => {
       value={{
         department,
         group,
-        updateGroup
+        updateGroup,
+        settings
       }}
     >
-      {children}
+      <div className={settings ? settings.theme : ''}>
+        {children}
+      </div>
     </__AppContext.Provider>
   )
 }

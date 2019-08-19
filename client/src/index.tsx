@@ -16,6 +16,12 @@ const render = () => {
 
 render()
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('service-worker.js')
+    .then(() => {})
+}
+
 if (module.hot) {
   module.hot.accept('./components/App', render)
 }

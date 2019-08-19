@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ScheduleEvent, Teacher, Room } from '../../types'
 import { fetchTeacher, fetchRoom } from '../../client'
 import { times, SIZE } from '../../enum'
-import { useSettings } from '../../hooks'
+import { useAppContext } from '../../hooks'
 
 import RemoveIcon from 'mdi-react/CloseCircleIcon'
 import Users from 'mdi-react/AccountsIcon'
@@ -26,7 +26,7 @@ export default ({
 }: Props) => {
   const [teacher, setTeacher] = useState<null | Teacher>(null)
   const [room, setRoom] = useState<null | Room>(null)
-  const { settings } = useSettings()
+  const { settings } = useAppContext()
 
   console.log(event)
 

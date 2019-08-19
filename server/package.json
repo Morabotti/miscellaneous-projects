@@ -20,7 +20,7 @@
     "watch": [
       "src"
     ],
-    "exec": "npm start",
+    "exec": "npm run server",
     "ext": "ts"
   },
   "keywords": [],
