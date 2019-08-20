@@ -23,8 +23,9 @@ export const useSettings = (): SettingsContext => {
       localStorage.setItem(SETTINGS, JSON.stringify(initialSettings()))
     }
     else {
-      const parsed = JSON.parse(memory)
+      const parsed: Settings = JSON.parse(memory)
       setSettings(parsed)
+      updateTheme(parsed.theme)
     }
   }
 
