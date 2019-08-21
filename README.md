@@ -1,6 +1,6 @@
 # Railway App / Rautatie
 
-[Live demo](http://www.cc.puv.fi/~e1700826/concepts/rautatie/)
+[Live demo](https://morabotti.github.io/Railway/build/)
 
 ## Pictures
 
