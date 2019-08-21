@@ -2,9 +2,9 @@
   "name": "Railway",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://www.cc.puv.fi/~e1700826/concepts/rautatie",
+  "homepage": "https://morabotti.github.io/Railway/build",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "match-sorter": "^2.3.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
