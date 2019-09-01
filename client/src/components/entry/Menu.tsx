@@ -8,7 +8,7 @@ export default () => {
 
   useEffect(() => {
     if (department && group) {
-      history.push(`/schedule/${department}/${group}/`)
+      history.replace(`/schedule/${department}/${group}/`)
     }
   }, [])
 
@@ -24,7 +24,7 @@ export default () => {
 
   const openSchedule = () => {
     updateGroup(selectedDepartment, selectedClass)
-    history.push(`/schedule/${selectedDepartment}/${selectedClass}/`)
+    history.replace(`/schedule/${selectedDepartment}/${selectedClass}/`)
   }
 
   return (

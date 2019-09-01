@@ -12,7 +12,7 @@ export default () => {
       history.goBack()
     }
     else {
-      history.push(`/schedule/${department}/${group}/`)
+      history.replace(`/schedule/${department}/${group}/`)
     }
   }
 
