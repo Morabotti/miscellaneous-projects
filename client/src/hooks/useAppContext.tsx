@@ -52,7 +52,7 @@ export const AppProvider = ({ children }: Props) => {
         changeSettings
       }}
     >
-      <div className={`theme ${settings ? settings.theme : ''}`}>
+      <div className={`theme ${settings ? settings.theme : 'default'}`}>
         {children}
       </div>
     </__AppContext.Provider>
