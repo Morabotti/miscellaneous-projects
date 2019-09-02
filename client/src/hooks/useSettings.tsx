@@ -20,7 +20,10 @@ export const useSettings = (): SettingsContext => {
   const loadOrCreateSettings = () => {
     const memory = localStorage.getItem(SETTINGS)
     if (memory === null) {
-      localStorage.setItem(SETTINGS, JSON.stringify(initialSettings()))
+      const initSettings = initialSettings()
+      localStorage.setItem(SETTINGS, JSON.stringify(initSettings))
+      setSettings(initSettings)
+      updateTheme(initSettings.theme)
     }
     else {
       const parsed: Settings = JSON.parse(memory)
