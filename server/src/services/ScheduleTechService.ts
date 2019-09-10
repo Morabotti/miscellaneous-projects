@@ -28,10 +28,12 @@ const FullTableLength = 4
 
 const minTR = 2
 //Number of rows in table / manuaalisesti
-const maxTR = 33
+const maxTR = 32
+//Number of items in last row in table / manuaalisesti
+const lastItems = 2
+
 const minTD = 1
 const maxTD = 3
-
 const TableMinTr = 3
 const TableMaxTr = 15
 const TableMinTd = 1
@@ -59,7 +61,7 @@ export const getSchedule = async () => {
     await OpenSites.click()
     for (var a = minTR; a <= maxTR; a++) {
         let HOOK_maxTD = maxTD
-        if (a == maxTR) { HOOK_maxTD = 1 }
+        if (a == maxTR) { HOOK_maxTD = lastItems }
         for (var b = minTD; b <= HOOK_maxTD; b++) {
             let TimeTable
             try { TimeTable = await driver.findElement(By.xpath('/html/body/font/font/center/font/center/b/font/table/tbody/tr[' + a + ']/td[' + b + ']/font/a')) }
@@ -107,7 +109,7 @@ export const getSchedule = async () => {
                                     title, day, text, teacher, room, groups, time: i,
                                     length: Number(eventLength) != 0 ? Number(eventLength) : 1,
                                 }
-                                weekData = [ ...weekData, newEvent ]
+                                weekData = [...weekData, newEvent]
                             }
                         }
                     }
@@ -146,7 +148,7 @@ export const getClasses = async () => {
     await driver.findElement(By.xpath('/html/body/font/font/center/center/font/table/tbody/tr[2]/td/font/a')).click()
     for (var a = minTR; a <= maxTR; a++) {
         let HOOK_maxTD = maxTD
-        if (a == maxTR) { HOOK_maxTD = 1 }
+        if (a == maxTR) { HOOK_maxTD = lastItems }
         for (var b = minTD; b <= HOOK_maxTD; b++) {
             let TimeTable
             try { TimeTable = await driver.findElement(By.xpath('/html/body/font/font/center/font/center/b/font/table/tbody/tr[' + a + ']/td[' + b + ']/font/a')) }
