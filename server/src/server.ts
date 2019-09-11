@@ -30,8 +30,8 @@ rule.second = 0
 
 scheduleJob(rule, async () => {
   if(config.env !== 'DEVELOPMENT') {
-    await scheduleTech.getSchedule()
     await scheduleSocial.getSchedule()
+    await scheduleTech.getSchedule()
   }
 })
 
