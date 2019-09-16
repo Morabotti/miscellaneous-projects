@@ -77,8 +77,31 @@ export const getRoom = (
  * @param row row of the item, defaults to (-2)
  */
 export const calcDay = (events: ScheduleEvent[], column: number, row: number) => {
+  let fetching = true
+  let orginal = column;
+  let latest = 0;
+
+  while (fetching) {
+    const adding = events.filter(e => e.day <= orginal && e.length - 1 + e.time >= row && e.time < row ).length
+    if (latest !== adding) {
+      orginal = orginal + (adding - latest)
+      latest = adding
+    } else {
+      fetching = false
+    }
+  }
+  return orginal
+}
+
+/*
+ * OLD FETCH, WORKS 99%
+export const calcDay = (events: ScheduleEvent[], column: number, row: number) => {
   let value = column
   let fix = 0
+
+  const adding = events.filter(e => e.day <= column && e.length - 1 + e.time >= row && e.time < row )
+  console.log(adding.length)
+
   let fetching = true
   for (const event of events) {
       if (event.day === value && event.length - 1 + event.time >= row && event.time < row) {
@@ -101,3 +124,4 @@ export const calcDay = (events: ScheduleEvent[], column: number, row: number) =>
   }
   return value + fix
 }
+*/
