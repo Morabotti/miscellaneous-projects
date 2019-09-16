@@ -158,7 +158,25 @@ export const getSchedule = async () => {
 
                 const newEvent: ScheduleEvent = {
                   title, day, text, teacher, room, groups, time: i,
+                  valid: true,
                   length: Number(eventLength) != 0 ? Number(eventLength) : 1,
+                }
+                WeekData.push(newEvent)
+              }
+              else if (BGCOLOR === '#cccccc') {
+                const text = await num[x].getText()
+                const eventLength = await num[x].getAttribute("rowspan")
+                let day = analyze.calcDay(WeekData, x, i)
+                const newEvent: ScheduleEvent = {
+                    title: '',
+                    day,
+                    text,
+                    teacher: null,
+                    room: null,
+                    groups: [],
+                    time: i,
+                    valid: false,
+                    length: Number(eventLength) != 0 ? Number(eventLength) : 1,
                 }
                 WeekData.push(newEvent)
               }

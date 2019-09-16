@@ -35,7 +35,8 @@ export interface ScheduleEvent {
   text: string,
   teacher: string | null,
   room: string | null,
-  groups: string[]
+  groups: string[],
+  valid: boolean
 }
 
 export interface TimeData {

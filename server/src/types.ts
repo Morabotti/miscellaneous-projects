@@ -32,5 +32,6 @@ export interface ScheduleEvent {
   text: string,
   teacher: string | null,
   room: string | null,
+  valid: boolean,
   groups: string[]
 }

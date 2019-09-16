@@ -9,7 +9,7 @@ server.listen(config.port, async () => {
     if (config.env === 'DEVELOPMENT' || config.secret === '' || config.key === '') {
       throw new Error
     }
-    // scheduleTech.getClasses()
+    // scheduleTech.getSchedule()
     // scheduleSocial.getSchedule()
     // await scheduleTech.getClasses()
     // await scheduleSocial.getClasses()

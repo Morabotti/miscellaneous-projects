@@ -27,7 +27,7 @@ export default ({
     )
   }
 
-  const hasExtraDay = activeWeek.weekData.filter(i => i.day === 6).length !== 0
+  const hasExtraDay = activeWeek.weekData.filter(i => i.day === 6 && i.valid).length !== 0
     ? 'extra-day'
     : ''
 
@@ -58,7 +58,9 @@ export default ({
           ))}
         </div>
         <div className={`grid-data ${hasExtraDay}`}>
-          {activeWeek && activeWeek.weekData.map((event, i) => (
+          {activeWeek && activeWeek.weekData
+            .filter(i => i.valid)
+            .map((event, i) => (
             <Event
               key={i}
               event={event}
