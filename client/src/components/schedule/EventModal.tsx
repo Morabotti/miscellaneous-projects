@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { ScheduleEvent, Teacher, Room } from '../../types'
-import { fetchTeacher, fetchRoom } from '../../client'
+import { ScheduleEvent, Teacher, Room, Week } from '../../types'
+import { fetchTeacher, fetchRoom, sendReport } from '../../client'
 import { times, SIZE } from '../../enum'
 import { useAppContext } from '../../hooks'
 
@@ -10,23 +10,51 @@ import User from 'mdi-react/AccountIcon'
 import BookIcon from 'mdi-react/BookIcon'
 import MapMarkerIcon from 'mdi-react/MapMarkerIcon'
 import ClockIcon from 'mdi-react/ClockIcon'
-// import CopyIcon from 'mdi-react/ContentCopyIcon'
+import { MenuStruct } from '../common'
 
 interface Props {
   isOpen: boolean,
   onClose: () => void,
   event: ScheduleEvent,
-  url: string
+  week: Week
 }
 
 export default ({
   isOpen,
   onClose,
-  event
+  event,
+  week
 }: Props) => {
   const [teacher, setTeacher] = useState<null | Teacher>(null)
   const [room, setRoom] = useState<null | Room>(null)
+  const [menuRef, setMenuRef] = useState<null | HTMLElement>(null)
+  const [menuOpen, setMenuOpen] = useState<boolean>(false)
   const { settings } = useAppContext()
+
+  const _menuPress = (option: string) => (e: React.MouseEvent) => {
+    e.stopPropagation()
+    switch (option) {
+      case 'orginal':
+        window.open(week.weekUrl, '_blank')
+        setMenuOpen(false)
+        return
+      case 'report':
+        sendReport(week.group, week.weekNum)
+          .then(() => {
+            setMenuOpen(false)
+          })
+        return
+      default:
+        setMenuOpen(false)
+    }
+  }
+
+  const _defaultPress = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (menuOpen) {
+      setMenuOpen(false)
+    }
+  }
 
   useEffect(() => {
     if (event && event.teacher) {
@@ -55,10 +83,14 @@ export default ({
       <div className='modal-wrap'>
         <div
           className='modal-content'
-          onClick={e => e.stopPropagation()}
+          onClick={_defaultPress}
         >
           <div className='modal-header'>
-            <div className='header-icon'>
+            <div
+              className='header-icon'
+              ref={ref => setMenuRef(ref)}
+              onClick={() => setMenuOpen(true)}
+            >
               <BookIcon />
             </div>
             <div className='header-text'>
@@ -73,19 +105,22 @@ export default ({
           </div>
           <div className='modal-container'>
             <h3>
-              <ClockIcon /> <span>{timeStart} - {timeEnd}</span>
+              <ClockIcon />
+              <span>{timeStart} - {timeEnd}</span>
             </h3>
             {event.groups.length !== 0 && (
               <div className='modal-section'>
                 <p>
-                  <Users /><span>{event.groups.toString().replace(/,/g, ', ')}</span>
+                  <Users />
+                  <span>{event.groups.toString().replace(/,/g, ', ')}</span>
                 </p>
               </div>
             )}
             {event.teacher && (
               <div className='modal-section'>
                 <p>
-                  <User /><span>{event.teacher} {teacher && `(${teacher.name})`}</span>
+                  <User />
+                  <span>{event.teacher} {teacher && `(${teacher.name})`}</span>
                 </p>
               </div>
             )}
@@ -120,7 +155,8 @@ export default ({
                   </svg>
                   <div className='map-location'>
                     <h2>
-                      <MapMarkerIcon /><span>Kerros {room.floor}: {event.room}</span>
+                      <MapMarkerIcon />
+                      <span>Kerros {room.floor}: {event.room}</span>
                     </h2>
                   </div>
                 </div>
@@ -129,6 +165,15 @@ export default ({
           </div>
         </div>
       </div>
+      <MenuStruct
+        isOpen={menuOpen}
+        element={menuRef}
+      >
+        <ul>
+          <li onClick={_menuPress('orginal')}>Avaa alkuperäinen.</li>
+          <li onClick={_menuPress('report')}>Raportoi virhe.</li>
+        </ul>
+      </MenuStruct>
     </div>
   )
 }

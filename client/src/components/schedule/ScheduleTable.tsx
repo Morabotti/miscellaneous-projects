@@ -61,13 +61,13 @@ export default ({
           {activeWeek && activeWeek.weekData
             .filter(i => i.valid)
             .map((event, i) => (
-            <Event
-              key={i}
-              event={event}
-              style={settings ? settings.style : 'classic'}
-              onSelect={event => setActiveClass(event)}
-            />
-          ))}
+              <Event
+                key={i}
+                event={event}
+                style={settings ? settings.style : 'classic'}
+                onSelect={event => setActiveClass(event)}
+              />
+            ))}
         </div>
         <TableOutlines
           style={settings ? settings.style : 'classic'}
@@ -79,7 +79,7 @@ export default ({
           isOpen={activeClass !== null}
           onClose={() => setActiveClass(null)}
           event={activeClass}
-          url={activeWeek.weekUrl}
+          week={activeWeek}
         />
       )}
     </>

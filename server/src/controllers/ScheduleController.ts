@@ -87,4 +87,9 @@ router.get('/location/:room', async (req: Request, res: Response) => {
   }
 })
 
+router.post('/report/vamk/:group/:week', async (req: Request, res: Response) => {
+  console.info(`[REPORT] | [USER]: ${req.params.group} | Week number: ${req.params.week}`)
+  return res.sendStatus(200)
+})
+
 export default router

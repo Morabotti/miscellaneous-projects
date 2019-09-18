@@ -65,3 +65,15 @@ export const fetchRoom = (
 )
   .then(checkResponse)
   .then((res) => res.json())
+
+export const sendReport = (
+  group: string,
+  week: number
+): Promise<Response> => fetch(
+  `/api/report/vamk/${group}/${week}`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }
+)
+  .then(checkResponse)
