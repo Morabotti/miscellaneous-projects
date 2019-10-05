@@ -19,12 +19,12 @@ chromeCapabilities.set('chromeOptions', chromeOptions)
 //WeekNum | Ensimmäinen viikko | Manuaalisesti
 const FirstWeekOfYear = 35;
 //WeekNum | VIimeinen viikko //#endregion| Manuaalisesti
-const LastWeekOfYear = 42;
+const LastWeekOfYear = 46;
 
 //URL ID | Manuaalisesti
 const StartOfID = 4;
 //URL ID Loppu | Manuaalisesti
-const EndOfID = 11;
+const EndOfID = 15;
 
 const FullTableMinus = 3;
 const FullTableLength = 4;
