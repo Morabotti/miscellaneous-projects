@@ -94,7 +94,7 @@ export const getSchedule = async () => {
                         if (num[x] != undefined) {
                             await new Promise(resolve => setTimeout(resolve, 4))
                             const BGCOLOR = await num[x].getAttribute("bgcolor")
-                            if (BGCOLOR === '#ffffcc' || BGCOLOR === '#ffdab9') {
+                            if (BGCOLOR === '#ffffcc' || BGCOLOR === '#ffdab9' || BGCOLOR == '#ffe4e1') {
                                 const title = await num[x].findElement(By.tagName("b")).getText()
                                 const text = await num[x].getText()
                                 const eventLength = await num[x].getAttribute("rowspan")
