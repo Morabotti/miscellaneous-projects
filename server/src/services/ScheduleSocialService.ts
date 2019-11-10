@@ -24,7 +24,7 @@ const LastWeekOfYear = 51;
 //URL ID | Manuaalisesti
 const StartOfID = 4;
 //URL ID Loppu | Manuaalisesti
-const EndOfID = 15;
+const EndOfID = 20;
 
 const FullTableMinus = 3;
 const FullTableLength = 4;
