@@ -1,6 +1,25 @@
 {
-  "main.css": "static/css/main.593d13df.css",
-  "main.css.map": "static/css/main.593d13df.css.map",
-  "main.js": "static/js/main.b3edf4ff.js",
-  "main.js.map": "static/js/main.b3edf4ff.js.map"
+  "files": {
+    "main.css": "/Railway/build/static/css/main.e7381b8a.chunk.css",
+    "main.js": "/Railway/build/static/js/main.6e060d27.chunk.js",
+    "main.js.map": "/Railway/build/static/js/main.6e060d27.chunk.js.map",
+    "runtime-main.js": "/Railway/build/static/js/runtime-main.85003516.js",
+    "runtime-main.js.map": "/Railway/build/static/js/runtime-main.85003516.js.map",
+    "static/css/2.11f871ab.chunk.css": "/Railway/build/static/css/2.11f871ab.chunk.css",
+    "static/js/2.a8420757.chunk.js": "/Railway/build/static/js/2.a8420757.chunk.js",
+    "static/js/2.a8420757.chunk.js.map": "/Railway/build/static/js/2.a8420757.chunk.js.map",
+    "index.html": "/Railway/build/index.html",
+    "precache-manifest.052177ef59bdc760107d325e36975549.js": "/Railway/build/precache-manifest.052177ef59bdc760107d325e36975549.js",
+    "service-worker.js": "/Railway/build/service-worker.js",
+    "static/css/2.11f871ab.chunk.css.map": "/Railway/build/static/css/2.11f871ab.chunk.css.map",
+    "static/css/main.e7381b8a.chunk.css.map": "/Railway/build/static/css/main.e7381b8a.chunk.css.map",
+    "static/js/2.a8420757.chunk.js.LICENSE": "/Railway/build/static/js/2.a8420757.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.85003516.js",
+    "static/css/2.11f871ab.chunk.css",
+    "static/js/2.a8420757.chunk.js",
+    "static/css/main.e7381b8a.chunk.css",
+    "static/js/main.6e060d27.chunk.js"
+  ]
 }
