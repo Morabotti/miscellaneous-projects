@@ -47,7 +47,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin({cleanAfterEveryBuildPatterns: 'build/*'}),
+    new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: 'build/*' }),
     new HtmlWebpackPlugin({
       inject: true,
       hash: true,

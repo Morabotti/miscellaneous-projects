@@ -8,7 +8,7 @@ const checkResponse = (res: Response): Response => {
 }
 
 export const fetchDepartments = (): Promise<string[]> => fetch(
-  '/api/departments',
+  '/api/schedule/departments',
   {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
@@ -20,7 +20,7 @@ export const fetchDepartments = (): Promise<string[]> => fetch(
 export const fetchClasses = (
   department: string
 ): Promise<Classes[]> => fetch(
-  `/api/classes/${department}`,
+  `/api/schedule/classes/${department}`,
   {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
@@ -33,7 +33,7 @@ export const fetchSchedule = (
   department: string,
   id: string
 ): Promise<Week[]> => fetch(
-  `/api/schedule/${department}/${id}`,
+  `/api/schedule/vamk/${department}/${id}`,
   {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
@@ -45,7 +45,7 @@ export const fetchSchedule = (
 export const fetchTeacher = (
   teacher: string
 ): Promise<Teacher> => fetch(
-  `/api/teacher/${teacher}`,
+  `/api/schedule/teacher/${teacher}`,
   {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
@@ -57,7 +57,7 @@ export const fetchTeacher = (
 export const fetchRoom = (
   room: string
 ): Promise<Room> => fetch(
-  `/api/location/${room}`,
+  `/api/schedule/location/${room}`,
   {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
@@ -70,7 +70,7 @@ export const sendReport = (
   group: string,
   week: number
 ): Promise<Response> => fetch(
-  `/api/report/vamk/${group}/${week}`,
+  `/api/schedule/report/vamk/${group}/${week}`,
   {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }

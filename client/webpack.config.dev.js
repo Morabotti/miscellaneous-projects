@@ -73,9 +73,6 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:8080'
-      },
-      '/assets': {
-        target: 'http://localhost:8080'
       }
     },
     port: 8082,

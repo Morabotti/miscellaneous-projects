@@ -8,4 +8,4 @@
 
 chromedriver.exe
 
-server/db/**/*.json
+db/**/*.json
