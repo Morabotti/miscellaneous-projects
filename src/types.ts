@@ -41,14 +41,16 @@ export enum Method {
 }
 
 export interface PackedSchedule {
+  name: string,
   groupId: string,
   department: string,
   data: Week[],
-  auth: string | null
+  token: string | null
 }
 
 export interface PackedGroups {
+  name: string,
   department: string,
   data: Group[],
-  auth: string | null
+  token: string | null
 }

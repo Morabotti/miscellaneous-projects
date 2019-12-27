@@ -24,9 +24,13 @@ export class Server {
   }
 
   private startApp () {
-    this.app.listen(config.variables.port, () => {
+    this.app.listen(config.variables.port, async () => {
       console.log(`[BOOT]: Server running on port ${config.variables.port}`)
-      this.departmentService.testConnection()
+      const connect = this.departmentService.testConnection()
+      if (connect) {
+        await this.techology.getClasses()
+        await this.economySocial.getClasses()
+      }
     })
   }
 

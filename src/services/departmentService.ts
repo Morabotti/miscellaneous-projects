@@ -8,39 +8,47 @@ export class DepartmentService {
     console.log(`[BOOT]: [${this.constructor.name}] Service registered`)
   }
 
-  public async testConnection () {
+  public async testConnection (): Promise<boolean> {
     try {
-      await this.send(
-        '/api/connections',
+      const req = await this.send(
+        '/api/connection',
         {
           method: 'POST',
           body: JSON.stringify({
             name: config.connections.name,
-            auth: this.generateToken()
-          })
+            token: this.generateToken()
+          }),
+          headers: { 'Content-Type': 'application/json' }
         }
       )
+
+      if (req.status !== 200) {
+        throw new Error()
+      }
+
+      console.log('[BOOT]: Successful connection made to main server')
+      return true
     } catch (e) {
       console.error(`[ERROR]: Initial connection failed to main server!`)
+      return false
     }
   }
 
   public async sendLatestSchedule (data: PackedSchedule) {
     const populateData: PackedSchedule = {
       ...data,
-      auth: this.generateToken()
+      token: this.generateToken()
     }
 
     try {
-      const res = await this.send(
-        `/api/update/${config.connections.name}/schedule`,
+      await this.send(
+        `/api/connection/update/${config.connections.name}/schedule`,
         {
           method: 'POST',
-          body: JSON.stringify(populateData)
+          body: JSON.stringify(populateData),
+          headers: { 'Content-Type': 'application/json' }
         }
       )
-      const data = await res.json()
-      console.log(data)
     } catch (e) {
       console.error(`[ERROR]: Failed to send latest schedule`)
     }
@@ -49,19 +57,18 @@ export class DepartmentService {
   public async sendGroups (data: PackedGroups) {
     const populateData: PackedGroups = {
       ...data,
-      auth: this.generateToken()
+      token: this.generateToken()
     }
 
     try {
-      const res = await this.send(
-        `/api/update/${config.connections.name}/groups`,
+      await this.send(
+        `/api/connection/update/${config.connections.name}/groups`,
         {
           method: 'POST',
-          body: JSON.stringify(populateData)
+          body: JSON.stringify(populateData),
+          headers: { 'Content-Type': 'application/json' }
         }
       )
-      const data = await res.json()
-      console.log(data)
     } catch (e) {
       console.error(`[ERROR]: Failed to send latest groups`)
     }
@@ -72,6 +79,6 @@ export class DepartmentService {
   }
 
   private generateToken = () => {
-    return jwt.sign({}, config.connections.secret, { expiresIn: 60 })
+    return jwt.sign({ name: config.connections.name }, config.connections.secret, { expiresIn: 30 })
   }
 }

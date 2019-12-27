@@ -1,12 +1,12 @@
 import { By, ThenableWebDriver, WebElement } from 'selenium-webdriver'
-import { Group, WeekList, ScheduleList, ScheduleEvent, Week } from '../types'
+import { Group, WeekList, ScheduleList, ScheduleEvent, Week, PackedSchedule, PackedGroups } from '../types'
 import { DepartmentService } from '../services'
 import { Department } from '.'
 import config from '../config'
 
 export class EconomySocial extends Department {
-  constructor (private departmentSerivce: DepartmentService) {
-    super()
+  constructor (departmentSerivce: DepartmentService) {
+    super(departmentSerivce)
 
     this.onRegister()
   }
@@ -65,6 +65,23 @@ export class EconomySocial extends Department {
 
     await this.closeDriver()
     this.onClassesFetchOver()
+
+    const packetEconomy: PackedGroups = {
+      name: config.connections.name,
+      department: 'business',
+      data: economyGroups,
+      token: null
+    }
+
+    const packetSocial: PackedGroups = {
+      name: config.connections.name,
+      department: 'social',
+      data: socialGroups,
+      token: null
+    }
+
+    await this.sendGroups(packetEconomy)
+    await this.sendGroups(packetSocial)
   }
 
   public async getLatestSchedule () {
@@ -215,6 +232,18 @@ export class EconomySocial extends Department {
             await nextWeek.click()
           }
         }
+
+        const packet: PackedSchedule = {
+          name: config.connections.name,
+          department: schedule.group.charAt(0) === 'T'
+            ? 'business'
+            : 'social',
+          groupId: schedule.group,
+          data: fullWeeks,
+          token: null
+        }
+
+        await this.sendSchedule(packet)
       }
     } catch (e) {
       await this.closeDriver()

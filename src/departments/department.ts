@@ -1,13 +1,14 @@
 import { ThenableWebDriver } from 'selenium-webdriver'
+import { DepartmentService } from '../services'
 import { buildDriver } from './driver'
-import { ScheduleEvent } from '../types'
+import { ScheduleEvent, PackedGroups, PackedSchedule } from '../types'
 import config from '../config'
 
 export abstract class Department {
   protected driver: null | ThenableWebDriver
   protected isActive: boolean
 
-  constructor () {
+  constructor (private departmentSerivce: DepartmentService) {
     this.driver = null
     this.isActive = false
   }
@@ -62,6 +63,14 @@ export abstract class Department {
 
   protected onLatestScheduleFetchOver () {
     console.log(`[EVENT]: Schedule fetch over on [${this.constructor.name}]`)
+  }
+
+  protected async sendGroups (packet: PackedGroups) {
+    await this.departmentSerivce.sendGroups(packet)
+  }
+
+  protected async sendSchedule (packet: PackedSchedule) {
+    await this.departmentSerivce.sendLatestSchedule(packet)
   }
 
   protected getRoom (data: string[]): string | null {
