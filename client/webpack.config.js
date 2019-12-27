@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -13,7 +14,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   output: {
-    filename: 'bundle.[hash].js',
+    filename: '[name].bundle.[hash].js',
     path: path.resolve(__dirname, 'build'),
     publicPath: '/'
   },
@@ -24,7 +25,8 @@ module.exports = {
         test: /\.[j|t]sx?$/,
         loader: 'babel-loader',
         options: {
-          compact: true
+          compact: true,
+          plugins: ['lodash']
         }
       }, {
         test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
@@ -46,8 +48,20 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'initial'
+        }
+      }
+    }
+  },
   plugins: [
     new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: 'build/*' }),
+    new LodashModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
       hash: true,

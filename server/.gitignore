@@ -6,7 +6,4 @@
 *.notes.txt
 *.log
 
-chromedriver.exe
-
 db/**/*.json
-db-old
