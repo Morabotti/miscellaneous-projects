@@ -1,15 +1,13 @@
-import { Controller, Get, HttpStatus, Res, Param, Logger } from '@nestjs/common'
+import { Controller, Get, HttpStatus, Res, Param } from '@nestjs/common'
 import { ScheduleService } from './schedule.service'
 import { Response } from 'express'
 
 @Controller('/api/schedule')
 export class ScheduleController {
-  private readonly logger = new Logger(ScheduleController.name);
-
   constructor(private readonly scheduleService: ScheduleService) {}
 
   @Get('/departments')
-  async fetchDepartments(@Res() res: Response): Promise<Response> {
+  public async fetchDepartments(@Res() res: Response): Promise<Response> {
     try {
       const departments = await this.scheduleService.getDepartments()
       return res.status(HttpStatus.OK).json(departments)
@@ -19,7 +17,7 @@ export class ScheduleController {
   }
 
   @Get('/classes/:department')
-  async fetchClasses(@Param() params, @Res() res: Response): Promise<Response> {
+  public async fetchClasses(@Param() params, @Res() res: Response): Promise<Response> {
     try {
       if (!params.department) {
         return res.status(HttpStatus.BAD_REQUEST).send()
@@ -33,7 +31,7 @@ export class ScheduleController {
   }
 
   @Get('/vamk/:department/:class')
-  async fetchSchedule(@Param() params, @Res() res: Response): Promise<Response> {
+  public async fetchSchedule(@Param() params, @Res() res: Response): Promise<Response> {
     try {
       if (!params.department || !params.class) {
         return res.status(HttpStatus.BAD_REQUEST).send()
@@ -51,7 +49,7 @@ export class ScheduleController {
   }
 
   @Get('/teacher/:teacher')
-  async fetchTeacher(@Param() params, @Res() res: Response): Promise<Response> {
+  public async fetchTeacher(@Param() params, @Res() res: Response): Promise<Response> {
     try {
       if (!params.teacher) {
         return res.status(HttpStatus.BAD_REQUEST).send()
@@ -65,7 +63,7 @@ export class ScheduleController {
   }
 
   @Get('/location/:room')
-  async fetchRoom(@Param() params, @Res() res: Response): Promise<Response> {
+  public async fetchRoom(@Param() params, @Res() res: Response): Promise<Response> {
     try {
       if (!params.room) {
         return res.status(HttpStatus.BAD_REQUEST).send()
@@ -79,8 +77,8 @@ export class ScheduleController {
   }
 
   @Get('/report/vamk/:group/:week')
-  async report(@Param() params, @Res() res: Response): Promise<Response> {
-    this.logger.error(`Report: ${params.group} | Week number: ${params.week}`)
+  public async report(@Param() params, @Res() res: Response): Promise<Response> {
+    this.scheduleService.report(`Report: ${params.group} | Week number: ${params.week}`)
     return res.status(HttpStatus.OK).send()
   }
 }

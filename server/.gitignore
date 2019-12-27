@@ -9,3 +9,4 @@
 chromedriver.exe
 
 db/**/*.json
+db-old

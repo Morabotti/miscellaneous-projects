@@ -1,19 +1,25 @@
-import { Injectable } from '@nestjs/common'
-import { Teacher, Classes, Week, Room } from '../app.types'
+import { Injectable, Logger } from '@nestjs/common'
+import { Teacher, Group, Week, Room, Department } from '../app.types'
 import * as request from 'request'
 import * as cheerio from 'cheerio'
 import { readFileSync, writeFile } from 'jsonfile'
 
 @Injectable()
 export class ScheduleService {
-  public async getDepartments(): Promise<string[]> {
-    return ['tekniikka', 'sosiaali', 'liiketalous']
+  private readonly logger = new Logger(ScheduleService.name)
+
+  public async getDepartments(): Promise<Department[]> {
+    return [
+      { fi: 'tekniikka', en: 'technology' },
+      { fi: 'sosiaali', en: 'social' },
+      { fi: 'liiketalous', en: 'business' }
+    ]
   }
 
-  public async getClasses(department: string): Promise<Classes[] | null> {
+  public async getClasses(department: string): Promise<Group[] | null> {
     const filePath = `./db/departments/${department}.json`
     try {
-      const data: Classes[] = await readFileSync(filePath)
+      const data: Group[] = await readFileSync(filePath)
       return data
     } catch (e) {
       throw new Error(e)
@@ -65,6 +71,10 @@ export class ScheduleService {
     } catch (e) {
       throw new Error(e)
     }
+  }
+
+  public report(text: string) {
+    this.logger.error(text)
   }
 
   private getTeacherFromVamk(id: string): Promise<Teacher> {

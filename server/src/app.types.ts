@@ -1,8 +1,12 @@
-export interface Classes {
-  id: number,
-  fileShort: string,
-  tableName: string,
-  fileName: string
+export interface Group {
+  groupId: string,
+  fullName: string,
+  groupName: string
+}
+
+export interface Department {
+  en: string,
+  fi: string
 }
 
 export interface Teacher {
@@ -34,4 +38,10 @@ export interface ScheduleEvent {
   room: string | null,
   valid: boolean,
   groups: string[]
+}
+
+export interface Token {
+  name: string,
+  iat: number,
+  exp: number
 }
