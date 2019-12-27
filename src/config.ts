@@ -41,8 +41,8 @@ const config: ConfigType = {
     password: process.env.CREDENTIALS_PASSWORD || ''
   },
   fetchLength: {
-    latestMinus: 2,
-    latestPlus: 3
+    latestMinus: 3,
+    latestPlus: 4
   },
   sizes: {
     rows: [3, 15],

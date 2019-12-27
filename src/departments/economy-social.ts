@@ -169,7 +169,8 @@ export class EconomySocial extends Department {
         await driver.get(schedule.url)
         for (let i = startingWeek; i <= endingWeek; i++) {
           const isLastWeek = i === endingWeek
-          const weekUrl = this.removeCredentials(schedule.url, config.departments.economySocial)
+          const currentUrl = await driver.getCurrentUrl()
+          const weekUrl = this.removeCredentials(currentUrl, config.departments.economySocial)
           let weekData: ScheduleEvent[] = []
 
           for (let row = config.sizes.rows[0]; row <= config.sizes.rows[1]; row++) {
@@ -193,7 +194,7 @@ export class EconomySocial extends Department {
                 const day = this.calculateDay(weekData, column, row)
                 const newEvent: ScheduleEvent = {
                     title: '', day, text, teacher: null, room: null,
-                    groups: [], time: i, valid: false,
+                    groups: [], time: row, valid: false,
                     length: Number(eventLength) !== 0 ? Number(eventLength) : 1,
                 }
                 weekData = [...weekData, newEvent]
@@ -209,7 +210,7 @@ export class EconomySocial extends Department {
                 const groups = this.getGroups(data)
 
                 const newEvent: ScheduleEvent = {
-                  title, day, text, teacher, room, groups, time: i,
+                  title, day, text, teacher, room, groups, time: row,
                   valid: true,
                   length: Number(eventLength) !== 0 ? Number(eventLength) : 1,
                 }
@@ -238,7 +239,7 @@ export class EconomySocial extends Department {
           department: schedule.group.charAt(0) === 'T'
             ? 'business'
             : 'social',
-          groupId: schedule.group,
+          groupId: schedule.group.substring(0, schedule.group.indexOf(':')),
           data: fullWeeks,
           token: null
         }

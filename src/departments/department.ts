@@ -78,7 +78,7 @@ export abstract class Department {
       const hasExtra = row.indexOf('(')
       const place = hasExtra > -1 ? row.slice(0, hasExtra) : row
 
-      const match = place.match(/\b([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}\b/g)
+      const match = place.match(/([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}/g)
       if (match) {
         return row
       }
@@ -87,17 +87,22 @@ export abstract class Department {
   }
 
   protected getTeacher (data: string[]): null | string {
-    for (const row of data) {
-      const match = row.match(/(\b[A-Z]{2,4}\b)|\b(VY_[A-Z]{2,3})\b/g)
-      if (match) {
-        return row
+    for (const d of data) {
+      if (d.length >= 2 && d.length <= 4 && !this.hasNumber(d) && !d.includes('-')) {
+        return d
+      }
+  
+      if (d.indexOf('VY') == 0 && !this.hasNumber(d)) {
+        if (d.length >= 4 && d.length <= 5) {
+          return d
+        }
       }
     }
     return null
   }
 
   protected getGroups (data: string[]): string[] {
-    return data.filter(i => i.match(/[ITS]|(VY)_*/))
+    return data.filter(i => i.match(/[ITS]-|(VY)_*/))
   }
 
   /** 
@@ -130,7 +135,7 @@ export abstract class Department {
     const weekNo = Math.ceil(((((d as any) - yearStart) / 86400000) + config.variables.weekOffset) / 7)
     return {
       year: d.getUTCFullYear(),
-      week: 5 //weekNo
+      week: 1 //weekNo
     }
   }
 
@@ -152,6 +157,10 @@ export abstract class Department {
       console.error(`[ERROR]: Failed to remove credentials [${this.constructor.name}]`)
       return backup
     }
+  }
+
+  private hasNumber (string: string): boolean {
+    return /\d/.test(string)
   }
 
   abstract getClasses (): void

@@ -1,6 +1,6 @@
 import { Application, json } from 'express'
 import * as helmet from 'helmet'
-import { Technology, EconomySocial } from './departments'
+import { Technology, EconomySocial, Department } from './departments'
 import { MasterController } from './controllers'
 import { DepartmentService } from './services'
 import config from './config'
@@ -26,10 +26,10 @@ export class Server {
   private startApp () {
     this.app.listen(config.variables.port, async () => {
       console.log(`[BOOT]: Server running on port ${config.variables.port}`)
-      const connect = this.departmentService.testConnection()
+      const connect = await this.departmentService.testConnection()
       if (connect) {
-        await this.techology.getClasses()
-        await this.economySocial.getClasses()
+        await this.techology.getLatestSchedule()
+        await this.economySocial.getLatestSchedule()
       }
     })
   }
@@ -40,6 +40,13 @@ export class Server {
   }
 
   private registerControllers () {
-    new MasterController(this.app, '/api/master')
+    new MasterController(this.app, '/api/master', this.getDepartments)
+  }
+
+  get getDepartments(): Department[] {
+    return [
+      this.techology,
+      this.economySocial
+    ]
   }
 }
