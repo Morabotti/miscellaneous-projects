@@ -1,8 +1,9 @@
 import { Application, json } from 'express'
-import * as helmet from 'helmet'
+import { RecurrenceRule, Range, scheduleJob } from 'node-schedule'
 import { Technology, EconomySocial, Department } from './departments'
 import { MasterController } from './controllers'
 import { DepartmentService } from './services'
+import * as helmet from 'helmet'
 import config from './config'
 
 export class Server {
@@ -20,6 +21,7 @@ export class Server {
     this.techology = new Technology(this.departmentService)
     this.economySocial = new EconomySocial(this.departmentService)
 
+    this.createSchedule()
     this.startApp()
   }
 
@@ -28,15 +30,31 @@ export class Server {
       console.log(`[BOOT]: Server running on port ${config.variables.port}`)
       const connect = await this.departmentService.testConnection()
       if (connect) {
-        await this.techology.getLatestSchedule()
-        await this.economySocial.getLatestSchedule()
+        await this.techology.getClasses()
+        await this.economySocial.getClasses()
       }
     })
   }
 
+  private createSchedule () {
+    if (config.variables.env !== 'DEVELOPMENT') {
+      const rule = new RecurrenceRule()
+      rule.dayOfWeek = [new Range(0, 6)]
+      rule.hour = [1, 9, 18]
+      rule.minute = 0
+      rule.second = 0
+
+      scheduleJob(rule, async () => {
+        for (const department of this.getDepartments) {
+          await department.getLatestSchedule()
+        }
+      })
+    }
+  }
+
   private configureApp () {
-    this.app.use(json())
-    this.app.use(helmet())
+    this.app.use(json)
+    this.app.use(helmet)
   }
 
   private registerControllers () {

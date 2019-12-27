@@ -21,7 +21,8 @@ interface ConfigType {
   },
   variables: {
     weekOffset: number,
-    port: number
+    port: number,
+    env: string
   },
   connections: {
     secret: string,
@@ -50,7 +51,8 @@ const config: ConfigType = {
   },
   variables: {
     weekOffset: 3,
-    port: Number(process.env.SERVER_PORT) || 8085
+    port: Number(process.env.SERVER_PORT) || 8085,
+    env: process.env.ENVIRONMENT || 'DEVELOPMENT'
   },
   connections: {
     secret: process.env.CONNECTION_SECRET || '',
