@@ -3,7 +3,7 @@ import { ScheduleStyle } from './types'
 export const DEPARTMENT = 'department'
 export const GROUP = 'id'
 export const SETTINGS = 'settings'
-export const PREFIX = 7
+export const PREFIX = 8
 export const SIZE = 60
 
 export const styles: ScheduleStyle[] = [

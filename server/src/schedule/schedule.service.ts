@@ -6,6 +6,7 @@ import { readFileSync, writeFile } from 'jsonfile'
 
 @Injectable()
 export class ScheduleService {
+  private readonly dbPath = './db'
   private readonly logger = new Logger(ScheduleService.name)
 
   public async getDepartments(): Promise<Department[]> {
@@ -16,8 +17,9 @@ export class ScheduleService {
     ]
   }
 
-  public async getClasses(department: string): Promise<Group[] | null> {
-    const filePath = `./db/departments/${department}.json`
+  public async getClasses( department: string, source: string = 'vamk'): Promise<Group[] | null> {
+    const filePath = `${this.dbPath}/${source}/department/${department}.json`
+
     try {
       const data: Group[] = await readFileSync(filePath)
       return data
@@ -28,9 +30,11 @@ export class ScheduleService {
 
   public async getSchedule(
     department: string,
-    id: string
+    groupId: string,
+    source: string = 'vamk'
   ): Promise<Week[]> {
-    const filePath = `./db/schedule/${department}/${id}.json`
+    const filePath = `${this.dbPath}/${source}/schedules/${department}/${groupId}.json`
+
     try {
       const data: Week[] = await readFileSync(filePath)
       return data
@@ -39,8 +43,9 @@ export class ScheduleService {
     }
   }
 
-  public async getTeacher(id: string): Promise<Teacher> {
-    const filePath = './db/teachers/vamk.json'
+  public async getTeacher(id: string, source: string = 'vamk'): Promise<Teacher> {
+    const filePath = `${this.dbPath}/${source}/teachers.json`
+
     try {
       const teachers: Teacher[] = await readFileSync(filePath)
       const foundTeacher = teachers.find(i => i.id === id)
@@ -57,8 +62,9 @@ export class ScheduleService {
     }
   }
 
-  public async getRoom(id: string): Promise<Room> {
-    const filePath = './db/locations/vamk.json'
+  public async getRoom(id: string, source: string = 'vamk'): Promise<Room> {
+    const filePath = `${this.dbPath}/${source}/locations.json`
+
     try {
       const rooms: Room[] = await readFileSync(filePath)
       const room = rooms.find(i => i.name === id)

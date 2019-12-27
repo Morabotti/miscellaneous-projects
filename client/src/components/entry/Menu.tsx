@@ -41,9 +41,9 @@ export default () => {
         >
           {departments && departments.map((e, i) => (
             <option
-              value={e}
+              value={e.en}
               key={i}
-            >{firstLetterUpperCase(e)}</option>
+            >{firstLetterUpperCase(e.fi)}</option>
           ))}
         </select>
         <h1 className='margin-default'>Valitse luokka</h1>
@@ -54,9 +54,9 @@ export default () => {
         >
           {classes && classes.map(e => (
             <option
-              value={e.fileShort}
-              key={e.id}
-            >{e.fileShort}: {e.fileName}</option>
+              value={e.groupId}
+              key={e.groupId}
+            >{e.groupId}: {e.groupName}</option>
           ))}
         </select>
         <p className='margin-default notification'>Käyttämällä sivua hyväksyt evästeiden käytön.</p>

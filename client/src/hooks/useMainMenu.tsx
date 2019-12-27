@@ -1,11 +1,11 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import * as client from '../client'
-import { Classes } from '../types'
+import { Classes, Department } from '../types'
 import { DEPARTMENT, GROUP } from '../enum'
 
 interface MainMenuContext {
   schools: string[],
-  departments: string[] | null,
+  departments: Department[] | null,
   classes: Classes[] | null,
   selectedSchool: string,
   selectedDepartment: string,
@@ -17,10 +17,10 @@ interface MainMenuContext {
 
 export const useMainMenu = (): MainMenuContext => {
   const [schools] = useState<string[]>(['vamk'])
-  const [departments, setDepartments] = useState<null | string[]>(null)
+  const [departments, setDepartments] = useState<null | Department[]>(null)
   const [classes, setClasses] = useState<null | Classes[]>(null)
   const [selectedSchool] = useState('vamk')
-  const [selectedDepartment, setSelectedDepartment] = useState('tekniikka')
+  const [selectedDepartment, setSelectedDepartment] = useState('technology')
   const [selectedClass, setSelectedClass] = useState('I-ET-1N1')
 
   const changeSchool = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -34,7 +34,7 @@ export const useMainMenu = (): MainMenuContext => {
       .then(classes => {
         setClasses(classes)
         if (classes[0]) {
-          setSelectedClass(classes[0].fileShort)
+          setSelectedClass(classes[0].groupId)
         }
       })
   }

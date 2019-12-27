@@ -2,10 +2,14 @@ export type ScheduleStyle = 'default' | 'vertical' | 'classic'
 export type ScheduleThemes = 'default' | 'dark'
 
 export interface Classes {
-  id: number,
-  fileShort: string,
-  tableName: string,
-  fileName: string
+  groupId: string,
+  fullName: string,
+  groupName: string
+}
+
+export interface Department {
+  en: string,
+  fi: string
 }
 
 export interface Teacher {

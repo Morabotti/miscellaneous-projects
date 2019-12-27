@@ -25,7 +25,7 @@ export class ConnectionService {
   }
 
   public async updateSchedule({ department, groupId, data }: UpdateScheduleDto, source: string) {
-    const filePath = `${this.dbPath}/${source}/${department}/${groupId}.json`
+    const filePath = `${this.dbPath}/${source}/schedules/${department}/${groupId}.json`
     await this.writeUpdate(filePath, data)
   }
 

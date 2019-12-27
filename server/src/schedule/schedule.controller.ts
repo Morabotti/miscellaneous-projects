@@ -6,7 +6,7 @@ import { Response } from 'express'
 export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
 
-  @Get('/departments')
+  @Get('/vamk/departments')
   public async fetchDepartments(@Res() res: Response): Promise<Response> {
     try {
       const departments = await this.scheduleService.getDepartments()
@@ -16,7 +16,7 @@ export class ScheduleController {
     }
   }
 
-  @Get('/classes/:department')
+  @Get('/vamk/classes/:department')
   public async fetchClasses(@Param() params, @Res() res: Response): Promise<Response> {
     try {
       if (!params.department) {
@@ -28,6 +28,40 @@ export class ScheduleController {
     } catch (e) {
       return res.status(HttpStatus.NO_CONTENT).send()
     }
+  }
+
+  @Get('/vamk/teacher/:teacher')
+  public async fetchTeacher(@Param() params, @Res() res: Response): Promise<Response> {
+    try {
+      if (!params.teacher) {
+        return res.status(HttpStatus.BAD_REQUEST).send()
+      }
+
+      const teacher = await this.scheduleService.getTeacher(params.teacher)
+      return res.status(HttpStatus.OK).json(teacher)
+    } catch (e) {
+      return res.status(HttpStatus.NOT_FOUND).send()
+    }
+  }
+
+  @Get('/vamk/location/:room')
+  public async fetchRoom(@Param() params, @Res() res: Response): Promise<Response> {
+    try {
+      if (!params.room) {
+        return res.status(HttpStatus.BAD_REQUEST).send()
+      }
+
+      const room = await this.scheduleService.getRoom(params.room)
+      return res.status(HttpStatus.OK).json(room)
+    } catch (e) {
+      return res.status(HttpStatus.NOT_FOUND).send()
+    }
+  }
+
+  @Get('/vamk/report/:group/:week')
+  public async report(@Param() params, @Res() res: Response): Promise<Response> {
+    this.scheduleService.report(`Report: ${params.group} | Week number: ${params.week}`)
+    return res.status(HttpStatus.OK).send()
   }
 
   @Get('/vamk/:department/:class')
@@ -46,39 +80,5 @@ export class ScheduleController {
     } catch (e) {
       return res.status(HttpStatus.NO_CONTENT).send()
     }
-  }
-
-  @Get('/teacher/:teacher')
-  public async fetchTeacher(@Param() params, @Res() res: Response): Promise<Response> {
-    try {
-      if (!params.teacher) {
-        return res.status(HttpStatus.BAD_REQUEST).send()
-      }
-
-      const teacher = await this.scheduleService.getTeacher(params.teacher)
-      return res.status(HttpStatus.OK).json(teacher)
-    } catch (e) {
-      return res.status(HttpStatus.NOT_FOUND).send()
-    }
-  }
-
-  @Get('/location/:room')
-  public async fetchRoom(@Param() params, @Res() res: Response): Promise<Response> {
-    try {
-      if (!params.room) {
-        return res.status(HttpStatus.BAD_REQUEST).send()
-      }
-
-      const room = await this.scheduleService.getRoom(params.room)
-      return res.status(HttpStatus.OK).json(room)
-    } catch (e) {
-      return res.status(HttpStatus.NOT_FOUND).send()
-    }
-  }
-
-  @Get('/report/vamk/:group/:week')
-  public async report(@Param() params, @Res() res: Response): Promise<Response> {
-    this.scheduleService.report(`Report: ${params.group} | Week number: ${params.week}`)
-    return res.status(HttpStatus.OK).send()
   }
 }
