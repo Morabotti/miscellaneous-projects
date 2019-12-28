@@ -52,7 +52,7 @@ const config: ConfigType = {
   variables: {
     weekOffset: 3,
     port: Number(process.env.SERVER_PORT) || 8085,
-    env: process.env.ENVIRONMENT || 'DEVELOPMENT'
+    env: process.env.SOFTWARE_ENVIRONMENT || 'DEVELOPMENT'
   },
   connections: {
     secret: process.env.CONNECTION_SECRET || '',

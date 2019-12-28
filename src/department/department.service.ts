@@ -1,14 +1,16 @@
-import { ThenableWebDriver } from 'selenium-webdriver'
-import { DepartmentService } from '../services'
-import { buildDriver } from './driver'
-import { ScheduleEvent, PackedGroups, PackedSchedule } from '../types'
-import config from '../config'
+import { Logger, Injectable } from '@nestjs/common'
+import { Builder, Capabilities, ThenableWebDriver } from 'selenium-webdriver'
+import { ScheduleEvent, PackedGroups, PackedSchedule } from '../app.types'
+import { ConnectionService } from '../connection/connection.service'
+import config from '../app.config'
 
-export abstract class Department {
+@Injectable()
+export abstract class DepartmentService {
+  private readonly logger = new Logger(DepartmentService.name)
   protected driver: null | ThenableWebDriver
   protected isActive: boolean
 
-  constructor (private departmentSerivce: DepartmentService) {
+  constructor (private readonly connectionService: ConnectionService) {
     this.driver = null
     this.isActive = false
   }
@@ -18,13 +20,13 @@ export abstract class Department {
       return null
     }
 
-    const driver = buildDriver()
+    const driver = this.builder()
     this.driver = driver
     this.isActive = true
     return driver
   }
 
-  protected async closeDriver () {
+  protected async closeDriver() {
     if (!this.isActive || this.driver === null) {
       return
     }
@@ -33,47 +35,43 @@ export abstract class Department {
       this.driver = null
       this.isActive = false
     } catch (e) {
-      console.log(`[ERROR]: Failed to close driver [${this.constructor.name}]`)
+      this.logger.error('Failed to close driver')
     }
   }
 
-  protected onRegister () {
-    console.log(`[BOOT]: [${this.constructor.name}] Department registered`)
+  protected onClassesFetchStart() {
+    this.logger.log('Groups fetch start')
   }
 
-  protected onClassesFetchStart () {
-    console.log(`[EVENT]: Groups fetch start on [${this.constructor.name}]`)
+  protected onClassesFetchFailed() {
+    this.logger.error('Groups fetch failed')
   }
 
-  protected onClassesFetchFailed () {
-    console.error(`[ERROR]: Groups fetch failed on [${this.constructor.name}]`)
+  protected onClassesFetchOver() {
+    this.logger.log('Groups fetch over')
   }
 
-  protected onClassesFetchOver () {
-    console.log(`[EVENT]: Groups fetch over on [${this.constructor.name}]`)
+  protected onLatestScheduleFetchStart() {
+    this.logger.log('Schedule fetch start')
   }
 
-  protected onLatestScheduleFetchStart () {
-    console.log(`[EVENT]: Schedule fetch start on [${this.constructor.name}]`)
+  protected onLatestScheduleFetchFailed() {
+    this.logger.error('Schedule fetch failed')
   }
 
-  protected onLatestScheduleFetchFailed () {
-    console.error(`[ERROR]: Schedule fetch failed on [${this.constructor.name}]`)
+  protected onLatestScheduleFetchOver() {
+    this.logger.log('Schedule fetch over')
   }
 
-  protected onLatestScheduleFetchOver () {
-    console.log(`[EVENT]: Schedule fetch over on [${this.constructor.name}]`)
+  protected async sendGroups(packet: PackedGroups) {
+    await this.connectionService.sendGroups(packet)
   }
 
-  protected async sendGroups (packet: PackedGroups) {
-    await this.departmentSerivce.sendGroups(packet)
+  protected async sendSchedule(packet: PackedSchedule) {
+    await this.connectionService.sendLatestSchedule(packet)
   }
 
-  protected async sendSchedule (packet: PackedSchedule) {
-    await this.departmentSerivce.sendLatestSchedule(packet)
-  }
-
-  protected getRoom (data: string[]): string | null {
+  protected getRoom(data: string[]): string | null {
     for (const row of data) {
       const hasExtra = row.indexOf('(')
       const place = hasExtra > -1 ? row.slice(0, hasExtra) : row
@@ -86,7 +84,7 @@ export abstract class Department {
     return null
   }
 
-  protected getTeacher (data: string[]): null | string {
+  protected getTeacher(data: string[]): null | string {
     for (const d of data) {
       if (d.length >= 2 && d.length <= 4 && !this.hasNumber(d) && !d.includes('-')) {
         return d
@@ -101,7 +99,7 @@ export abstract class Department {
     return null
   }
 
-  protected getGroups (data: string[]): string[] {
+  protected getGroups(data: string[]): string[] {
     return data.filter(i => i.match(/[ITS]-|(VY)_*/))
   }
 
@@ -111,7 +109,7 @@ export abstract class Department {
    * @param column initial column of the event (day), defaults to (-1)
    * @param row row of the item, defaults to (-2)
    */
-  protected calculateDay (events: ScheduleEvent[], column: number, row: number) {
+  protected calculateDay(events: ScheduleEvent[], column: number, row: number) {
     let fetching = true
     let orginal = column
     let latest = 0;
@@ -128,7 +126,7 @@ export abstract class Department {
     return orginal
   }
 
-  protected getCurrentTime (d: Date) {
+  protected getCurrentTime(d: Date) {
     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7))
     const yearStart: any = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
@@ -139,7 +137,7 @@ export abstract class Department {
     }
   }
 
-  protected isEmptyOrSpaces (group: string) {
+  protected isEmptyOrSpaces(group: string) {
     return group === null || group.match(/^ *$/) !== null
   }
 
@@ -149,12 +147,12 @@ export abstract class Department {
     return url.replace('https://', `https://${username}:${password}@`)
   }
 
-  protected removeCredentials (url: string, backup: string) {
+  protected removeCredentials(url: string, backup: string) {
     if (url.indexOf('secure.puv.fi/') !== -1) {
       const newUrl = url.substring(url.indexOf('secure.puv.fi/'), url.length)
       return `https://${newUrl}`
     } else {
-      console.error(`[ERROR]: Failed to remove credentials [${this.constructor.name}]`)
+      this.logger.error('Failed to remove credentials')
       return backup
     }
   }
@@ -163,6 +161,26 @@ export abstract class Department {
     return /\d/.test(string)
   }
 
+  private builder() {
+    const capabilities = Capabilities.chrome()
+    const options = {
+      args: [
+        '--disable-notifications',
+        '--disable-extensions',
+        '--log-level=3',
+        '--no-sandbox',
+        '--headless',
+        '--disable-gpu'
+      ]
+    }
+  
+    capabilities.set('goog:chromeOptions', options)
+  
+    return new Builder()
+      .withCapabilities(capabilities)
+      .build()
+  }
+  
   abstract getClasses (): void
   abstract getLatestSchedule (): void
 }

@@ -17,6 +17,8 @@ RUN npm install
 
 COPY . .
 
+EXPOSE 8085
+
 RUN npm run build
 
 ENTRYPOINT ["node", "./dist/"]

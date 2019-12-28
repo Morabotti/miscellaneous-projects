@@ -1,12 +1,12 @@
+import { Injectable, Logger } from '@nestjs/common'
 import * as jwt from 'jsonwebtoken'
 import fetch, { RequestInit } from 'node-fetch'
-import { PackedSchedule, PackedGroups } from '../types'
-import config from '../config'
+import { PackedSchedule, PackedGroups } from '../app.types'
+import config from '../app.config'
 
-export class DepartmentService {
-  constructor () {
-    console.log(`[BOOT]: [${this.constructor.name}] Service registered`)
-  }
+@Injectable()
+export class ConnectionService {
+  private readonly logger = new Logger(ConnectionService.name)
 
   public async testConnection (): Promise<boolean> {
     try {
@@ -25,11 +25,10 @@ export class DepartmentService {
       if (req.status !== 200) {
         throw new Error()
       }
-
-      console.log('[BOOT]: Successful connection made to main server')
+      this.logger.log('Successful connection made to main server')
       return true
     } catch (e) {
-      console.error(`[ERROR]: Initial connection failed to main server!`)
+      this.logger.error('Initial connection failed to main server!')
       return false
     }
   }
@@ -50,7 +49,7 @@ export class DepartmentService {
         }
       )
     } catch (e) {
-      console.error(`[ERROR]: Failed to send latest schedule`)
+      this.logger.error('Failed to send latest schedule')
     }
   }
 
@@ -70,7 +69,7 @@ export class DepartmentService {
         }
       )
     } catch (e) {
-      console.error(`[ERROR]: Failed to send latest groups`)
+      this.logger.error('Failed to send latest groups')
     }
   }
 

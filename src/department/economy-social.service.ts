@@ -1,14 +1,14 @@
+import { Injectable } from '@nestjs/common'
 import { By, ThenableWebDriver, WebElement } from 'selenium-webdriver'
-import { Group, WeekList, ScheduleList, ScheduleEvent, Week, PackedSchedule, PackedGroups } from '../types'
-import { DepartmentService } from '../services'
-import { Department } from '.'
-import config from '../config'
+import { Group, WeekList, ScheduleList, ScheduleEvent, Week, PackedSchedule, PackedGroups } from '../app.types'
+import { ConnectionService } from '../connection/connection.service'
+import { DepartmentService } from './department.service'
+import config from '../app.config'
 
-export class EconomySocial extends Department {
-  constructor (departmentSerivce: DepartmentService) {
-    super(departmentSerivce)
-
-    this.onRegister()
+@Injectable()
+export class EconomySocialService extends DepartmentService {
+  constructor (connectionService: ConnectionService) {
+    super(connectionService)
   }
 
   public async getClasses () {
