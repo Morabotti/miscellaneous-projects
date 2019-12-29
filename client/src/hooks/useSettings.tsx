@@ -29,8 +29,10 @@ export const useSettings = (): SettingsContext => {
     }
     else {
       const parsed: Settings = JSON.parse(memory)
-      setSettings(parsed)
-      updateTheme(parsed.theme)
+      const initSettings = initialSettings()
+      const combined = { ...initSettings, ...parsed }
+      setSettings(combined)
+      updateTheme(combined.theme)
     }
   }
 
