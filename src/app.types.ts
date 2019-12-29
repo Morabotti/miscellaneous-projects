@@ -33,13 +33,6 @@ export interface Week {
   weekData: ScheduleEvent[]
 }
 
-export enum Method {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE'
-}
-
 export interface PackedSchedule {
   name: string,
   groupId: string,
@@ -53,4 +46,9 @@ export interface PackedGroups {
   department: string,
   data: Group[],
   token: string | null
+}
+
+export interface CurrentSituation {
+  department: boolean,
+  schedules: boolean
 }

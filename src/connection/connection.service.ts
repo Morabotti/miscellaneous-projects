@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common'
 import * as jwt from 'jsonwebtoken'
 import fetch, { RequestInit } from 'node-fetch'
-import { PackedSchedule, PackedGroups } from '../app.types'
+import { PackedSchedule, PackedGroups, CurrentSituation } from '../app.types'
 import config from '../app.config'
 
 @Injectable()
 export class ConnectionService {
   private readonly logger = new Logger(ConnectionService.name)
 
-  public async testConnection (): Promise<boolean> {
+  public async testConnection(): Promise<CurrentSituation | null> {
     try {
       const req = await this.send(
         '/api/connection',
@@ -25,11 +25,13 @@ export class ConnectionService {
       if (req.status !== 200) {
         throw new Error()
       }
+
+      const data: CurrentSituation = await req.json()
       this.logger.log('Successful connection made to main server')
-      return true
+      return data
     } catch (e) {
       this.logger.error('Initial connection failed to main server!')
-      return false
+      return null
     }
   }
 
