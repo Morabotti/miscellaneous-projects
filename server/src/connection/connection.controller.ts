@@ -23,7 +23,12 @@ export class ConnectionController {
       return res.status(HttpStatus.UNAUTHORIZED).send()
     }
 
-    return res.status(HttpStatus.OK).send()
+    try {
+      const data = await this.connectionService.getCurrentSituation(testConnectionDto.name)
+      return res.status(HttpStatus.OK).json(data)
+    } catch (e) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send()
+    }
   }
 
   @Post('/update/:source/schedule')
