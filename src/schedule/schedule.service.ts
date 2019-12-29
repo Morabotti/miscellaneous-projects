@@ -39,6 +39,11 @@ export class ScheduleService extends NestSchedule {
   public async initialConnect() {
     try {
       const connection: CurrentSituation = await this.connectionService.testConnection()
+
+      if (!connection) {
+        return
+      }
+
       if (!connection.department) {
         await this.technologyService.getClasses()
         await this.economySocialService.getClasses()
