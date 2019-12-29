@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react'
-import { useMainMenu, useRouter, useAppContext } from '../../hooks'
-import { firstLetterUpperCase } from '../../helpers/letters'
+import { useMainMenu, useAppContext } from '@hooks'
+import { firstLetterUpperCase } from '@util/letters'
+import { useHistory } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
-export default () => {
-  const { history } = useRouter()
+const Menu = () => {
+  const { replace } = useHistory()
+  const { t, i18n } = useTranslation('home')
   const { department, group, updateGroup } = useAppContext()
 
   useEffect(() => {
     if (department && group) {
-      history.replace(`/schedule/${department}/${group}/`)
+      replace(`/schedule/${department}/${group}/`)
     }
   }, [])
 
@@ -24,16 +27,17 @@ export default () => {
 
   const openSchedule = () => {
     updateGroup(selectedDepartment, selectedClass)
-    history.replace(`/schedule/${selectedDepartment}/${selectedClass}/`)
+    replace(`/schedule/${selectedDepartment}/${selectedClass}/`)
   }
 
   return (
     <div className='main-container'>
       <div className='wrap'>
         <h1 className='main-title'>
-          <span>{selectedSchool.toUpperCase()}</span> Lukujärjestys
+          <span>{selectedSchool.toUpperCase()} </span>
+          {t('title')}
         </h1>
-        <h1>Valitse yksikkö</h1>
+        <h1>{t('department')}</h1>
         <select
           className='select-normal'
           value={selectedDepartment}
@@ -43,10 +47,10 @@ export default () => {
             <option
               value={e.en}
               key={i}
-            >{firstLetterUpperCase(e.fi)}</option>
+            >{firstLetterUpperCase(i18n.language === 'fi' ? e.fi : e.en)}</option>
           ))}
         </select>
-        <h1 className='margin-default'>Valitse luokka</h1>
+        <h1 className='margin-default'>{t('group')}</h1>
         <select
           className='select-normal'
           value={selectedClass}
@@ -59,14 +63,15 @@ export default () => {
             >{e.groupId}: {e.groupName}</option>
           ))}
         </select>
-        <p className='margin-default notification'>Käyttämällä sivua hyväksyt evästeiden käytön.</p>
         <div className='submit-box'>
           <button
             className='submit-button'
             onClick={openSchedule}
-          >Avaa lukujärjestys</button>
+          >{t('open')}</button>
         </div>
       </div>
     </div>
   )
 }
+
+export default Menu

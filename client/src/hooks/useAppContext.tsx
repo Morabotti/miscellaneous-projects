@@ -1,7 +1,7 @@
 import React, { useContext, useState, ReactNode } from 'react'
-import { Settings } from '../types'
-import { DEPARTMENT, GROUP } from '../enum'
-import { useSettings } from '.'
+import { Settings } from '@types'
+import { DEPARTMENT, GROUP } from '@enums'
+import { useSettings } from '@hooks'
 
 interface AppContext {
   department: string | null,

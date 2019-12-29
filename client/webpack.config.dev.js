@@ -3,9 +3,25 @@ const fs = require('fs')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const tsconfig = require('./tsconfig.json')
 
 const directory = fs.realpathSync(process.cwd())
 const resolve = (relativePath) => path.resolve(directory, relativePath)
+
+function resolveTsconfigPathsToAlias () {
+  const { paths } = tsconfig.compilerOptions
+  const aliases = {}
+
+  Object.keys(paths).forEach((item) => {
+    const key = item.replace('/*', '')
+    const value = path.resolve(__dirname, paths[item][0].replace('/*', '').replace('*', ''))
+    if (!aliases.hasOwnProperty(key)) {
+      aliases[key] = value
+    }
+  })
+
+  return aliases
+}
 
 module.exports = {
   mode: 'development',
@@ -16,6 +32,7 @@ module.exports = {
     ]
   },
   resolve: {
+    alias: resolveTsconfigPathsToAlias(),
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   output: {

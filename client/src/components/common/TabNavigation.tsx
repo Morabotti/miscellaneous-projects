@@ -8,7 +8,7 @@ interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
-export default ({
+const TabNavigation = ({
   back,
   logo,
   header,
@@ -29,3 +29,5 @@ export default ({
     </div>
   </div>
 )
+
+export default TabNavigation

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { ScheduleStyle } from '../../types'
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
   extraDay: string
 }
 
-export default ({
+const TableOutlines = ({
   style,
   extraDay
 }: Props) => (
@@ -16,3 +16,5 @@ export default ({
     ))}
   </div>
 )
+
+export default memo(TableOutlines)

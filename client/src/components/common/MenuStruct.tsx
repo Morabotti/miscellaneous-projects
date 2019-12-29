@@ -11,7 +11,7 @@ interface Coords {
   y: number
 }
 
-export default ({
+const MenuStruct = ({
   element,
   children,
   isOpen
@@ -54,3 +54,5 @@ export default ({
     </div>
   )
 }
+
+export default MenuStruct

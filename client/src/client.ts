@@ -1,4 +1,4 @@
-import { Classes, Week, Teacher, Room, Department } from './types'
+import { Classes, Week, Teacher, Room, Department } from '@types'
 
 const checkResponse = (res: Response): Response => {
   if (!res.ok) {

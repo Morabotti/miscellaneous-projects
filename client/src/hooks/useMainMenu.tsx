@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, useEffect } from 'react'
-import * as client from '../client'
-import { Classes, Department } from '../types'
-import { DEPARTMENT, GROUP } from '../enum'
+import { fetchClasses, fetchDepartments } from '@client'
+import { Classes, Department } from '@types'
+import { DEPARTMENT, GROUP } from '@enums'
 
 interface MainMenuContext {
   schools: string[],
@@ -30,7 +30,7 @@ export const useMainMenu = (): MainMenuContext => {
   const changeDepartment = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.currentTarget.value
     setSelectedDepartment(value)
-    client.fetchClasses(value)
+    fetchClasses(value)
       .then(classes => {
         setClasses(classes)
         if (classes[0]) {
@@ -47,10 +47,10 @@ export const useMainMenu = (): MainMenuContext => {
     const dep = localStorage.getItem(DEPARTMENT)
     const id = localStorage.getItem(GROUP)
     if (!dep || !id) {
-      client.fetchDepartments()
+      fetchDepartments()
         .then(dep => {
           setDepartments(dep)
-          return client.fetchClasses(selectedDepartment)
+          return fetchClasses(selectedDepartment)
         })
         .then(setClasses)
     }

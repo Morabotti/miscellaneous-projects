@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
-import { days, times, PREFIX } from '../../enum'
-import { Week, ScheduleEvent } from '../../types'
+import { days, times, PREFIX } from '@enums'
+import { Week, ScheduleEvent } from '@types'
 import { TableOutlines, Event, EventModal } from '.'
-import { dateFromDay } from '../../helpers/time'
-import { useAppContext } from '../../hooks'
+import { dateFromDay } from '@util/time'
+import { useAppContext } from '@hooks'
 import { SwipeableHandlers } from 'react-swipeable/types'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   activeWeek: Week | null,
   fullYear: number,
   swiper: SwipeableHandlers
 }
-export default ({
+
+const ScheduleTable = ({
   activeWeek,
   fullYear,
   swiper
 }: Props) => {
+  const { t } = useTranslation('schedule')
   const { settings } = useAppContext()
   const [ activeClass, setActiveClass ] = useState<null | ScheduleEvent>(null)
 
@@ -43,7 +46,7 @@ export default ({
             )
             return (
               <div key={d} className={`day ${d}`}>
-                {d.toUpperCase()}
+                {t(d)}
                 <br />
                 <span className='date'>{`${c.getDate()}.${c.getMonth() + 1}.`}</span>
               </div>
@@ -85,3 +88,5 @@ export default ({
     </>
   )
 }
+
+export default ScheduleTable

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import * as client from '../client'
-import { Week } from '../types'
-import { getWeekNumber } from '../helpers/time'
+import { fetchSchedule } from '@client'
+import { Week } from '@types'
+import { getWeekNumber } from '@util/time'
 
 interface ScheduleContext {
   activeSchedule: Week | null,
@@ -11,15 +11,19 @@ interface ScheduleContext {
 }
 
 export const useSchedule = (
-  department: string,
-  id: string
+  department: string | undefined,
+  id: string | undefined
 ): ScheduleContext => {
   const [ activeSchedule, setActiveSchedule ] = useState<null | Week>(null)
   const [ loading, setLoading ] = useState(true)
   const [ fullSchedule, setFullSchedule ] = useState<null | Week[]>(null)
 
   useEffect(() => {
-    client.fetchSchedule(department, id)
+    if (department === undefined || id === undefined) {
+      return
+    }
+
+    fetchSchedule(department, id)
       .then(schedule => {
         setFullSchedule(schedule)
         const date = getWeekNumber(new Date())

@@ -1,32 +1,14 @@
 import React, { useEffect } from 'react'
-import { useSchedule, useTime, useAppContext } from '../../hooks'
+import { useSchedule, useTime, useAppContext } from '@hooks'
 import { useSwipeable } from 'react-swipeable'
+import { useParams } from 'react-router'
+import { ScheduleTable, Navigation, BottomBar } from '.'
 
-import {
-  ScheduleTable,
-  Navigation,
-  BottomBar
-} from '.'
-
-interface Props {
-  match: {
-    params: {
-      department: string,
-      id: string
-    }
-  }
-}
-
-export default ({
-  match: { params: { department, id } }
-}: Props) => {
-  const {
-    activeSchedule,
-    fullSchedule,
-    changeWeek
-  } = useSchedule(department, id)
-  const time = useTime()
+const ScheduleMain = () => {
+  const { department, id } = useParams()
+  const { activeSchedule, fullSchedule, changeWeek } = useSchedule(department, id)
   const { updateGroup } = useAppContext()
+  const time = useTime()
 
   const swiper = useSwipeable({ onSwipedRight: () => {
     if (activeSchedule) {
@@ -40,7 +22,9 @@ export default ({
   } })
 
   useEffect(() => {
-    updateGroup(department, id)
+    if (department !== undefined && id !== undefined) {
+      updateGroup(department, id)
+    }
   }, [])
 
   return (
@@ -62,3 +46,5 @@ export default ({
     </div>
   )
 }
+
+export default ScheduleMain

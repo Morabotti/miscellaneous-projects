@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { updateTheme } from '../helpers/dom'
-import { Settings } from '../types'
-import { SETTINGS } from '../enum'
+import { updateTheme } from '@util/dom'
+import { Settings } from '@types'
+import { SETTINGS, LANGUAGE } from '@enums'
+import { saveLanguage } from '@translations'
 
 interface SettingsContext {
   settings: Settings | null,
@@ -11,6 +12,7 @@ interface SettingsContext {
 const initialSettings = (): Settings => ({
   style: 'classic',
   theme: 'default',
+  lang: window.localStorage.getItem(LANGUAGE) || 'fi',
   useMap: true
 })
 
@@ -45,6 +47,13 @@ export const useSettings = (): SettingsContext => {
   useEffect(() => {
     loadOrCreateSettings()
   }, [])
+
+  useEffect(() => {
+    if (!settings) {
+      return
+    }
+    saveLanguage(settings.lang)
+  }, [settings && settings.lang])
 
   return {
     settings,

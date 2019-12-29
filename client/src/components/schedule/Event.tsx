@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScheduleStyle, ScheduleEvent } from '../../types'
+import { ScheduleStyle, ScheduleEvent } from '@types'
 
 interface Props {
   event: ScheduleEvent,
@@ -7,7 +7,7 @@ interface Props {
   onSelect: (event: ScheduleEvent) => void
 }
 
-export default ({
+const Event = ({
   event,
   style,
   onSelect
@@ -28,3 +28,5 @@ export default ({
     </div>
   </div>
 )
+
+export default Event

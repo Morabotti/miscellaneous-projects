@@ -1,4 +1,4 @@
-import { ScheduleThemes } from '../types'
+import { ScheduleThemes } from '@types'
 
 const getThemeColor = (theme: ScheduleThemes): string => {
   switch (theme) {

@@ -5,10 +5,23 @@
     "lib": [ "esnext", "dom", "dom.iterable" ],
     "jsx": "preserve",
     "noEmit": true,
+    "resolveJsonModule": true,
     "downlevelIteration": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@client": ["src/client.ts"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@hooks": ["src/hooks"],
+      "@types": ["src/types"],
+      "@util/*": ["src/util/*"],
+      "@translations": ["src/translations"],
+      "@enums": ["src/enums.ts"],
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "./src/**/*.ts",

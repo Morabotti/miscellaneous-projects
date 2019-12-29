@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import UpArrow from 'mdi-react/ChevronUpIcon'
 import InfoCircle from 'mdi-react/InfoCircleIcon'
 import CogIcon from 'mdi-react/CogIcon'
 import Calendar from 'mdi-react/CalendarIcon'
-import { useRouter, useAppContext } from '../../hooks'
+import { useAppContext } from '@hooks'
+import { useHistory } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
-  group: string
+  group: string | undefined
 }
 
-export default ({
+const BottomBar = ({
   group
 }: Props) => {
-  const { history } = useRouter()
+  const { t } = useTranslation('schedule')
+  const { replace, push } = useHistory()
   const { updateGroup } = useAppContext()
   const [ optionsOpen, setOptionsOpen ] = useState(false)
 
   const backToMainMenu = () => {
     updateGroup(null, null)
-    history.replace('/')
+    replace('/')
   }
 
   return (
@@ -27,29 +30,29 @@ export default ({
         className='bottom-button'
         onClick={() => setOptionsOpen(!optionsOpen)}
       >
-        <span>{group}</span><UpArrow />
+        <span>{group || ''}</span><UpArrow />
       </div>
       <div className='bottom-content'>
         <div
           className='bottom-grid'
-          onClick={() => history.push('/info')}
+          onClick={() => push('/info')}
         >
           <InfoCircle />
-          <p>INFO</p>
+          <p>{t('info')}</p>
         </div>
         <div
           className='bottom-grid'
           onClick={backToMainMenu}
         >
           <Calendar />
-          <p>START MENU</p>
+          <p>{t('start')}</p>
         </div>
         <div
           className='bottom-grid'
-          onClick={() => history.push('/settings')}
+          onClick={() => push('/settings')}
         >
           <CogIcon />
-          <p>SETTINGS</p>
+          <p>{t('settings')}</p>
         </div>
       </div>
       <div
@@ -60,3 +63,5 @@ export default ({
     </div>
   )
 }
+
+export default memo(BottomBar)

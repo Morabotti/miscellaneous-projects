@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Week } from '../../types'
+import { Week } from '@types'
 import LeftArrow from 'mdi-react/ChevronLeftIcon'
 import RightArrow from 'mdi-react/ChevronRightIcon'
-import { dateFromDay } from '../../helpers/time'
-import { PREFIX } from '../../enum'
+import { dateFromDay } from '@util/time'
+import { PREFIX } from '@enums'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   activeWeek: Week | null,
@@ -12,12 +13,13 @@ interface Props {
   fullYear: number
 }
 
-export default ({
+const Navigation = ({
   activeWeek,
   changeWeek,
   fullWeeks,
   fullYear
 }: Props) => {
+  const { t } = useTranslation('schedule')
   const [ weeksOpen, setWeeksOpen ] = useState(false)
 
   return (
@@ -36,7 +38,7 @@ export default ({
                 className='current-week'
                 onClick={() => setWeeksOpen(!weeksOpen)}
               >
-                <p>Viikko {activeWeek.weekNum}</p>
+                <p>{t('week')} {activeWeek.weekNum}</p>
               </button>
             </div>
             <div
@@ -63,7 +65,7 @@ export default ({
                     setWeeksOpen(false)
                   }}
                 >
-                  <a>Viikko {week.weekNum} | <span>{start.getDate()}.{start.getMonth() + 1}―{end.getDate()}.{end.getMonth() + 1}</span></a>
+                  <a>{t('week')} {week.weekNum} | <span>{start.getDate()}.{start.getMonth() + 1}―{end.getDate()}.{end.getMonth() + 1}</span></a>
                 </div>
               )
             })
@@ -80,3 +82,5 @@ export default ({
     </>
   )
 }
+
+export default Navigation

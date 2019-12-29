@@ -1,5 +1,5 @@
-import React from 'react'
-import { firstLetterUpperCase } from '../../helpers/letters'
+import React, { memo } from 'react'
+import { firstLetterUpperCase } from '@util/letters'
 
 interface Props {
   header: string,
@@ -8,7 +8,7 @@ interface Props {
   onSelect: (set: string) => void
 }
 
-export default ({
+const SettingsGroup = ({
   options,
   selected,
   onSelect,
@@ -32,3 +32,5 @@ export default ({
     </div>
   </div>
 )
+
+export default memo(SettingsGroup)

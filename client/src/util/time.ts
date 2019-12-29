@@ -1,4 +1,4 @@
-import { TimeData } from '../types'
+import { TimeData } from '@types'
 
 export const getWeekNumber = (d: Date): TimeData => {
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))

@@ -4,6 +4,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const tsconfig = require('./tsconfig.json')
+
+function resolveTsconfigPathsToAlias () {
+  const { paths } = tsconfig.compilerOptions
+  const aliases = {}
+
+  Object.keys(paths).forEach((item) => {
+    const key = item.replace('/*', '')
+    const value = path.resolve(__dirname, paths[item][0].replace('/*', '').replace('*', ''))
+    if (!aliases.hasOwnProperty(key)) {
+      aliases[key] = value
+    }
+  })
+
+  return aliases
+}
 
 module.exports = {
   mode: 'production',
@@ -11,6 +27,7 @@ module.exports = {
     './src/index.tsx'
   ],
   resolve: {
+    alias: resolveTsconfigPathsToAlias(),
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   output: {

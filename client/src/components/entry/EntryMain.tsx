@@ -1,11 +1,12 @@
 import React from 'react'
-import { Menu, Background } from '.'
+import { Menu, Background, LanguageBar } from '.'
 
-export default () => {
-  return (
-    <div className='background-main'>
-      <Menu />
-      <Background />
-    </div>
-  )
-}
+const EntryMain = () => (
+  <div className='background-main'>
+    <LanguageBar />
+    <Menu />
+    <Background />
+  </div>
+)
+
+export default EntryMain

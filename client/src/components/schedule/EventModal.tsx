@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ScheduleEvent, Teacher, Room, Week } from '../../types'
-import { fetchTeacher, fetchRoom, sendReport } from '../../client'
-import { times, SIZE } from '../../enum'
-import { useAppContext } from '../../hooks'
+import { ScheduleEvent, Teacher, Room, Week } from '@types'
+import { fetchTeacher, fetchRoom, sendReport } from '@client'
+import { times, SIZE } from '@enums'
+import { useAppContext } from '@hooks'
+import { MenuStruct } from '@components/common'
 
 import RemoveIcon from 'mdi-react/CloseCircleIcon'
 import Users from 'mdi-react/AccountsIcon'
@@ -10,7 +11,7 @@ import User from 'mdi-react/AccountIcon'
 import BookIcon from 'mdi-react/BookIcon'
 import MapMarkerIcon from 'mdi-react/MapMarkerIcon'
 import ClockIcon from 'mdi-react/ClockIcon'
-import { MenuStruct } from '../common'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   isOpen: boolean,
@@ -19,12 +20,13 @@ interface Props {
   week: Week
 }
 
-export default ({
+const EventModal = ({
   isOpen,
   onClose,
   event,
   week
 }: Props) => {
+  const { t } = useTranslation('schedule')
   const [teacher, setTeacher] = useState<null | Teacher>(null)
   const [room, setRoom] = useState<null | Room>(null)
   const [menuRef, setMenuRef] = useState<null | HTMLElement>(null)
@@ -156,7 +158,7 @@ export default ({
                   <div className='map-location'>
                     <h2>
                       <MapMarkerIcon />
-                      <span>Kerros {room.floor}: {event.room}</span>
+                      <span>{t('floor')} {room.floor}: {event.room}</span>
                     </h2>
                   </div>
                 </div>
@@ -170,10 +172,12 @@ export default ({
         element={menuRef}
       >
         <ul>
-          <li onClick={_menuPress('orginal')}>Avaa alkuperäinen.</li>
-          <li onClick={_menuPress('report')}>Raportoi virhe.</li>
+          <li onClick={_menuPress('orginal')}>{t('orginal')}</li>
+          <li onClick={_menuPress('report')}>{t('report')}</li>
         </ul>
       </MenuStruct>
     </div>
   )
 }
+
+export default EventModal

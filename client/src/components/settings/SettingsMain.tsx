@@ -1,51 +1,62 @@
 import React from 'react'
 import CogIcon from 'mdi-react/CogIcon'
-import { useRouter, useAppContext } from '../../hooks'
-import { TabNavigation } from '../common'
-import { styles } from '../../enum'
+import { useAppContext } from '@hooks'
+import { TabNavigation } from '@components/common'
+import { styles } from '@enums'
 import { SettingsGroup } from '.'
+import { useHistory } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
-export default () => {
+const SettingsMain = () => {
   const { department, group, settings, changeSettings } = useAppContext()
-  const { history } = useRouter()
+  const { replace, goBack } = useHistory()
+  const { t } = useTranslation('settings')
 
-  const goBack = () => {
+  const navigateBack = () => {
     if (department === null || group === null) {
-      history.goBack()
+      goBack()
     }
     else {
-      history.replace(`/schedule/${department}/${group}/`)
+      replace(`/schedule/${department}/${group}/`)
     }
   }
 
   return (
     <TabNavigation
       logo={<CogIcon />}
-      header='Settings'
-      back={goBack}
+      header={t('header')}
+      back={navigateBack}
     >
       {settings !== null ? (
         <>
           <SettingsGroup
-            header='Lukujärjestys tyyli'
+            header={t('optionStyle')}
             options={styles}
             selected={settings.style}
             onSelect={value => changeSettings('style', value)}
           />
           <SettingsGroup
-            header='Teema'
+            header={t('optionTheme')}
             options={['default', 'dark']}
             selected={settings.theme}
             onSelect={value => changeSettings('theme', value)}
           />
           <SettingsGroup
-            header='Näytä kartta'
+            header={t('optionMap')}
             options={['true', 'false']}
             selected={settings.useMap ? 'true' : 'false'}
             onSelect={value => changeSettings('useMap', value === 'true')}
           />
+          <SettingsGroup
+            header={t('optionTheme')}
+            options={['en', 'fi']}
+            selected={settings.lang}
+            onSelect={value => changeSettings('lang', value)}
+          />
         </>
-      ) : <h2>Loading...</h2> }
+      ) : <h2>{t('loading')}</h2> }
     </TabNavigation>
   )
 }
+
+export default SettingsMain

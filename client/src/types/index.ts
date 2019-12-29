@@ -55,5 +55,6 @@ export interface TimeData {
 export interface Settings {
   style: ScheduleStyle,
   theme: ScheduleThemes,
+  lang: string,
   useMap: boolean
 }
