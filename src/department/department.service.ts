@@ -77,7 +77,7 @@ export abstract class DepartmentService {
       const place = hasExtra > -1 ? row.slice(0, hasExtra) : row
 
       const match = place.match(/([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}/g)
-      if (match) {
+      if (match && place.length <= 15) {
         return row
       }
     }
