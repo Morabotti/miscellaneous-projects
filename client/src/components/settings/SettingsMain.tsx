@@ -48,7 +48,7 @@ const SettingsMain = () => {
             onSelect={value => changeSettings('useMap', value === 'true')}
           />
           <SettingsGroup
-            header={t('optionTheme')}
+            header={t('optionLang')}
             options={['en', 'fi']}
             selected={settings.lang}
             onSelect={value => changeSettings('lang', value)}

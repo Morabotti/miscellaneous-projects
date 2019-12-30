@@ -27,12 +27,15 @@ export const useSchedule = (
       .then(schedule => {
         setFullSchedule(schedule)
         const date = getWeekNumber(new Date())
-        const closestWeek = schedule.reduce(
-          (prev, curr) => Math.abs(
-            curr.weekNum - date.week
+        const closestWeek = schedule.reduce((p, c) => 
+          Math.abs(
+            c.weekNum - date.week
           ) < Math.abs(
-            prev.weekNum - date.week
-          ) ? curr : prev)
+            p.weekNum - date.week
+          ) && Math.abs(
+            c.weekNum - date.week
+          ) < 20 ? c : p
+        )
         setActiveSchedule(closestWeek)
         setLoading(false)
       })
