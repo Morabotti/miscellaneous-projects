@@ -76,9 +76,9 @@ export abstract class DepartmentService {
       const hasExtra = row.indexOf('(')
       const place = hasExtra > -1 ? row.slice(0, hasExtra) : row
 
-      const match = place.match(/([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}/g)
+      const match = place.match(/^([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}/g)
       if (match && place.length <= 15) {
-        return row
+        return place
       }
     }
     return null
@@ -100,7 +100,7 @@ export abstract class DepartmentService {
   }
 
   protected getGroups(data: string[]): string[] {
-    return data.filter(i => i.match(/[ITS]-|(VY)_*/))
+    return data.filter(i => i.match(/^[ITS]-|^(VY)-/))
   }
 
   /** 
