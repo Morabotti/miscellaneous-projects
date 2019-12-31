@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { fetchSchedule } from '@client'
 import { Week } from '@types'
 import { getWeekNumber } from '@util/time'
+import { useHistory } from 'react-router'
+import { useAppContext } from '@hooks'
 
 interface ScheduleContext {
   activeSchedule: Week | null,
@@ -14,6 +16,8 @@ export const useSchedule = (
   department: string | undefined,
   id: string | undefined
 ): ScheduleContext => {
+  const { updateGroup } = useAppContext()
+  const { replace } = useHistory()
   const [ activeSchedule, setActiveSchedule ] = useState<null | Week>(null)
   const [ loading, setLoading ] = useState(true)
   const [ fullSchedule, setFullSchedule ] = useState<null | Week[]>(null)
@@ -27,7 +31,7 @@ export const useSchedule = (
       .then(schedule => {
         setFullSchedule(schedule)
         const date = getWeekNumber(new Date())
-        const closestWeek = schedule.reduce((p, c) => 
+        const closestWeek = schedule.reduce((p, c) =>
           Math.abs(
             c.weekNum - date.week
           ) < Math.abs(
@@ -38,6 +42,10 @@ export const useSchedule = (
         )
         setActiveSchedule(closestWeek)
         setLoading(false)
+      })
+      .catch(() => {
+        updateGroup(null, null)
+        replace('/')
       })
   }, [])
 

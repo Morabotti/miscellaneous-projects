@@ -78,7 +78,7 @@ export class ScheduleController {
 
       return res.status(HttpStatus.OK).json(schedule)
     } catch (e) {
-      return res.status(HttpStatus.NO_CONTENT).send()
+      return res.status(HttpStatus.BAD_REQUEST).send()
     }
   }
 }
