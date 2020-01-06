@@ -133,7 +133,7 @@ export abstract class DepartmentService {
     const weekNo = Math.ceil(((((d as any) - yearStart) / 86400000) + config.variables.weekOffset) / 7)
     return {
       year: d.getUTCFullYear(),
-      week: 1 //weekNo
+      week: weekNo
     }
   }
 
