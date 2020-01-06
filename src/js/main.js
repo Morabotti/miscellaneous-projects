@@ -1,4 +1,5 @@
-let countDown = new Date('2019-03-01T16:00:00Z').getTime();
+// 2 tuntia offset
+let countDown = new Date('2020-02-28T16:00:00Z').getTime();
 var TDays = document.getElementById("days");
 var THours = document.getElementById("hours");
 var TMinutes = document.getElementById("minutes");
@@ -16,15 +17,14 @@ THours.innerText = "00";
 TMinutes.innerText = "00";
 TSeconds.innerText = "00";
 
-
-let Timer = setInterval(function() {
+function updateTime() {
     let now = new Date().getTime(),
     distance = countDown - now;
 
-    TDays.innerText = Math.floor(distance / (day)),
-    THours.innerText = Math.floor((distance % (day)) / (hour)),
-    TMinutes.innerText = Math.floor((distance % (hour)) / (minute)),
-    TSeconds.innerText = Math.floor((distance % (minute)) / second);
+    TDays.innerText = Math.floor(distance / (day)).toString(),
+    THours.innerText = Math.floor((distance % (day)) / (hour)).toString(),
+    TMinutes.innerText = Math.floor((distance % (hour)) / (minute)).toString(),
+    TSeconds.innerText = Math.floor((distance % (minute)) / second).toString();
 
     if(distance < 0){
         clearInterval(Timer)
@@ -32,8 +32,10 @@ let Timer = setInterval(function() {
         THours.innerText = "00";
         TMinutes.innerText = "00";
         TSeconds.innerText = "00";
-    }   
-}, second)
+    }
+}
+
+let Timer = setInterval(updateTime, second)
 
 document.getElementById("godown").addEventListener("click", MouseEffect, false);
 
@@ -77,7 +79,7 @@ function ReSize(){
         TRANS[x].setAttribute("style", "border-width: 0 "+ window.innerWidth+ "px 130px 0")
     }
     if(window.innerWidth < 380){
-        document.getElementById("disc-size").setAttribute("width", window.innerWidth - 25)
+        document.getElementById("disc-size").setAttribute("width", (window.innerWidth - 25).toString())
     }
 }
 
@@ -118,8 +120,6 @@ $("#godown").click(function() {
         scrollTop: $("#scrollto").offset().top
     }, 1300);
 });
-ReSize();
-
 
 document.getElementById("disc-button").addEventListener("click", TOGGLESLIDER, false)
 
@@ -163,3 +163,9 @@ function HandleDropDown() {
     }
 }
 
+function bootstrap() {
+    updateTime()
+    ReSize();
+}
+
+bootstrap()
