@@ -32,6 +32,7 @@ export abstract class DepartmentService {
     }
     try {
       await this.driver.close()
+      await this.driver.quit()
       this.driver = null
       this.isActive = false
     } catch (e) {
