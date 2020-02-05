@@ -36,7 +36,7 @@ const routes = [
   }
 ]
 
-ReactGA.initialize('UA-131129716-1', { debug: true })
+ReactGA.initialize('UA-131129716-1')
 
 const App = () => (
   <AppProvider>
