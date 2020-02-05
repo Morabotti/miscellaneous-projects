@@ -39,7 +39,7 @@ export const AppProvider = ({ children }: Props) => {
       localStorage.removeItem(GROUP)
     }
     else {
-      ReactGA.pageview(`/schedule/${department}/${group}`)
+      ReactGA.pageview(`/schedule/${department}/${group}/`)
       localStorage.setItem(DEPARTMENT, department)
       localStorage.setItem(GROUP, group)
     }
