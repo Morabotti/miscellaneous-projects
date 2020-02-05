@@ -6,6 +6,7 @@ import { styles } from '@enums'
 import { SettingsGroup } from '.'
 import { useHistory } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import ReactGA from 'react-ga'
 
 const SettingsMain = () => {
   const { department, group, settings, changeSettings } = useAppContext()
@@ -20,6 +21,8 @@ const SettingsMain = () => {
       replace(`/schedule/${department}/${group}/`)
     }
   }
+
+  ReactGA.modalview('/settings')
 
   return (
     <TabNavigation

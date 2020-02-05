@@ -4,6 +4,7 @@ import { useAppContext } from '../../hooks'
 import { TabNavigation } from '../common'
 import { useHistory } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import ReactGA from 'react-ga'
 
 const InfoMain = () => {
   const { department, group } = useAppContext()
@@ -18,6 +19,8 @@ const InfoMain = () => {
       replace(`/schedule/${department}/${group}/`)
     }
   }
+
+  ReactGA.modalview('/info')
 
   return (
     <TabNavigation

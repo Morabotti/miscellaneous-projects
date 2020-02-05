@@ -2,6 +2,7 @@ import React, { useContext, useState, ReactNode } from 'react'
 import { Settings } from '@types'
 import { DEPARTMENT, GROUP } from '@enums'
 import { useSettings } from '@hooks'
+import ReactGA from 'react-ga'
 
 interface AppContext {
   department: string | null,
@@ -33,10 +34,12 @@ export const AppProvider = ({ children }: Props) => {
     setGroup(group)
 
     if (department === null || group === null) {
+      ReactGA.pageview('/')
       localStorage.removeItem(DEPARTMENT)
       localStorage.removeItem(GROUP)
     }
     else {
+      ReactGA.pageview(`/schedule/${department}/${group}`)
       localStorage.setItem(DEPARTMENT, department)
       localStorage.setItem(GROUP, group)
     }

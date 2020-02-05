@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { hot } from 'react-hot-loader'
+import ReactGA from 'react-ga'
 import { AppProvider } from '@hooks'
 import { SuspenseLoader } from '@components/common'
 import { I18nextProvider } from 'react-i18next'
@@ -34,6 +35,8 @@ const routes = [
     component: InfoMain
   }
 ]
+
+ReactGA.initialize('UA-131129716-1', { debug: true })
 
 const App = () => (
   <AppProvider>
