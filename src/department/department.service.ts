@@ -32,7 +32,6 @@ export abstract class DepartmentService {
     }
     try {
       await this.driver.close()
-      await this.driver.quit()
       this.driver = null
       this.isActive = false
     } catch (e) {
@@ -77,7 +76,7 @@ export abstract class DepartmentService {
       const hasExtra = row.indexOf('(')
       const place = hasExtra > -1 ? row.slice(0, hasExtra) : row
 
-      const match = place.match(/^([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}/g)
+      const match = place.match(/^([ABCF][1-9].{3}|(LEC|TF|LEP|UVA|Alere|LM)){1,12}|F[1-9].{2}/g)
       if (match && place.length <= 15) {
         return place
       }
