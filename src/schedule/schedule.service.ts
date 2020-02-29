@@ -35,7 +35,7 @@ export class ScheduleService extends NestSchedule {
     }
   }
 
-  @Timeout(4000)
+  @Timeout(1000)
   public async initialConnect() {
     try {
       const connection: CurrentSituation = await this.connectionService.testConnection()

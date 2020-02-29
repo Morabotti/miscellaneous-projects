@@ -38,7 +38,12 @@ export class TechnologyService extends DepartmentService {
       await this.onGroupList(driver, async (group) => {
         const fullGroup = await group.getText()
         if (!this.isEmptyOrSpaces(fullGroup)) {
-          const groupId = fullGroup.substring(0, fullGroup.indexOf(':'))
+          const initialGroupId = fullGroup.substring(0, fullGroup.indexOf(':'))
+
+          const groupId = initialGroupId === ''
+            ? this.createGroupId(fullGroup)
+            : initialGroupId
+
           const ext = fullGroup.indexOf('ry') !== -1 
             ? 'ry'
             : fullGroup.indexOf('Gr') !== -1
@@ -146,6 +151,13 @@ export class TechnologyService extends DepartmentService {
     for (const schedule of schedules) {
       let fullWeeks: Week[] = []
       await driver.get(schedule.url)
+
+      const initialGroupId = schedule.group.substring(0, schedule.group.indexOf(':'))
+
+      const groupId = initialGroupId === ''
+          ? this.createGroupId(schedule.group)
+          : initialGroupId
+
       for (let i = startingWeek; i <= endingWeek; i++) {
         const isLastWeek = i === endingWeek
         const currentUrl = await driver.getCurrentUrl()
@@ -205,7 +217,7 @@ export class TechnologyService extends DepartmentService {
         }
 
         const newWeek: Week = {
-          group: schedule.group.substring(0, schedule.group.indexOf(':')),
+          group: groupId,
           weekNum: i,
           weekUrl,
           weekData
@@ -218,10 +230,11 @@ export class TechnologyService extends DepartmentService {
           await nextWeek.click()
         }
       }
+
       const packet: PackedSchedule = {
         name: config.connections.name,
         department: 'technology',
-        groupId: schedule.group.substring(0, schedule.group.indexOf(':')),
+        groupId: groupId,
         data: fullWeeks,
         token: null
       }
@@ -231,6 +244,41 @@ export class TechnologyService extends DepartmentService {
 
     await this.closeDriver()
     this.onLatestScheduleFetchOver()
+  }
+
+  private createGroupId (fullName: string): string {
+    const words = fullName.split(' ')
+
+    switch(words[0]) {
+      case 'Energiatekniikka':
+        return `I-ET-${words[words.length - 1]}`
+      case 'Exchange':
+        return `I-EX`
+      case 'Energia-':
+        return `I-EY-${words[words.length - 1]}`
+      case 'Information':
+        return `I-IT-${words[words.length - 1]}`
+      case 'Konetekniikka':
+        return `I-KT-${words[words.length - 1]}`
+      case 'Energy':
+        return `I-MX-${words[words.length - 1]}`
+      case 'Project':
+        return `I-PM-${words[words.length - 1]}`
+      case 'Rakennustekniikka':
+        return `I-RT-${words[words.length - 1]}`
+      case 'Sähkötekniikka':
+        return `I-ST-${words[words.length - 1]}`
+      case 'Tietotekniikka':
+        return `I-TT-${words[words.length - 1]}`
+      case 'Ympäristöteknologia':
+        return `I-YT-${words[words.length - 1]}`
+      case 'Vaasan':
+        if (words[words.length - 1] === 'yliopisto') {
+          return `VY`
+        } else {
+          return `VY-${words[words.length - 1]}`
+        }
+    }
   }
 
   private async onGroupList (
