@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  transport:
+    image: mariadb:10.4.8
+    environment:
+      - MYSQL_PASSWORD=test
+      - MYSQL_USER=test
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=transport-db
+    ports:
+      - 3306:3306
+    volumes:
+      - transport:/var/lib/mysql
+
+volumes:
+  transport:
