@@ -1,4 +1,4 @@
-const checkResponse = (res: Response): Promise<Response> => {
+export const checkResponse = (res: Response): Promise<Response> => {
   if (!res.ok) {
     return res.text()
       .then((text) => {

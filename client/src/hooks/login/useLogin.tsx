@@ -2,6 +2,7 @@ import { useEffect, useCallback } from 'react'
 import { useInitialContext, useAuth } from '@hooks'
 import { AuthUser, AuthRoles } from '@types'
 import { useHistory, useLocation } from 'react-router'
+import { routes } from '@components/Application'
 
 interface LoginContext {
   error: boolean,
@@ -37,7 +38,14 @@ export const useLogin = (): LoginContext => {
         push(search.replace(/^.*?\=/, ''))
       }
       else {
-        push('/hello')
+        const route = routes.find(i => i.access.includes(auth.user.role))
+        if (!route) {
+          push('/')
+          console.log('No route found')
+          return
+        }
+
+        push(route.path)
       }
     }
   }, [auth, push, search])

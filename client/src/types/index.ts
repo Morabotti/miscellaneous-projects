@@ -1,4 +1,6 @@
 import { Action as _Action } from '@actions'
+import { ElementType, LazyExoticComponent, FC } from 'react'
+import { SvgIconProps } from '@material-ui/core'
 
 export type Action = _Action
 export type AuthRoles = 'admin' | 'driver'
@@ -15,7 +17,19 @@ export enum NotificationType {
   DEFAULT = 'default'
 }
 
-interface User {
+export interface ViewProps {
+  access: AuthRoles[]
+}
+
+export interface Routes {
+  section?: string,
+  path: string,
+  icon?: ElementType<SvgIconProps>,
+  component: LazyExoticComponent<FC<ViewProps>>,
+  access: AuthRoles[]
+}
+
+export interface User {
   id: string,
   name: string,
   email: string,
