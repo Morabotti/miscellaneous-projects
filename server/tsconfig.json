@@ -15,7 +15,10 @@
       "@customer/*": ["src/customer/*"],
       "@user/*": ["src/user/*"],
       "@utils/*": ["src/utils/*"],
-      "@auth/*": ["src/auth/*"]
+      "@auth/*": ["src/auth/*"],
+      "@job/*": ["src/job/*"],
+      "@location/*": ["src/location/*"],
+      "@vehicle/*": ["src/vehicle/*"],
     }
   },
   "exclude": ["node_modules", "dist"]

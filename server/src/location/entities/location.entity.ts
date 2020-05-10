@@ -1,21 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity()
-export class Customer {
+export class Location {
   @PrimaryGeneratedColumn('increment')
   id: number
 
   @Column()
-  firstName: string
-
-  @Column()
-  lastName: string
+  name: string
 
   @Column({ nullable: true })
   phone: string
-
-  @Column({ nullable: true })
-  email: string
 
   @Column({ nullable: true })
   address: string
