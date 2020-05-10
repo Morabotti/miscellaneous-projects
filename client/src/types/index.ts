@@ -23,6 +23,7 @@ export interface ViewProps {
 
 export interface Routes {
   section?: string,
+  name?: string,
   path: string,
   icon?: ElementType<SvgIconProps>,
   component: LazyExoticComponent<FC<ViewProps>>,

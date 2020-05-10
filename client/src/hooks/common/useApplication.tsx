@@ -11,7 +11,8 @@ import { Action, NotificationType } from '@types'
 
 export interface GlobalState {
   loading: boolean,
-  actionLoading: boolean
+  actionLoading: boolean,
+  dashboardContainer: boolean
 }
 
 interface ApplicationContext {
@@ -26,7 +27,8 @@ interface Props {
 
 const initialState: GlobalState = {
   loading: false,
-  actionLoading: false
+  actionLoading: false,
+  dashboardContainer: true
 }
 
 export const __ApplicationContext = createContext<ApplicationContext>({

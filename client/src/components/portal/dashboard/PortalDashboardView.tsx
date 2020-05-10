@@ -1,6 +1,7 @@
 import React from 'react'
 import { ViewProps } from '@types'
 import { useAuth } from '@hooks'
+import { Section } from '@components/common'
 
 const PortalDashboardView = ({
   access
@@ -17,9 +18,11 @@ const PortalDashboardView = ({
   }
 
   return (
-    <div>
-      sdsdadsadss
-    </div>
+    <>
+      <Section title='Dashboard'>
+        sdsdadsadss
+      </Section>
+    </>
   )
 }
 
