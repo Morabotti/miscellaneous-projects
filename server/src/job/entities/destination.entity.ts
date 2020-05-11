@@ -11,6 +11,9 @@ export class Destination {
   @Column({ type: 'boolean', default: false })
   visited: boolean
 
+  @Column({ type: 'boolean', default: false })
+  dropPoint: boolean
+
   @Column({ type: 'date', nullable: true })
   estimation: string
 
@@ -25,4 +28,8 @@ export class Destination {
   @OneToOne(type => LocationEntity, { nullable: true })
   @JoinColumn()
   location: LocationEntity
+
+  @OneToOne(type => LocationEntity, { nullable: true })
+  @JoinColumn()
+  target: LocationEntity
 }

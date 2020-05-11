@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { TransportType } from '@app/app.enums'
 
 @Entity()
 export class Location {
@@ -7,6 +8,9 @@ export class Location {
 
   @Column()
   name: string
+
+  @Column({ type: 'enum', enum: TransportType, default: TransportType.CARGO })
+  type: TransportType
 
   @Column({ nullable: true })
   phone: string

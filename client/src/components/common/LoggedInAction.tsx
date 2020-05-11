@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo, memo } from 'react'
+import React, { Fragment, useState, useMemo, memo, useCallback } from 'react'
 import { MenuDown, MenuUp } from 'mdi-material-ui'
 import { AuthUser } from '@types'
 import { useLocation } from 'react-router'
@@ -9,7 +9,6 @@ import {
   Button,
   Typography as T,
   Avatar,
-  colors,
   Popper,
   Fade,
   Paper,
@@ -34,13 +33,13 @@ const useStyles = makeStyles(theme =>
       color: theme.palette.common.white,
       marginRight: theme.spacing(0.75),
       fontSize: theme.typography.body1.fontSize,
-      backgroundColor: colors.blue[600]
+      backgroundColor: '#1eb3d8'
     },
     innerAvatar: {
       color: theme.palette.common.white,
       marginBottom: theme.spacing(0.75),
       fontSize: theme.typography.h3.fontSize,
-      backgroundColor: colors.blue[600],
+      backgroundColor: '#1eb3d8',
       width: '100px',
       height: '100px'
     },
@@ -99,10 +98,10 @@ export const LoggedInAction = memo(({
     setOpen(false)
   }, [pathname])
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget)
-    setOpen(!open)
-  }
+    setOpen(prev => !prev)
+  }, [setAnchorEl, setOpen])
 
   if (!auth) {
     return <Fragment />
@@ -142,7 +141,7 @@ export const LoggedInAction = memo(({
                       fullWidth
                       onClick={revokeAuth}
                     >
-                      Kirjaudu ulos
+                      Log out
                     </Button>
                   </div>
                 </div>

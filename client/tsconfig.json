@@ -16,6 +16,7 @@
       "@client": ["src/client.ts"],
       "@components": ["src/components"],
       "@components/*": ["src/components/*"],
+      "@portal/*": ["src/components/portal*"],
       "@hooks": ["src/hooks"],
       "@utils/*": ["src/utils/*"],
       "@types": ["src/types"],

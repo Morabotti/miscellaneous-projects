@@ -1,8 +1,20 @@
-import React, { FC, memo } from 'react'
-import { Typography as T } from '@material-ui/core'
+import React, { memo } from 'react'
+import { makeStyles, createStyles, LinearProgress } from '@material-ui/core'
 
-export const SuspenseLoader: FC = memo(() => {
+const useStyles = makeStyles(theme => createStyles({
+  loader: {
+    position: 'absolute',
+    top: 64,
+    height: theme.spacing(1),
+    left: 0,
+    width: '100%'
+  }
+}))
+
+export const SuspenseLoader = memo(() => {
+  const classes = useStyles()
+
   return (
-    <T variant='body1'>Loading</T>
+    <LinearProgress className={classes.loader} />
   )
 })

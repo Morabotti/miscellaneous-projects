@@ -3,7 +3,16 @@ import { ElementType, LazyExoticComponent, FC } from 'react'
 import { SvgIconProps } from '@material-ui/core'
 
 export type Action = _Action
-export type AuthRoles = 'admin' | 'driver'
+
+export enum RouteTypes {
+  PRIVATE = 'private',
+  ROUTED = 'routed'
+}
+
+export enum AuthRoles {
+  ADMIN = 'admin',
+  DRIVER = 'driver'
+}
 
 export enum LocalStorageKeys {
   TOKEN = 'token'
@@ -23,8 +32,9 @@ export interface ViewProps {
 
 export interface Routes {
   section?: string,
-  name?: string,
+  type: RouteTypes,
   path: string,
+  name?: string,
   icon?: ElementType<SvgIconProps>,
   component: LazyExoticComponent<FC<ViewProps>>,
   access: AuthRoles[]

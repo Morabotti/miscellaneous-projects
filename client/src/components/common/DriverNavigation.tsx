@@ -1,7 +1,8 @@
 import React, { memo, Fragment } from 'react'
-import clsx from 'clsx'
+import { OuterNotAccessed } from '@components/common'
 import { DotsVertical } from 'mdi-material-ui'
 import { useAuth } from '@hooks'
+import clsx from 'clsx'
 
 import {
   createStyles,
@@ -66,13 +67,14 @@ export const DriverNavigation = memo(({
   variant = 'default'
 }: Props) => {
   const classes = useStyles()
-  const { auth } = useAuth()
+  const { auth, revokeAuth } = useAuth()
 
   if (auth === null || auth.user.role !== 'driver') {
     return (
-      <div>
-        This role has no access to this path
-      </div>
+      <OuterNotAccessed
+        onLogout={revokeAuth}
+        auth={auth}
+      />
     )
   }
 

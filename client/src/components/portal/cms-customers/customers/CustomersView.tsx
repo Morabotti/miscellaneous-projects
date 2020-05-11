@@ -1,9 +1,10 @@
 import React from 'react'
 import { ViewProps } from '@types'
 import { useAuth } from '@hooks'
-import { Section, InnerNotAccessed } from '@components/common'
+import { Section, ActionButton, InnerNotAccessed } from '@components/common'
+import { Plus } from 'mdi-material-ui'
 
-const PortalDashboardView = ({
+const CustomersView = ({
   access
 }: ViewProps) => {
   const { auth } = useAuth()
@@ -17,11 +18,18 @@ const PortalDashboardView = ({
 
   return (
     <>
-      <Section title='Dashboard'>
-        sdsdadsadss
+      <Section title='Customers'>
+        customers
       </Section>
+      <ActionButton
+        title='Add new customer'
+        onClick={() => {}}
+        icon={<Plus />}
+        color='secondary'
+        single
+      />
     </>
   )
 }
 
-export default PortalDashboardView
+export default CustomersView

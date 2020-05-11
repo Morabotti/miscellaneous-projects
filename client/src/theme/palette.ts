@@ -14,9 +14,9 @@ const palette: PaletteOptions = {
     dark: '#dc4714'
   },
   secondary: {
-    light: '#ff4081',
-    main: '#f50057',
-    dark: '#c51162',
+    light: '#4bc2df',
+    main: '#1eb3d8',
+    dark: '#157d97',
     contrastText: white
   },
   error: {

@@ -1,7 +1,7 @@
 import React, { ReactNode, memo, useState, useCallback } from 'react'
 import { Routes } from '@types'
 import { useAuth, useApplication } from '@hooks'
-import { LoggedInAction } from '@components/common'
+import { LoggedInAction, OuterNotAccessed } from '@components/common'
 import { Menu } from 'mdi-material-ui'
 import { Link, useLocation } from 'react-router-dom'
 import { adminSections } from '@components/Application'
@@ -85,6 +85,16 @@ const useStyles = makeStyles(theme => createStyles({
   section: {
     fontWeight: 600,
     paddingLeft: theme.spacing(2)
+  },
+  bar: {
+    backgroundColor: theme.palette.primary.dark
+  },
+  loader: {
+    position: 'absolute',
+    height: theme.spacing(1),
+    top: 64,
+    left: 0,
+    width: '100%'
   }
 }))
 
@@ -107,15 +117,16 @@ export const Navigation = memo(({ children, routes }: Props) => {
 
   if (auth === null || auth.user.role !== 'admin') {
     return (
-      <div>
-        This role has no access to this path
-      </div>
+      <OuterNotAccessed
+        onLogout={revokeAuth}
+        auth={auth}
+      />
     )
   }
 
   return (
     <div className={classes.root}>
-      <AppBar position='fixed'>
+      <AppBar position='fixed' className={classes.bar}>
         <Toolbar>
           <Hidden lgUp>
             <IconButton
@@ -140,7 +151,7 @@ export const Navigation = memo(({ children, routes }: Props) => {
           </div>
         </Toolbar>
         {loading && (
-          <LinearProgress />
+          <LinearProgress className={classes.loader} />
         )}
       </AppBar>
       <Hidden lgUp>

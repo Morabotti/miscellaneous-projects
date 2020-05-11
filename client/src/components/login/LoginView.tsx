@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme =>
 
 export const LoginView = () => {
   const classes = useStyles()
-  const [level, setLevel] = useState<AuthRoles>('admin')
+  const [level, setLevel] = useState<AuthRoles>(AuthRoles.ADMIN)
   const { login, loading } = useLogin()
 
   const handleTargetChange = useCallback((
@@ -66,12 +66,12 @@ export const LoginView = () => {
               onChange={handleTargetChange}
             >
               <FormControlLabel
-                value='admin'
+                value={AuthRoles.ADMIN}
                 control={<Radio color='primary' />}
                 label='Admin'
               />
               <FormControlLabel
-                value='driver'
+                value={AuthRoles.DRIVER}
                 control={<Radio color='primary' />}
                 label='Driver'
               />
