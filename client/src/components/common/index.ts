@@ -1,6 +1,7 @@
 export { AuthLayer } from './AuthLayer'
 export { SnackbarContainer } from './SnackbarContainer'
-export { SuspenseLoader } from './SuspenseLoader'
+export { PortalSuspenseLoader } from './PortalSuspenseLoader'
+export { DriverSuspenseLoader } from './DriverSuspenseLoader'
 export { DriverNavigation } from './DriverNavigation'
 export { Navigation } from './AdminNavigation'
 export { LoggedInAction } from './LoggedInAction'

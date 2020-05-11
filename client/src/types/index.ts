@@ -11,7 +11,8 @@ export enum RouteTypes {
 
 export enum AuthRoles {
   ADMIN = 'admin',
-  DRIVER = 'driver'
+  DRIVER = 'driver',
+  MODERATOR = 'moderator'
 }
 
 export enum LocalStorageKeys {
@@ -33,6 +34,7 @@ export interface ViewProps {
 export interface Routes {
   section?: string,
   type: RouteTypes,
+
   path: string,
   name?: string,
   icon?: ElementType<SvgIconProps>,

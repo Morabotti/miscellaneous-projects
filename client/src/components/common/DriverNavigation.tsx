@@ -11,6 +11,7 @@ import {
   Typography as T,
   Fab
 } from '@material-ui/core'
+import { AuthRoles } from '@types'
 
 const useStyles = makeStyles(theme => createStyles({
   centerer: {
@@ -69,7 +70,7 @@ export const DriverNavigation = memo(({
   const classes = useStyles()
   const { auth, revokeAuth } = useAuth()
 
-  if (auth === null || auth.user.role !== 'driver') {
+  if (auth === null || auth.user.role !== AuthRoles.DRIVER) {
     return (
       <OuterNotAccessed
         onLogout={revokeAuth}

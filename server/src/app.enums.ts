@@ -1,6 +1,7 @@
 export enum UserRole {
   ADMIN = 'admin',
-  DRIVER = 'driver'
+  DRIVER = 'driver',
+  MODERATOR = 'moderator'
 }
 
 export enum TransportType {

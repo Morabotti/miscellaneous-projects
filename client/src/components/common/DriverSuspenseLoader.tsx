@@ -4,14 +4,14 @@ import { makeStyles, createStyles, LinearProgress } from '@material-ui/core'
 const useStyles = makeStyles(theme => createStyles({
   loader: {
     position: 'absolute',
-    top: 64,
+    top: 0,
     height: theme.spacing(1),
     left: 0,
     width: '100%'
   }
 }))
 
-export const SuspenseLoader = memo(() => {
+export const DriverSuspenseLoader = memo(() => {
   const classes = useStyles()
 
   return (

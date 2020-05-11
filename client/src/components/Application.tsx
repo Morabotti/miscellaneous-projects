@@ -10,9 +10,10 @@ import { LoginView } from '@components/login'
 import {
   AuthLayer,
   SnackbarContainer,
-  SuspenseLoader,
   Navigation,
-  DriverNavigation
+  DriverNavigation,
+  PortalSuspenseLoader,
+  DriverSuspenseLoader
 } from '@components/common'
 
 import {
@@ -39,7 +40,7 @@ export const routes: Routes[] = [{
   path: '/portal/dashboard',
   component: PortalDashboardView,
   icon: ViewDashboardOutline,
-  access: [AuthRoles.ADMIN]
+  access: [AuthRoles.ADMIN, AuthRoles.MODERATOR]
 }, {
   section: 'Common',
   name: 'Transports',
@@ -47,7 +48,7 @@ export const routes: Routes[] = [{
   path: '/portal/transports',
   component: PortalDashboardView,
   icon: TruckFastOutline,
-  access: [AuthRoles.ADMIN]
+  access: [AuthRoles.ADMIN, AuthRoles.MODERATOR]
 }, {
   section: 'Content Management',
   name: 'Customers',
@@ -55,7 +56,7 @@ export const routes: Routes[] = [{
   path: '/portal/cms/customers',
   component: PortalCustomersView,
   icon: AccountBoxOutline,
-  access: [AuthRoles.ADMIN]
+  access: [AuthRoles.ADMIN, AuthRoles.MODERATOR]
 }, {
   section: 'Content Management',
   name: 'Destinations',
@@ -63,7 +64,7 @@ export const routes: Routes[] = [{
   path: '/portal/cms/destinations',
   component: PortalDashboardView,
   icon: MapMarkerRadiusOutline,
-  access: [AuthRoles.ADMIN]
+  access: [AuthRoles.ADMIN, AuthRoles.MODERATOR]
 }, {
   section: 'Content Management',
   name: 'Vehicles',
@@ -71,7 +72,7 @@ export const routes: Routes[] = [{
   path: '/portal/cms/vehicles',
   component: PortalDashboardView,
   icon: TruckOutline,
-  access: [AuthRoles.ADMIN]
+  access: [AuthRoles.ADMIN, AuthRoles.MODERATOR]
 }, {
   section: 'Content Management',
   name: 'Users',
@@ -92,10 +93,22 @@ export const routes: Routes[] = [{
   access: [AuthRoles.DRIVER]
 }]
 
-export const adminRoutes = routes.filter(i => i.access.includes(AuthRoles.ADMIN))
-export const adminRoutedRoutes = adminRoutes.filter(i => i.type === RouteTypes.ROUTED)
-export const adminSections = [...new Set(adminRoutes.map(i => i.section))]
+export const dashboardRoutes = routes.filter(i => (
+  i.access.includes(AuthRoles.ADMIN)
+  || i.access.includes(AuthRoles.MODERATOR)
+))
+
+export const adminRoutedRoutes = dashboardRoutes.filter(i => i.type === RouteTypes.ROUTED)
 export const driverRoutes = routes.filter(i => i.access.includes(AuthRoles.DRIVER))
+
+export const dashboardSections = [...new Set(dashboardRoutes.map(i => i.section))]
+  .map(section => {
+    const access = [...new Set(dashboardRoutes
+      .filter(i => i.section === section)
+      .flatMap(i => i.access))]
+
+    return { section, access }
+  })
 
 const App: FC = () => (
   <MuiThemeProvider theme={theme}>
@@ -111,7 +124,7 @@ const App: FC = () => (
               <ApplicationProvider>
                 <Route path='/driver'>
                   <DriverNavigation>
-                    <Suspense fallback={<SuspenseLoader />}>
+                    <Suspense fallback={<DriverSuspenseLoader />}>
                       {driverRoutes.map(route => (
                         <Route exact key={route.path} path={route.path}>
                           <route.component access={route.access} />
@@ -122,8 +135,8 @@ const App: FC = () => (
                 </Route>
                 <Route path='/portal'>
                   <Navigation routes={adminRoutedRoutes}>
-                    <Suspense fallback={<SuspenseLoader />}>
-                      {adminRoutes.map(route => (
+                    <Suspense fallback={<PortalSuspenseLoader />}>
+                      {dashboardRoutes.map(route => (
                         <Route exact key={route.path} path={route.path}>
                           <route.component access={route.access} />
                         </Route>

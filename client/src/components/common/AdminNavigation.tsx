@@ -1,10 +1,10 @@
 import React, { ReactNode, memo, useState, useCallback } from 'react'
-import { Routes } from '@types'
+import { Routes, AuthRoles } from '@types'
 import { useAuth, useApplication } from '@hooks'
 import { LoggedInAction, OuterNotAccessed } from '@components/common'
 import { Menu } from 'mdi-material-ui'
 import { Link, useLocation } from 'react-router-dom'
-import { adminSections } from '@components/Application'
+import { dashboardSections } from '@components/Application'
 
 import {
   createStyles,
@@ -115,7 +115,7 @@ export const Navigation = memo(({ children, routes }: Props) => {
     [setDrawer]
   )
 
-  if (auth === null || auth.user.role !== 'admin') {
+  if (auth === null || auth.user.role === AuthRoles.DRIVER) {
     return (
       <OuterNotAccessed
         onLogout={revokeAuth}
@@ -167,30 +167,37 @@ export const Navigation = memo(({ children, routes }: Props) => {
             onKeyDown={onDrawer(false)}
           >
             <div className={classes.toolbarDrawer} />
-            {adminSections.map(section => (
-              <div key={section}>
-                {section !== 'Common' && (
-                  <T variant='body1' className={classes.section}>{section}</T>
-                )}
-                <List>
-                  {routes.filter(i => i.section === section).map(route => (
-                    <ListItem
-                      key={route.path}
-                      component={Link}
-                      button to={route.path}
-                      selected={pathname === route.path}
-                    >
-                      {route.icon && (
-                        <ListItemIcon>
-                          <route.icon />
-                        </ListItemIcon>
-                      )}
-                      <ListItemText>{route.name}</ListItemText>
-                    </ListItem>
-                  ))}
-                </List>
-              </div>
-            ))}
+            {dashboardSections
+              .filter(i => i.access.includes(auth.user.role))
+              .map(section => (
+                <div key={section.section}>
+                  {section.section !== 'Common' && (
+                    <T variant='body1' className={classes.section}>{section.section}</T>
+                  )}
+                  <List>
+                    {routes
+                      .filter(i => i.section === section.section)
+                      .filter(i => i.access.includes(auth.user.role))
+                      .map(route => (
+                        <ListItem
+                          key={route.path}
+                          component={Link}
+                          button to={route.path}
+                          selected={pathname === route.path}
+                        >
+                          {route.icon && (
+                            <ListItemIcon>
+                              <route.icon />
+                            </ListItemIcon>
+                          )}
+                          <ListItemText>{route.name}</ListItemText>
+                        </ListItem>
+                      ))
+                    }
+                  </List>
+                </div>
+              ))
+            }
           </div>
         </SwipeableDrawer>
       </Hidden>
@@ -202,30 +209,37 @@ export const Navigation = memo(({ children, routes }: Props) => {
           open
         >
           <div className={classes.toolbar} />
-          {adminSections.map(section => (
-            <div key={section}>
-              {section !== 'Common' && (
-                <T variant='body1' className={classes.section}>{section}</T>
-              )}
-              <List>
-                {routes.filter(i => i.section === section).map(route => (
-                  <ListItem
-                    key={route.path}
-                    component={Link}
-                    button to={route.path}
-                    selected={pathname === route.path}
-                  >
-                    {route.icon && (
-                      <ListItemIcon>
-                        <route.icon />
-                      </ListItemIcon>
-                    )}
-                    <ListItemText>{route.name}</ListItemText>
-                  </ListItem>
-                ))}
-              </List>
-            </div>
-          ))}
+          {dashboardSections
+            .filter(i => i.access.includes(auth.user.role))
+            .map(section => (
+              <div key={section.section}>
+                {section.section !== 'Common' && (
+                  <T variant='body1' className={classes.section}>{section.section}</T>
+                )}
+                <List>
+                  {routes
+                    .filter(i => i.section === section.section)
+                    .filter(i => i.access.includes(auth.user.role))
+                    .map(route => (
+                      <ListItem
+                        key={route.path}
+                        component={Link}
+                        button to={route.path}
+                        selected={pathname === route.path}
+                      >
+                        {route.icon && (
+                          <ListItemIcon>
+                            <route.icon />
+                          </ListItemIcon>
+                        )}
+                        <ListItemText>{route.name}</ListItemText>
+                      </ListItem>
+                    ))
+                  }
+                </List>
+              </div>
+            ))
+          }
         </Drawer>
       </Hidden>
       <main className={classes.content}>

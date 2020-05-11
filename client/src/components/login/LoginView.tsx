@@ -71,6 +71,11 @@ export const LoginView = () => {
                 label='Admin'
               />
               <FormControlLabel
+                value={AuthRoles.MODERATOR}
+                control={<Radio color='primary' />}
+                label='Moderator'
+              />
+              <FormControlLabel
                 value={AuthRoles.DRIVER}
                 control={<Radio color='primary' />}
                 label='Driver'

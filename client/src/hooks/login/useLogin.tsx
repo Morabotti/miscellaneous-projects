@@ -21,7 +21,7 @@ export const useLogin = (): LoginContext => {
       token: '12341234514654364352343214312321213',
       user: {
         id: '344213-21ads21312-dada5342-asde23',
-        name: 'Testi Käyttäjä',
+        name: 'Testi User',
         role,
         email: 'test.user@testing.com',
         createdAt: '22.22.2222'
