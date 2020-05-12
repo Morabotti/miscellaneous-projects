@@ -12,8 +12,7 @@ import {
   SnackbarContainer,
   Navigation,
   DriverNavigation,
-  PortalSuspenseLoader,
-  DriverSuspenseLoader
+  SuspenseLoader
 } from '@components/common'
 
 import {
@@ -124,7 +123,7 @@ const App: FC = () => (
               <ApplicationProvider>
                 <Route path='/driver'>
                   <DriverNavigation>
-                    <Suspense fallback={<DriverSuspenseLoader />}>
+                    <Suspense fallback={<SuspenseLoader />}>
                       {driverRoutes.map(route => (
                         <Route exact key={route.path} path={route.path}>
                           <route.component access={route.access} />
@@ -135,7 +134,7 @@ const App: FC = () => (
                 </Route>
                 <Route path='/portal'>
                   <Navigation routes={adminRoutedRoutes}>
-                    <Suspense fallback={<PortalSuspenseLoader />}>
+                    <Suspense fallback={<SuspenseLoader navbarLoader />}>
                       {dashboardRoutes.map(route => (
                         <Route exact key={route.path} path={route.path}>
                           <route.component access={route.access} />

@@ -16,10 +16,10 @@ const useStyles = makeStyles(theme => createStyles({
     justifyContent: 'space-between'
   },
   paper: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     marginBottom: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
-      padding: theme.spacing(0),
+      padding: theme.spacing(1),
       marginBottom: theme.spacing(2)
     }
   },
