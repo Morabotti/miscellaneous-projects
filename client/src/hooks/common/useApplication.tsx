@@ -7,12 +7,13 @@ import React, {
 } from 'react'
 
 import { useSnackbar } from 'notistack'
-import { Action, NotificationType } from '@types'
+import { Action, NotificationType, User } from '@types'
 
 export interface GlobalState {
   loading: boolean,
   actionLoading: boolean,
-  dashboardContainer: boolean
+  dashboardContainer: boolean,
+  portalUsers: null | User[]
 }
 
 interface ApplicationContext {
@@ -28,7 +29,8 @@ interface Props {
 const initialState: GlobalState = {
   loading: false,
   actionLoading: false,
-  dashboardContainer: true
+  dashboardContainer: true,
+  portalUsers: null
 }
 
 export const __ApplicationContext = createContext<ApplicationContext>({
@@ -48,6 +50,16 @@ const reducer = (state: GlobalState, action: Action): GlobalState => {
       return {
         ...state,
         actionLoading: action.actionLoading
+      }
+    case 'set-portal-dashboard-container':
+      return {
+        ...state,
+        dashboardContainer: action.dashboardContainer
+      }
+    case 'set-portal-users':
+      return {
+        ...state,
+        portalUsers: action.portalUsers
       }
     default:
       throw new Error('No reducer action set!')

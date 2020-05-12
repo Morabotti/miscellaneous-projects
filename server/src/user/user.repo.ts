@@ -39,12 +39,24 @@ export class UserRepository extends Repository<User> {
     return true
   }
 
+  removeUsers = async (users: string[]) => {
+    const query = await this.createQueryBuilder('user')
+      .where('user.id IN (:users)', { users })
+      .delete()
+      .execute()
+
+    if (query.affected === 0) {
+      throw new HttpException('Failed to remove users', HttpStatus.NOT_FOUND)
+    }
+
+    return true
+  }
+
   changeUserPassword = async (uuid: string, passwordHash: string) => {
-    return this.createQueryBuilder()
+    return this.createQueryBuilder('user')
+      .update(User)
+      .set({ password: passwordHash })
       .where('user.id = :uuid', { uuid })
-      .insert()
-      .into(User)
-      .values({ password: passwordHash })
       .execute()
   }
 }

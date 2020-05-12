@@ -43,6 +43,10 @@ export class UserService {
     return this.userRepository.removeUser(id)
   }
 
+  public async deleteUsers(userIds: string[]) {
+    return this.userRepository.removeUsers(userIds)
+  }
+
   public async updateUser(id: string, userDto: UserDto) {
     const user = await this.userRepository.updateUser(userDto)
     return this.map(user)
@@ -62,9 +66,9 @@ export class UserService {
       throw new HttpException('Email is not valid.', HttpStatus.BAD_REQUEST)
     }
 
-    const mailTaken = this.userRepository.findUserByEmail(newUserDto.email)
+    const mailFree = this.userRepository.findUserByEmail(newUserDto.email)
 
-    if (mailTaken) {
+    if (!mailFree) {
       throw new HttpException('Email is taken.', HttpStatus.BAD_REQUEST)
     }
 

@@ -8,6 +8,20 @@ import { NewUserDto, UserDto, PasswordDto } from '@user/interfaces'
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Delete('/multiple')
+  public async deleteMultipleById(
+    @Res() res: Response,
+    @Param('id') id,
+    @Body() users: string[]
+  ) {
+    if (users.length === 0) {
+      return res.status(HttpStatus.BAD_REQUEST).send()
+    }
+
+    await this.userService.deleteUsers(users)
+    return res.status(HttpStatus.OK).send()
+  }
+
   @Get('/:id')
   public async getById(
     @Res() res: Response,

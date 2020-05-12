@@ -3,6 +3,7 @@ import { ElementType, LazyExoticComponent, FC } from 'react'
 import { SvgIconProps } from '@material-ui/core'
 
 export type Action = _Action
+export type Order = 'asc' | 'desc'
 
 export enum RouteTypes {
   PRIVATE = 'private',
@@ -50,6 +51,13 @@ export interface User {
   createdAt: string
 }
 
+export interface NewUser {
+  name: string,
+  email: string,
+  role: AuthRoles,
+  password: string
+}
+
 export interface AuthUser {
   token: string,
   user: User
@@ -64,4 +72,23 @@ export interface RequestContext {
   loading: boolean,
   error: boolean,
   setRequest: (loading: boolean, error?: boolean) => void
+}
+
+export interface ResetPassword {
+  password: string
+}
+
+export interface HeadCell<T>{
+  disablePadding: boolean,
+  id: keyof T,
+  label: string,
+  float: boolean
+}
+
+export interface PaginationContext<T> {
+  offset: number,
+  limit: number,
+  setOffset: (set: number) => void,
+  setLimit: (set: number) => void,
+  filterPagination: (item: T, index: number) => void
 }

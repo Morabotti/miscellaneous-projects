@@ -31,6 +31,7 @@ const DriverDashboardView = lazy(() => import('./driver/dashboard/DriverDashboar
 const DriverVehiclesView = lazy(() => import('./driver/vehicles/DriverVehiclesView'))
 
 const PortalCustomersView = lazy(() => import('./portal/cms-customers/customers/CustomersView'))
+const PortalUsersView = lazy(() => import('./portal/cms-users/UsersView'))
 
 export const routes: Routes[] = [{
   section: 'Common',
@@ -77,7 +78,7 @@ export const routes: Routes[] = [{
   name: 'Users',
   type: RouteTypes.ROUTED,
   path: '/portal/cms/users',
-  component: PortalDashboardView,
+  component: PortalUsersView,
   icon: AccountOutline,
   access: [AuthRoles.ADMIN]
 }, {

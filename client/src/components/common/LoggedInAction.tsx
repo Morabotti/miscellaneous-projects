@@ -14,7 +14,8 @@ import {
   Paper,
   ClickAwayListener,
   Divider,
-  Hidden
+  Hidden,
+  Chip
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme =>
@@ -72,6 +73,12 @@ const useStyles = makeStyles(theme =>
     },
     subtext: {
       color: theme.palette.text.secondary
+    },
+    bold: {
+      fontWeight: 600
+    },
+    tags: {
+      marginTop: theme.spacing(1)
     }
   })
 )
@@ -129,7 +136,9 @@ export const LoggedInAction = memo(({
                   <div className={classes.bottom}>
                     <T variant='body1'>{auth.user.name}</T>
                     <T variant='body2' className={classes.subtext}>{auth.user.email}</T>
-                    <T variant='body2' className={classes.subtext}>{auth.user.role}</T>
+                    <div className={classes.tags}>
+                      <Chip color='primary' label={auth.user.role.toUpperCase()} />
+                    </div>
                   </div>
                 </div>
                 <Divider variant='fullWidth' />
