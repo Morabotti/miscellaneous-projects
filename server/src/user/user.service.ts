@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 
 import { User } from '@user/entities'
 import { UserRepository } from '@user/user.repo'
-import { UserDto, NewUserDto, LoginDto } from '@user/interfaces'
+import { UserDto, NewUserDto, LoginDto, PasswordDto } from '@user/interfaces'
 import { generateHash, comparePassword } from '@utils/hash'
 import { validateEmail } from '@utils/validate'
 
@@ -33,7 +33,7 @@ export class UserService {
     const users = await this.userRepository.getUsers()
     return users.map(this.map)
   }
-  
+
   public async getUser(id: string) {
     const user = await this.userRepository.findUserById(id)
     return this.map(user)
@@ -43,13 +43,25 @@ export class UserService {
     return this.userRepository.removeUser(id)
   }
 
+  public async updateUser(id: string, userDto: UserDto) {
+    const user = await this.userRepository.updateUser(userDto)
+    return this.map(user)
+  }
+
+  public async resetPassword(id: string, passwordDto: PasswordDto) {
+    const password = await generateHash(passwordDto.password)
+    await this.userRepository.changeUserPassword(id, password)
+
+    return this.getUser(id)
+  }
+
   public async createUser(newUserDto: NewUserDto): Promise<UserDto> {
     const isValid = validateEmail(newUserDto.email)
 
     if (!isValid) {
       throw new HttpException('Email is not valid.', HttpStatus.BAD_REQUEST)
     }
-    
+
     const mailTaken = this.userRepository.findUserByEmail(newUserDto.email)
 
     if (mailTaken) {

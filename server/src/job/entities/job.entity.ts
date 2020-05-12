@@ -10,7 +10,7 @@ export class Job {
 
   @Column({ type: 'enum', enum: TransportType })
   type: TransportType
-  
+
   @Column({ type: 'date', nullable: true })
   estimatedStart: string
 

@@ -45,5 +45,6 @@ export class UserRepository extends Repository<User> {
       .insert()
       .into(User)
       .values({ password: passwordHash })
+      .execute()
   }
 }

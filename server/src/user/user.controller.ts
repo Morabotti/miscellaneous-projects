@@ -1,8 +1,8 @@
-import { Controller, Res, HttpStatus, Get, Post, Body, Param, Delete } from '@nestjs/common'
+import { Controller, Res, HttpStatus, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
 import { Response } from 'express'
 
 import { UserService } from '@user/user.service'
-import { NewUserDto } from '@user/interfaces'
+import { NewUserDto, UserDto, PasswordDto } from '@user/interfaces'
 
 @Controller('/api/user')
 export class UserController {
@@ -29,6 +29,36 @@ export class UserController {
   ) {
     await this.userService.deleteUser(id)
     return res.status(HttpStatus.OK).send()
+  }
+
+  @Put('/:id')
+  public async updateById(
+    @Res() res: Response,
+    @Param('id') id,
+    @Body() userDto: UserDto
+  ) {
+    try {
+      const user = await this.userService.updateUser(id, userDto)
+      return res.status(HttpStatus.OK).json(user)
+    }
+    catch (e) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send()
+    }
+  }
+
+  @Put('/reset-password/:id')
+  public async updatePassword(
+    @Res() res: Response,
+    @Param('id') id,
+    @Body() passwordDto: PasswordDto
+  ) {
+    try {
+      const user = await this.userService.resetPassword(id, passwordDto)
+      return res.status(HttpStatus.OK).json(user)
+    }
+    catch (e) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send()
+    }
   }
 
   @Get()
