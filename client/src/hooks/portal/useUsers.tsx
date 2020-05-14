@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
-import { PaginationContext, User, NewUser, NotificationType } from '@types'
+import { useState, useCallback, useEffect, ChangeEvent } from 'react'
+import { PaginationContext, User, NewUser, NotificationType, UserFilters } from '@types'
 import { useApplication, usePagination } from '@hooks'
 import { setPortalUsers, setLoading } from '@actions'
 
@@ -15,6 +15,7 @@ import {
 interface UserDashboardContext {
   pagination: PaginationContext<User>,
   users: User[] | null,
+  filters: UserFilters,
   selected: string[],
   addingDialogOpen: boolean,
   deletingUser: string | null,
@@ -36,8 +37,15 @@ interface UserDashboardContext {
   onNewUser: (set: NewUser) => void,
   onEditUser: (set: User) => void,
   onChangePassword: (password: string) => void,
-  onDeleteUser: () => void
+  onDeleteUser: () => void,
+  onFilterChange: (key: keyof UserFilters) => (e: ChangeEvent<HTMLInputElement>) => void
 }
+
+const userFilters: UserFilters = ({
+  email: '',
+  name: '',
+  role: ''
+})
 
 export const useUsers = (): UserDashboardContext => {
   const { state: { portalUsers, loading }, dispatch, createNotification } = useApplication()
@@ -49,6 +57,20 @@ export const useUsers = (): UserDashboardContext => {
   const [inspectUser, setInspectUser] = useState<null | User>(null)
   const [editUser, setEditUser] = useState<null | User>(null)
   const [changingPass, setChangingPass] = useState<null | User>(null)
+  const [filters, setFilters] = useState<UserFilters>(userFilters)
+
+  const onFilterChange = useCallback((
+    key: keyof UserFilters
+  ) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    e.persist()
+
+    setFilters(prev => ({
+      ...prev,
+      [key]: e.target.value
+    }))
+  }, [setFilters])
 
   const fetchUsers = useCallback(async () => {
     if (portalUsers !== null) {
@@ -115,7 +137,6 @@ export const useUsers = (): UserDashboardContext => {
   }, [setChangingPass, changingPass, createNotification, dispatch])
 
   const onDeleteSelected = useCallback(async () => {
-    console.log(portalUsers, deletingMultiple)
     if (deletingMultiple === null || portalUsers === null) {
       return
     }
@@ -209,6 +230,7 @@ export const useUsers = (): UserDashboardContext => {
   return {
     pagination,
     loading,
+    filters,
     users: portalUsers,
     selected,
     deletingUser,
@@ -225,6 +247,7 @@ export const useUsers = (): UserDashboardContext => {
     toggleAddUser,
     toggleMultipleDeleting,
     onEditUser,
+    onFilterChange,
     onChangePassword,
     onDeleteSelected,
     onNewUser,

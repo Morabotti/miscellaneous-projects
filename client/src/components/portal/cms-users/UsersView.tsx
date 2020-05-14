@@ -35,6 +35,7 @@ const UsersView = ({
   const {
     pagination,
     users,
+    filters,
     addingDialogOpen,
     deletingUser,
     deletingMultiple,
@@ -54,6 +55,7 @@ const UsersView = ({
     onChangePassword,
     onEditUser,
     onDeleteSelected,
+    onFilterChange,
     loading
   } = useUsers()
 
@@ -70,8 +72,10 @@ const UsersView = ({
           users={users}
           selected={selected}
           setSelected={setSelected}
+          filters={filters}
           filter={pagination.filterPagination}
           onPasswordChange={toggleUserChangePassword}
+          onFilterChange={onFilterChange}
           onDelete={toggleUserDelete}
           onEdit={toggleUserEdit}
           onInspect={toggleUserInspect}

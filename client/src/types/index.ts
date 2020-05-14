@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Action as _Action } from '@actions'
 import { ElementType, LazyExoticComponent, FC } from 'react'
 import { SvgIconProps } from '@material-ui/core'
 
 export type Action = _Action
 export type Order = 'asc' | 'desc'
+
+export type UserFilters = Record<keyof User | any, string>
 
 export enum RouteTypes {
   PRIVATE = 'private',

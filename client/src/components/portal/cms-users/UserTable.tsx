@@ -1,7 +1,7 @@
 import React, { useCallback, useState, memo } from 'react'
 import { VisualizedTableHead, InformationMissing } from '@components/portal/shared'
 import { stableSort, getSorting } from '@utils/sorting'
-import { HeadCell, Order, User } from '@types'
+import { HeadCell, Order, User, UserFilters } from '@types'
 import { DotsVertical, AccountQuestion } from 'mdi-material-ui'
 import { Skeleton } from '@material-ui/lab'
 
@@ -39,12 +39,19 @@ const headCells: HeadCell<User>[] = [
 interface Props {
   users: User[] | null,
   selected: string[],
+  filters: UserFilters,
   setSelected: React.Dispatch<React.SetStateAction<string[]>>,
   filter: (item: User, index: number) => void,
   onDelete: (set: string | null) => void,
   onInspect: (set: null | User) => void,
   onEdit: (set: null | User) => void,
-  onPasswordChange: (set: null | User) => void
+  onPasswordChange: (set: null | User) => void,
+
+  onFilterChange: (
+    filters: keyof UserFilters
+  ) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void
 }
 
 export const UserTable = memo(({
@@ -52,18 +59,21 @@ export const UserTable = memo(({
   selected,
   setSelected,
   filter,
+  filters,
   onDelete,
   onInspect,
   onEdit,
-  onPasswordChange
+  onPasswordChange,
+  onFilterChange
 }: Props) => {
   const classes = useStyles()
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof User>('email')
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null)
   const [select, setSelect] = useState<User | null>(null)
+  const [toggleSearch, setToggleSearch] = useState(false)
 
-  const isSelected = (id: string) => selected.indexOf(id) !== -1
+  const isSelected = useCallback((id: string) => selected.indexOf(id) !== -1, [selected])
 
   const handleSelectAllClick = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     if (users === null) {
@@ -127,6 +137,32 @@ export const UserTable = memo(({
     closeMenu()
   }, [closeMenu, onEdit, select])
 
+  const handleFilterToggle = useCallback(() => {
+    setToggleSearch(prev => !prev)
+  }, [setToggleSearch])
+
+  const rowFilter = useCallback((user: User) => {
+    if (filters.email !== ''
+      && !user.email.toLowerCase().includes(filters.email.toLowerCase())
+    ) {
+      return false
+    }
+
+    if (filters.name !== ''
+      && !user.name.toLowerCase().includes(filters.name.toLowerCase())
+    ) {
+      return false
+    }
+
+    if (filters.role !== ''
+      && !user.role.toLowerCase().includes(filters.role.toLowerCase())
+    ) {
+      return false
+    }
+
+    return true
+  }, [filters])
+
   if (users === null) {
     return (
       <Skeleton variant='rect' height={70} />
@@ -149,14 +185,19 @@ export const UserTable = memo(({
           numSelected={selected.length}
           rowCount={users.length}
           order={order}
+          filters={filters}
           orderBy={orderBy}
           onSelectAll={handleSelectAllClick}
           onRequestSort={handleRequestSort}
           headCells={headCells}
-          showActions
+          enableSearch
+          searchMode={toggleSearch}
+          onToggleSearch={handleFilterToggle}
+          onFilterChange={onFilterChange}
         />
         <TableBody>
           {stableSort<User>(users, getSorting(order, orderBy))
+            .filter(rowFilter)
             .filter(filter)
             .map((row) => {
               const isItemSelected = isSelected(row.id)

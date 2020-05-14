@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react'
 import { HeadCell, Order } from '@types'
+import clsx from 'clsx'
+import { MagnifyPlusOutline, MagnifyMinusOutline } from 'mdi-material-ui'
 
 import {
   TableHead,
@@ -8,10 +10,13 @@ import {
   Checkbox,
   TableSortLabel,
   createStyles,
-  makeStyles
+  makeStyles,
+  Tooltip,
+  IconButton,
+  TextField
 } from '@material-ui/core'
 
-const useStyles = makeStyles(() => createStyles({
+const useStyles = makeStyles(theme => createStyles({
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -22,6 +27,17 @@ const useStyles = makeStyles(() => createStyles({
     position: 'absolute',
     top: 20,
     width: 1
+  },
+  search: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingRight: theme.spacing(2)
+  },
+  visibility: {
+    visibility: 'collapse'
+  },
+  visible: {
+    visibility: 'unset'
   }
 }))
 
@@ -32,19 +48,29 @@ interface Props<T> {
   order: Order,
   orderBy: string,
   showActions?: boolean,
+  enableSearch?: boolean,
+  searchMode?: boolean,
+  filters?: Record<keyof T, string>,
+  onToggleSearch?: () => void,
   onSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void,
+  onFilterChange: (key: keyof T) => (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export function VisualizedTableHead<T> ({
   numSelected,
   rowCount,
   headCells,
+  searchMode,
+  filters,
   order,
   orderBy,
   onSelectAll,
   onRequestSort,
-  showActions = false
+  onToggleSearch,
+  onFilterChange,
+  showActions = false,
+  enableSearch = false
 }: Props<T>) {
   const classes = useStyles()
 
@@ -90,6 +116,44 @@ export function VisualizedTableHead<T> ({
         ))}
         {showActions && (
           <TableCell padding='none' />
+        )}
+        {enableSearch && (
+          <TableCell padding='none' align='right'>
+            <Tooltip title={searchMode ? 'Disable filters' : 'Set filters'}>
+              <IconButton onClick={onToggleSearch}>
+                {searchMode
+                  ? <MagnifyMinusOutline />
+                  : <MagnifyPlusOutline />
+                }
+              </IconButton>
+            </Tooltip>
+          </TableCell>
+        )}
+      </TableRow>
+      <TableRow
+        className={clsx(classes.visibility, {
+          [classes.visible]: (searchMode && filters)
+        })}
+      >
+        <TableCell />
+        {headCells.map((headCell, index) => (
+          <TableCell
+            key={index}
+            padding={headCell.disablePadding ? 'none' : 'default'}
+            classes={{ root: classes.search }}
+          >
+            <TextField
+              value={filters?.[headCell.id] || ''}
+              onChange={onFilterChange(headCell.id)}
+              placeholder={headCell.label}
+              variant='outlined'
+              size='small'
+              fullWidth
+            />
+          </TableCell>
+        ))}
+        {(showActions || enableSearch) && (
+          <TableCell />
         )}
       </TableRow>
     </TableHead>
