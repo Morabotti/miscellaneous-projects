@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import * as client from './client'
 import { Train, Location } from './types'
 import useInterval from './useInterval'
@@ -23,7 +23,7 @@ const App = () => {
     updatedTime: new Date().toLocaleTimeString()
   })
 
-  const fetchInitials = () => {
+  const fetchInitials = useCallback(() => {
     Promise.all([
       client.fetchLocations(),
       client.fetchTrains()
@@ -36,7 +36,7 @@ const App = () => {
           updatedTime: new Date().toLocaleTimeString()
         })
       })
-  }
+  }, [setState])
 
   const getTrains = () => {
     client.fetchTrains()
@@ -51,8 +51,7 @@ const App = () => {
 
   useEffect(() => {
     fetchInitials()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchInitials])
 
   useInterval(() => {
     getTrains()
