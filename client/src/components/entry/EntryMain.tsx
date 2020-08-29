@@ -1,6 +1,15 @@
 import React from 'react'
-import { Menu, Background, LanguageBar } from '.'
+import { Background, LanguageBar, EndOfLife } from '.'
 
+const EntryMain = () => (
+  <div className='background-main'>
+    <LanguageBar />
+    <EndOfLife />
+    <Background />
+  </div>
+)
+
+/*
 const EntryMain = () => (
   <div className='background-main'>
     <LanguageBar />
@@ -8,5 +17,6 @@ const EntryMain = () => (
     <Background />
   </div>
 )
+*/
 
 export default EntryMain

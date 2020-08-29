@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { hot } from 'react-hot-loader'
 import ReactGA from 'react-ga'
 import { AppProvider } from '@hooks'
@@ -37,6 +37,7 @@ const routes = [
 ]
 
 ReactGA.initialize('UA-131129716-1')
+const eol = true
 
 const App = () => (
   <AppProvider>
@@ -44,7 +45,12 @@ const App = () => (
       <BrowserRouter>
         <Suspense fallback={<SuspenseLoader />}>
           <Switch>
-            {routes.map(route => (
+            {eol ? (
+              <>
+                <Route path='/' exact><EntryMain /></Route>
+                <Redirect to='/' />
+              </>
+            ) : routes.map(route => (
               <Route path={route.path} key={route.path} exact={route.exact}>
                 <route.component />
               </Route>
