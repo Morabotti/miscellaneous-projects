@@ -1,0 +1,24 @@
+{
+  "extends": "jubic-typescript",
+  "plugins": ["react-hooks"],
+  "overrides": [
+    {
+      "files": ["webpack.*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "rules": {
+    "@typescript-eslint/no-empty-function": "off",
+    "react-hooks/rules-of-hooks": "warn",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "globals": {
+    "fetch": false,
+    "localStorage": false
+  }
+}
