@@ -1,7 +1,7 @@
 # Ves_Gdpr Module
 
-**Ves_Gdpr** is a module for handling GDPR information deletion requests. This is a school project and should not be
-in any kind of real life production.
+**Ves_Gdpr** is a module for handling GDPR information deletion requests. This is a school project and therefore
+should not be used in any kind of real life production application.
 
 ## Setup
 
@@ -20,7 +20,7 @@ Following commands should be ran as correct user privileges.
 
 Run following command to enable this module:
 ```
-php bin/magento module:enable --all
+php bin/magento module:enable Ves_Gdpr
 ```
 
 Run following command to run migrations to database:
