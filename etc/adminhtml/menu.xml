@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ves::gdpr" module="Ves_Gdpr" resource="Magento_Backend::content" sortOrder="60" title="Ves GDPR" />
+        <add action="gdpr/listing" id="Ves_Gdpr::listing_index" module="Ves_Gdpr" parent="Ves::gdpr" resource="Ves_Gdpr::listing_index" sortOrder="10" title="GDPR requests" />
+    </menu>
+</config>
