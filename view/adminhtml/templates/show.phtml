@@ -8,7 +8,9 @@ $id = $get['id'];
 if ($id) {
     $gdprRequest = $block->getGdprRequest($id);
 
-    $url = $block->getUrl('gdpr/show/mark', ['id' => $id]);
+    $concealUrl = $block->getUrl('gdpr/show/conceal', ['id' => $id]);
+    $deleteUrl = $block->getUrl('gdpr/show/delete', ['id' => $id]);
+
     $disabled = $gdprRequest->getHandled() ? 'disabled="disabled"' : '';
 }
 ?>
@@ -20,9 +22,11 @@ if ($id) {
                 <button id="back" title="Back" type="button" class="action- scalable back" onclick="location.href = '<?php echo $block->getUrl('gdpr/listing'); ?>';" data-ui-id="back-button">
                     <span><?php echo __("Back") ?></span>
                 </button>
-
-                <button id="addAttribute" title="Mark as Handled" type="button" class="action- scalable action-secondary" <?php  echo $disabled; ?> onclick="location.href = '<?php echo $url; ?>';">
-                    <span><?php echo __("Mark as Handled") ?></span>
+                <button id="addAttribute" title="Conceal data" type="button" class="action- scalable action-primary" <?php  echo $disabled; ?> onclick="location.href = '<?php echo $concealUrl; ?>';">
+                    <span><?php echo __("Conceal Data") ?></span>
+                </button>
+                <button id="deleteAttribute" title="Delete request" type="button" class="action- scalable action-secondary" <?php  echo $disabled; ?> onclick="location.href = '<?php echo $deleteUrl; ?>';">
+                    <span><?php echo __("Delete GDPR Request") ?></span>
                 </button>
             </div>
         </div>

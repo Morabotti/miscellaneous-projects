@@ -4,7 +4,7 @@ namespace Ves\Gdpr\Controller\Form;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Ves\Gdpr\Api\GdprRepositoryInterface;
 
 class Index extends Action
@@ -35,7 +35,7 @@ class Index extends Action
 
                 $this->messageManager->addSuccessMessage("Your GDPR request has been saved!");
                 return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl("/");
-            } catch (NoSuchEntityException $e) {
+            } catch (AlreadyExistsException $e) {
                 $this->messageManager->addErrorMessage(
                     "Your GDPR request failed to sent. Please contact customer service"
                 );
