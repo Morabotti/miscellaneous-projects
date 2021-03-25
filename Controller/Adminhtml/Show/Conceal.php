@@ -9,6 +9,10 @@ use Magento\Customer\Api\Data\AddressInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\State\InputMismatchException;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Api\Data\OrderAddressInterface;
@@ -74,10 +78,10 @@ class Conceal extends Action implements HttpGetActionInterface
                 $gdprRequest->setHandled(date('Y-m-d H:i:s'));
                 $this->gdprRepository->save($gdprRequest);
 
-                $this->messageManager->addSuccessMessage('Successfully handled GDPR request.');
+                $this->messageManager->addSuccessMessage(__('Successfully handled GDPR request.'));
                 return $this->_redirect('gdpr/show', ['id' => $gdprRequest->getId()]);
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage('No GDPR request found.');
+                $this->messageManager->addErrorMessage(__('No GDPR request found.'));
                 return $this->_redirect('gdpr/listing');
             }
         }
@@ -85,6 +89,15 @@ class Conceal extends Action implements HttpGetActionInterface
         return $this->_redirect('gdpr/listing');
     }
 
+    /**
+     * Clears customer data based on GDPR request.
+     * @param GdprRequest $gdprRequest
+     * @return void
+     * @throws InputException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     * @throws InputMismatchException
+     */
     private function clearCustomer(GdprRequest $gdprRequest)
     {
         $customer = $this->customerRepository->get($gdprRequest->getEmail());
@@ -109,6 +122,11 @@ class Conceal extends Action implements HttpGetActionInterface
         $this->customerRepository->save($customer);
     }
 
+    /**
+     * Clears order data based on GDPR request.
+     * @param GdprRequest $gdprRequest
+     * @return void
+     */
     private function clearOrders(GdprRequest $gdprRequest)
     {
         try {
@@ -130,6 +148,11 @@ class Conceal extends Action implements HttpGetActionInterface
         }
     }
 
+    /**
+     * Clears quotes data based on GDPR request.
+     * @param GdprRequest $gdprRequest
+     * @return void
+     */
     private function clearQuotes(GdprRequest $gdprRequest)
     {
         $searchCriteria = $this->searchCriteriaBuilder
@@ -148,6 +171,12 @@ class Conceal extends Action implements HttpGetActionInterface
         }
     }
 
+
+    /**
+     * Nullifies / hashes order object data.
+     * @param OrderInterface $order
+     * @return void
+     */
     private function nullifyOrder(OrderInterface $order)
     {
         $billingAddr = $order->getBillingAddress();
@@ -166,6 +195,11 @@ class Conceal extends Action implements HttpGetActionInterface
         $order->setCustomerGender(null);
     }
 
+    /**
+     * Nullifies / hashes order address object data.
+     * @param OrderAddressInterface $addr
+     * @return void
+     */
     private function nullifyBillingAddress(OrderAddressInterface $addr)
     {
         $addr->setCity(null);
@@ -181,6 +215,11 @@ class Conceal extends Action implements HttpGetActionInterface
         $addr->setVatId(null);
     }
 
+    /**
+     * Nullifies / hashes address object data.
+     * @param AddressInterface $addr
+     * @return void
+     */
     private function nullifyAddress(AddressInterface $addr)
     {
         $addr->setCity(null);
@@ -196,7 +235,12 @@ class Conceal extends Action implements HttpGetActionInterface
         $addr->setVatId(null);
     }
 
-    private function shaHash($str)
+    /**
+     * Hashes given string. If string is null, null is returned.
+     * @param String|null $str
+     * @return string|null
+     */
+    private function shaHash(string $str)
     {
         if ($str == null) {
             return null;

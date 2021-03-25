@@ -5,6 +5,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\AlreadyExistsException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Ves\Gdpr\Api\GdprRepositoryInterface;
 
 class Index extends Action
@@ -23,6 +24,7 @@ class Index extends Action
     /**
      * Execute view action
      * @return ResultFactory | void
+     * @throws NoSuchEntityException
      */
     public function execute()
     {
@@ -33,11 +35,11 @@ class Index extends Action
                 $reclamation = $this->gdprRepository->of($post);
                 $this->gdprRepository->save($reclamation);
 
-                $this->messageManager->addSuccessMessage("Your GDPR request has been saved!");
+                $this->messageManager->addSuccessMessage(__("Your GDPR request has been saved!"));
                 return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl("/");
             } catch (AlreadyExistsException $e) {
                 $this->messageManager->addErrorMessage(
-                    "Your GDPR request failed to sent. Please contact customer service"
+                    __("Your GDPR request failed to sent. Please contact customer service.")
                 );
             }
         }

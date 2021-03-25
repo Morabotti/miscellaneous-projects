@@ -2,7 +2,6 @@
 namespace Ves\Gdpr\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Ves\Gdpr\Model\GdprRequest;
 use Ves\Gdpr\Model\ResourceModel\GdprRequest\Collection as GdprRequestCollection;

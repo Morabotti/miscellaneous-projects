@@ -42,14 +42,14 @@ class Delete extends Action implements HttpGetActionInterface
                 $gdprRequest->setHandled(date('Y-m-d H:i:s'));
 
                 if (!$gdprRequest->getHandled()) {
-                    $this->messageManager->addErrorMessage('GDPR request has already been accepted.');
+                    $this->messageManager->addErrorMessage(__('GDPR request has already been accepted.'));
                     return $this->_redirect('gdpr/show', ['id' => $gdprRequest->getId()]);
                 }
 
                 $this->gdprRepository->delete($gdprRequest);
-                $this->messageManager->addSuccessMessage('Successfully deleted GDPR request.');
+                $this->messageManager->addSuccessMessage(__('Successfully deleted GDPR request.'));
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage('No GDPR request found.');
+                $this->messageManager->addErrorMessage(__('No GDPR request found.'));
             }
         }
 
