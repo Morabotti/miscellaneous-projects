@@ -71,9 +71,21 @@ class Conceal extends Action implements HttpGetActionInterface
             try {
                 $gdprRequest = $this->gdprRepository->getById($get['id']);
 
-                // $this->clearCustomer($gdprRequest);
-                // $this->clearOrders($gdprRequest);
-                // $this->clearQuotes($gdprRequest);
+                /*
+                $action = $this->hasOrders($gdprRequest);
+                if ($action == null) {
+                    $this->messageManager->addErrorMessage(__('Cant handle this request.'));
+                    return $this->_redirect('gdpr/listing');
+                } elseif ($action == true) {
+                    $this->concealCustomer($gdprRequest);
+                    $this->concealOrders($gdprRequest);
+                    $this->concealQuotes($gdprRequest);
+                } else {
+                    $this->deleteCustomer($gdprRequest);
+                    $this->deleteQuotes($gdprRequest);
+                    $this->deletesOrders($gdprRequest);
+                }
+                */
 
                 $gdprRequest->setHandled(date('Y-m-d H:i:s'));
                 $this->gdprRepository->save($gdprRequest);
@@ -90,6 +102,100 @@ class Conceal extends Action implements HttpGetActionInterface
     }
 
     /**
+     * Determinates whether to conceal, delete or do nothing.
+     * Returns null when nothing should be done
+     * Returns true if conceal
+     * Return false if delete
+     * @param GdprRequest $gdprRequest
+     * @return null | boolean
+     */
+    private function hasOrders(GdprRequest $gdprRequest)
+    {
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter("customer_email", $gdprRequest->getEmail())
+            ->create();
+
+        $orders = $this->orderRepository
+            ->getList($searchCriteria)
+            ->getItems();
+
+        if (sizeof($orders) == 0) {
+            return false;
+        }
+
+        $hasOldOrders = true;
+
+        foreach ($orders as $order) {
+            if ($order->getStatus() == 'processing' || $order->getStatus() == 'pending') {
+                return null;
+            }
+
+            if ($order->getCreatedAt() != null && strtotime($order->getCreatedAt()) < strtotime('-6 years')) {
+                $hasOldOrders = false;
+            }
+        }
+
+        return $hasOldOrders;
+    }
+
+    /**
+     * Deletes customer.
+     * @param GdprRequest $gdprRequest
+     * @return void
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    private function deleteCustomer(GdprRequest $gdprRequest)
+    {
+        $customer = $this->customerRepository->get($gdprRequest->getEmail());
+        $this->customerRepository->deleteById($customer->getId());
+    }
+
+    /**
+     * Deletes orders.
+     * @param GdprRequest $gdprRequest
+     * @return void
+     */
+    private function deletesOrders(GdprRequest $gdprRequest)
+    {
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter("customer_email", $gdprRequest->getEmail())
+            ->create();
+
+        $orders = $this->orderRepository
+            ->getList($searchCriteria)
+            ->getItems();
+
+        if ($orders) {
+            foreach ($orders as $order) {
+                $this->orderRepository->delete($order);
+            }
+        }
+    }
+
+    /**
+     * Deletes quotes data based on GDPR request.
+     * @param GdprRequest $gdprRequest
+     * @return void
+     */
+    private function deleteQuotes(GdprRequest $gdprRequest)
+    {
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter("customer_email", $gdprRequest->getEmail())
+            ->create();
+
+        $quotes = $this->cartRepository
+            ->getList($searchCriteria)
+            ->getItems();
+
+        if ($quotes) {
+            foreach ($quotes as $quote) {
+                $this->cartRepository->delete($quote);
+            }
+        }
+    }
+
+    /**
      * Clears customer data based on GDPR request.
      * @param GdprRequest $gdprRequest
      * @return void
@@ -98,7 +204,7 @@ class Conceal extends Action implements HttpGetActionInterface
      * @throws NoSuchEntityException
      * @throws InputMismatchException
      */
-    private function clearCustomer(GdprRequest $gdprRequest)
+    private function concealCustomer(GdprRequest $gdprRequest)
     {
         $customer = $this->customerRepository->get($gdprRequest->getEmail());
         $addresses = $customer->getAddresses();
@@ -110,10 +216,10 @@ class Conceal extends Action implements HttpGetActionInterface
             $customer->setAddresses($addresses);
         }
 
-        $customer->setFirstname($this->shaHash($customer->getFirstname()));
-        $customer->setMiddlename($this->shaHash($customer->getMiddlename()));
-        $customer->setLastname($this->shaHash($customer->getLastname()));
-        $customer->setEmail($this->shaHash($customer->getEmail()));
+        $customer->setFirstname($this->randomize($customer->getFirstname()));
+        $customer->setMiddlename($this->randomize($customer->getMiddlename()));
+        $customer->setLastname($this->randomize($customer->getLastname()));
+        $customer->setEmail($this->randomize($customer->getEmail()));
         $customer->setPrefix(null);
         $customer->setDefaultBilling(null);
         $customer->setDefaultShipping(null);
@@ -127,7 +233,7 @@ class Conceal extends Action implements HttpGetActionInterface
      * @param GdprRequest $gdprRequest
      * @return void
      */
-    private function clearOrders(GdprRequest $gdprRequest)
+    private function concealOrders(GdprRequest $gdprRequest)
     {
         try {
             $searchCriteria = $this->searchCriteriaBuilder
@@ -153,7 +259,7 @@ class Conceal extends Action implements HttpGetActionInterface
      * @param GdprRequest $gdprRequest
      * @return void
      */
-    private function clearQuotes(GdprRequest $gdprRequest)
+    private function concealQuotes(GdprRequest $gdprRequest)
     {
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter("customer_email", $gdprRequest->getEmail())
@@ -171,7 +277,6 @@ class Conceal extends Action implements HttpGetActionInterface
         }
     }
 
-
     /**
      * Nullifies / hashes order object data.
      * @param OrderInterface $order
@@ -186,11 +291,11 @@ class Conceal extends Action implements HttpGetActionInterface
             $order->setBillingAddress($billingAddr);
         }
 
-        $order->setCustomerFirstname($this->shaHash($order->getCustomerFirstname()));
-        $order->setCustomerLastname($this->shaHash($order->getCustomerLastname()));
-        $order->setCustomerMiddlename($this->shaHash($order->getCustomerMiddlename()));
-        $order->setCustomerEmail($this->shaHash($order->getCustomerEmail()));
-        $order->setCustomerDob($this->shaHash($order->getCustomerDob()));
+        $order->setCustomerFirstname($this->randomize($order->getCustomerFirstname()));
+        $order->setCustomerLastname($this->randomize($order->getCustomerLastname()));
+        $order->setCustomerMiddlename($this->randomize($order->getCustomerMiddlename()));
+        $order->setCustomerEmail($this->randomize($order->getCustomerEmail()));
+        $order->setCustomerDob($this->randomize($order->getCustomerDob()));
         $order->setCustomerNote(null);
         $order->setCustomerGender(null);
     }
@@ -205,13 +310,13 @@ class Conceal extends Action implements HttpGetActionInterface
         $addr->setCity(null);
         $addr->setPostcode(null);
         $addr->setStreet(null);
-        $addr->setCompany($this->shaHash($addr->getCompany()));
-        $addr->setFirstname($this->shaHash($addr->getFirstname()));
-        $addr->setMiddlename($this->shaHash($addr->getMiddlename()));
-        $addr->setLastname($this->shaHash($addr->getLastname()));
-        $addr->setFax($this->shaHash($addr->getFax()));
-        $addr->setPrefix($this->shaHash($addr->getPrefix()));
-        $addr->setTelephone($this->shaHash($addr->getTelephone()));
+        $addr->setCompany($this->randomize($addr->getCompany()));
+        $addr->setFirstname($this->randomize($addr->getFirstname()));
+        $addr->setMiddlename($this->randomize($addr->getMiddlename()));
+        $addr->setLastname($this->randomize($addr->getLastname()));
+        $addr->setFax($this->randomize($addr->getFax()));
+        $addr->setPrefix($this->randomize($addr->getPrefix()));
+        $addr->setTelephone($this->randomize($addr->getTelephone()));
         $addr->setVatId(null);
     }
 
@@ -225,27 +330,34 @@ class Conceal extends Action implements HttpGetActionInterface
         $addr->setCity(null);
         $addr->setPostcode(null);
         $addr->setStreet(null);
-        $addr->setCompany($this->shaHash($addr->getCompany()));
-        $addr->setFirstname($this->shaHash($addr->getFirstname()));
-        $addr->setMiddlename($this->shaHash($addr->getMiddlename()));
-        $addr->setLastname($this->shaHash($addr->getLastname()));
-        $addr->setFax($this->shaHash($addr->getFax()));
-        $addr->setPrefix($this->shaHash($addr->getPrefix()));
-        $addr->setTelephone($this->shaHash($addr->getTelephone()));
+        $addr->setCompany($this->randomize($addr->getCompany()));
+        $addr->setFirstname($this->randomize($addr->getFirstname()));
+        $addr->setMiddlename($this->randomize($addr->getMiddlename()));
+        $addr->setLastname($this->randomize($addr->getLastname()));
+        $addr->setFax($this->randomize($addr->getFax()));
+        $addr->setPrefix($this->randomize($addr->getPrefix()));
+        $addr->setTelephone($this->randomize($addr->getTelephone()));
         $addr->setVatId(null);
     }
 
     /**
      * Hashes given string. If string is null, null is returned.
      * @param String|null $str
+     * @param int $length
      * @return string|null
      */
-    private function shaHash(string $str)
+    private function randomize(string $str, $length = 10)
     {
         if ($str == null) {
             return null;
         }
 
-        return hash("sha256", $str, false);
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
