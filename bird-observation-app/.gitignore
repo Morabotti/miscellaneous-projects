@@ -1,0 +1,15 @@
+*.iml
+dependency-reduced-pom.xml
+target
+.idea
+.env
+*node_modules
+*.vscode
+*build
+*dist
+
+.project
+.classpath
+.settings
+.factorypath
+.editorconfig
