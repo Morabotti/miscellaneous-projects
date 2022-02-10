@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SonkaLAN 2020 | 28.2.–1.3.2020</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height">
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#38ADEC">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+    <link rel="manifest" href="./img/site.webmanifest">
+    <link rel="mask-icon" href="./img/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="./img/favicon.ico">
+
+    <meta name="msapplication-TileColor" content="#38ADEC">
+    <meta name="msapplication-config" content="./img/browserconfig.xml">
+
+    <meta name="keywords" content="SonkaLAN, Sonka, Sonkajärvi, sonkajärvi, Lan, lanparty, lanit, lan, sonkalan, sonka"/>
+    <meta name="description" content="SonkaLAN - Sonkajärvellä tapahtuva nuorille suunnattu LAN -tapahtuma. Varaa liput heti. 28.2.–1.3.2020"/>
+
+    <meta property="og:url" content="http://sonkalan.fi/">
+    <meta property="og:image" content="https://i.imgur.com/L62rIC6.png">
+    <meta property="og:description" content="SonkaLAN - Sonkajärvellä tapahtuva nuorille suunnattu LAN -tapahtuma">
+    <meta property="og:title" content="SonkaLAN 2020 | 28.2.–1.3.2020">
+    <meta property="og:site_name" content="SonkaLAN 2020 | 28.2.–1.3.2020">
+
+    <meta itemprop="name" content="SonkaLAN 2020 | 28.2.–1.3.2020">
+    <meta itemprop="description" content="SonkaLAN - Sonkajärvellä tapahtuva nuorille suunnattu LAN -tapahtuma">
+    <meta itemprop="image" content="https://i.imgur.com/L62rIC6.png">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://sonkalan.fi/">
+    <meta name="twitter:title" content="SonkaLAN 2020 | 28.2.–1.3.2020">
+    <meta name="twitter:description" content="SonkaLAN - Sonkajärvellä tapahtuva nuorille suunnattu LAN -tapahtuma">
+    <meta name="twitter:image" content="https://i.imgur.com/L62rIC6.png">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" type="text/css" media="screen">
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/icon-animation.min.css" rel="stylesheet" type="text/css" media="screen">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131217287-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-131217287-1');
+</script>
+
+</head>
+<body>
+    <div class="wrap">
+        <div class="main-selection" id="main-sec">
+            <div class="liity-disc" id="disc-button">
+                <a>Liity Discordiin!</a>
+            </div>
+            <div class="dropdown-disc hidden" id="dropdown-disc">
+                <iframe id="disc-size" src="https://discordapp.com/widget?id=532235256787632131&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+            </div>
+            <div class="container">
+                <div class="img-cont">
+                    <img src="./img/sonkalanlogo.svg" alt="sonkalan">
+                </div>
+                <div class="img-content">
+                    <div class="img-aika">
+                        <p>28.2.–1.3.2020</p>
+                    </div>
+                </div>
+                <div class="timer">
+                    <ul>
+                        <li><span id="days">00</span>Päivää</li>
+                        <li><span id="hours">00</span>Tuntia</li>
+                        <li><span id="minutes">00</span>Minuuttia</li>
+                        <li><span id="seconds">00</span>Sekunttia</li>
+                    </ul>
+                </div>
+                <div class="varausmessage">
+                    <p id="paikat">0/48 paikkaa varattu!</p>
+                </div>
+                <div class="center">
+                    <a href="https://sonkalan.liput.io/" class="bttn-dark" target="_blank">Varaa liput</a>
+                </div>
+                <div class="bottomarea">
+                    <div class="ArrowDown" id="godown">
+                        <i class="fas fa-angle-down fa-5x animated faa-falling" id="arrowD"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sencondbigcont">
+            <div class="bg-change" id="scrollto">
+            </div>
+            <div class="contentF bg_color_first">
+                <div class="container">
+                    <div class="cont-header BHeader fadein_normal">
+                        <h1 class="title is-1">Mikä</h1>
+                    </div>
+                    <div class="cont-wrap">
+                        <div class="columns">
+                            <div class="column box-content fadein_normal">
+                                <h2 class="subtitle is-2 text-center is-white">SonkaLAN 2020</h2>
+                                <div class="box-content-value">
+                                    <p>SonkaLAN on Sonkajärven Nuorisovaltuuston järjestämä nuorille suunnattu lähiverkkotapahtuma eli lanit. <b>Tapahtuman alaikäraja on 13-vuotta</b></p>
+                                    <h3>Mitä mukaan:</h3>
+                                    <p>Tietokone / pelikonsoli lisälaitteineen</p>
+                                    <p>Vähintään 5m nettijohto ja vähintään 3 pistokkeen maadoitettu jatkojohto. Kaisanet myy Iisalmen myymälässä edullisesti nettijohtoja.</p>
+                                    <p>Hygienia sekä nukkumatarvikkeet (makuualusta jne.) yöpymistä varten</p>
+                                    <p>Tulostettu tai puhelimen näytöltä näytettävä sisäänpääsylippu. Paikkamaksu maksetaan ovella käteisellä.</p>
+                                    <p></p>
+                                    <p>Lisätietoja saa: <a href="https://discord.gg/K2PpMSX" target="_blank">discordista</a>, <a href="https://www.facebook.com/SonkaLAN-1151088385040658/" target="_blank">facebookista</a> tai sähköpostilla sonkalan(ät)joonax.eu</p>
+                                </div>
+                            </div>
+                            <div class="column fadein_normal">
+                                <figure class="image shadow">
+                                    <img src="./img/20160311_183433.jpg">
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="bg-change-second transition">
+            </div>
+        </div>
+        <div class="thirdbiggcont">
+            <div class="contentF bg_color_second">
+                <div class="container">
+                    <div class="cont-header BHeader is-black fadein_normal">
+                        <h1 class="title is-1 ">Milloin & Missä</h1>
+                    </div>
+                    <div class="cont-wrap">
+                        <div class="columns">
+                            <div class="column">
+                                <div class="leftUpper">
+                                    <h2 class="title is-2 fadein_normal">Hiihtoloma</h2>
+                                    <h2 class="subtitle is-2 fadein_normal">28.2.-1.3.2020</h2>
+                                    <h2 class="subtitle is-3 fadein_normal">klo. 18.00</h2>
+                                </div>
+                                <div class="leftLower">
+                                    <h2 class="title is-2 fadein_normal">Sonkajärvi</h2>
+                                    <h2 class="subtitle is-2 fadein_normal">Sonkajärven Liikuntahalli</h2>
+                                    <h3 class="subtitle is-3 fadein_normal">Kuntotie 4, 74300 Sonkajärvi</h3>
+                                </div>
+                            </div>
+                            <div class="column fadein_normal">
+                                <div style="width: 100%"><iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=Kuntotie%204%2C%2074300%20Sonkaj%C3%A4rvi+(SonkaLAN%202018)&amp;ie=UTF8&amp;t=&amp;z=17&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="bg-change-third transition">
+            </div>
+        </div>
+        <div class="contentF">
+            <div class="container">
+                <div class="cont-header BHeader fadein_normal">
+                    <h1 class="title is-1">Aikataulu</h1>
+                </div>
+                <div class="cont-wrap">
+                    <div class="time-header fadein_normal">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <a class="button weekstyle day-selected" value="day-pe">
+                                    <span>Perjantai</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a class="button weekstyle" value="day-la">
+                                    <span>Lauantai</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a class="button weekstyle" value="day-su">
+                                    <span>Sunnuntai</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="time-content fadein_normal">
+                        <div class="time-day day-activated" id="day-pe">
+                            <table class="table is-narrow is-fullwidth table-timetable">
+                                <thead>
+                                    <tr>
+                                        <th>Kello</th>
+                                        <th>Tapahtuma</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>18:00</td>
+                                        <td>Tapahtuma alkaa - Ovet aukeavat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19:00</td>
+                                        <td>Valot kiinni</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21:00</td>
+                                        <td>Pro Pilkki 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="time-day" id="day-la">
+                            <table class="table is-narrow is-fullwidth table-timetable">
+                                <thead>
+                                    <tr>
+                                        <th>Kello</th>
+                                        <th>Tapahtuma</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>18:00</td>
+                                        <td>Rallipeli</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20:00</td>
+                                        <td>CS:GO 1on1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="time-day" id="day-su">
+                            <table class="table is-narrow is-fullwidth table-timetable">
+                                <thead>
+                                    <tr>
+                                        <th>Kello</th>
+                                        <th>Tapahtuma</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>13:00</td>
+                                        <td>Lanit päättyvät</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-change-forth transition">
+        </div>
+
+        <div class="contentF bg_color_second">
+            <div class="container" id="ScrollFAQ">
+                <div class="cont-header is-black BHeader fadein_normal">
+                    <h1 class="title is-1">UKK - Usein kysytyt kysymykset</h1>
+                </div>
+                <div class="cont-wrap">
+                    <div class="kysymykset">
+                        <div class="kysymys fadein_normal">
+                            <p>Mikä on paikan koko?</p>
+                            <div class="vastaus">
+                                Konepaikka on 90cm leveä ja 80 cm syvä.
+                            </div>
+                        </div>
+                        <div class="kysymys fadein_normal">
+                            <p>Saako tuoda oman tuolin?</p>
+                            <div class="vastaus">
+                                Saa tuoda oman tuolin, kunhan se ei ole yli 90cm leveä.
+                            </div>
+                        </div>
+                        <div class="kysymys fadein_normal">
+                            <p>Mitä turnauksia laneilla järjestetään?</p>
+                            <div class="vastaus">
+                                Turnaukset ja niiden alkamisajat löytyvät aikatalusta.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-change-fifth transition">
+        </div>
+
+        <div class="contentF bg_color_last">
+            <div class="container">
+                <div class="cont-header BHeader fadein_normal">
+                    <h1 class="title is-1">Lanit tarjoaa:</h1>
+                </div>
+                <div class="sponsor-cont">
+                    <div class="dummy"></div>
+                    <div class="sponsor fadein_normal">
+                        <a href="https://www.kaisanet.fi/" target="_blank">
+                            <div class="logo">
+                                <div>
+                                    <img src="./img/kaisanet.png" alt="kaisanet">
+                                </div>
+                            </div>
+                            <div class="sponsor-name">
+                                <h2>KAISAnet</h2>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

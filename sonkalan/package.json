@@ -1,0 +1,36 @@
+{
+  "name": "Sonkalan",
+  "version": "1.0.0",
+  "description": "Sonkalan 2019",
+  "scripts": {
+    "clean": "rimraf dist",
+    "babel": "./node_modules/.bin/babel src -d dist",
+    "css": "gulp minify-css",
+    "html": "copyfiles -u 1 src/**/*.html dist",
+    "rest": "copyfiles -u 1 src/**/*.webmanifest dist && copyfiles -u 1 src/**/*.xml dist",
+    "image": "gulp default",
+    "build": "npm run clean && npm run babel && npm run css && npm run html && npm run rest && npm run image",
+    "serve": "serve -s dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-helper-mark-eval-scopes": "^0.4.3",
+    "babel-minify": "^0.5.0",
+    "babel-plugin-remove-comments": "^2.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-minify": "^0.5.0",
+    "copyfiles": "^2.1.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-json-minify": "^1.2.2",
+    "gulp-util": "^3.0.8",
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "serve": "^10.1.2",
+    "server": "^1.0.18"
+  }
+}
