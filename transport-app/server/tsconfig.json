@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "incremental": true,
+    "paths": {
+      "@app/*": ["src/*"],
+      "@customer/*": ["src/customer/*"],
+      "@user/*": ["src/user/*"],
+      "@utils/*": ["src/utils/*"],
+      "@auth/*": ["src/auth/*"],
+      "@job/*": ["src/job/*"],
+      "@location/*": ["src/location/*"],
+      "@vehicle/*": ["src/vehicle/*"],
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
