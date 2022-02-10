@@ -1,0 +1,34 @@
+<?php /** @var Ves\Gdpr\Block\Adminhtml\Listing $block */ ?>
+<table class="data-grid" data-role="grid">
+    <thead>
+        <tr>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("ID"); ?></span></th>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("Name"); ?></span></th>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("Email"); ?></span></th>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("Telephone"); ?></span></th>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("Created"); ?></span></th>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("Handled"); ?></span></th>
+            <th class="data-grid-th"><span class="data-grid-cell-content"><?php echo __("Actions"); ?></span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $gdprRequests = $block->getGdprRequests();
+        foreach ($gdprRequests->getItems() as $gdprRequest) {
+            $url = $block->getUrl('gdpr/show', ['id' => $gdprRequest->getId()]); ?>
+            <tr class="data-row">
+                <td><?php echo $gdprRequest->getId(); ?></td>
+                <td><?php echo $gdprRequest->getFirstName() . " " . $gdprRequest->getLastName(); ?></td>
+                <td><?php echo $gdprRequest->getEmail(); ?></td>
+                <td><?php echo $gdprRequest->getPhone(); ?></td>
+                <td><?php echo $gdprRequest->getCreated(); ?></td>
+                <td><?php echo $gdprRequest->getHandled(); ?></td>
+                <td>
+                    <a href="<?php echo $url ?>"><?php echo __("Show details"); ?></a>
+                </td>
+            </tr>
+        <?php
+        }
+        ?>
+    </tbody>
+</table>

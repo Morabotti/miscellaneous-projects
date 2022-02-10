@@ -1,0 +1,75 @@
+<?php /** @var Ves\Gdpr\Block\Gdpr $block */ ?>
+<div>
+    <div class="page-title-wrapper">
+        <h1 class="page-title"><?php echo __("GDPR Removal Request"); ?></h1>
+    </div>
+    <div class="page-divider-block">
+        <p><?php echo __("This request will remove your data. Include more text"); ?></p>
+        <p><?php echo __("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis malesuada justo, a commodo arcu. Nunc posuere euismod elit. Donec leo ligula, rutrum quis rutrum et, convallis et nunc. Curabitur et mauris varius, porttitor nisi congue, convallis neque. Morbi augue dolor, ornare at euismod vel, posuere et lectus. Nunc tempus tempus nisl, et mollis felis faucibus quis. Vestibulum vel libero molestie, bibendum arcu vitae, blandit risus. Ut at tortor nibh. Quisque pulvinar id justo sit amet bibendum."); ?></p>
+        <p><?php echo __("Nulla non ligula arcu. Etiam condimentum lectus odio, sit amet tincidunt turpis aliquet eget. Fusce nec sem justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla sed orci sed leo tristique aliquet. Nullam et erat a mi elementum pharetra. Duis non condimentum ex. Curabitur ornare ex in nunc ornare dapibus. Mauris quis lacus congue, sodales velit ac, dapibus nulla. Nulla molestie eros in pulvinar consectetur. Cras nunc lorem, aliquam eu nunc sed, scelerisque ornare leo. Nam nunc dolor, dictum id leo a, vestibulum faucibus risus."); ?></p>
+    </div>
+    <div class="page-title-wrapper">
+        <h2 class="page-title"><?php echo __("Removal request form"); ?></h2>
+        <form action="/gdpr/form/index" method="post" data-mage-init='{"validation": {}}'>
+            <fieldset class="fieldset">
+                <div class="field field-name-firstname required">
+                    <label class="label" for="firstname"><span><?php echo __("First Name") ?></span></label>
+                    <div class="control">
+                        <input
+                            type="text"
+                            id="firstname"
+                            name="firstname"
+                            title="First Name"
+                            class="input-text required-entry"
+                            data-validate="{required:true}"
+                        >
+                    </div>
+                </div>
+                <div class="field field-name-lastname required">
+                    <label class="label" for="lastname"><span><?php echo __("Last Name") ?></span></label>
+                    <div class="control">
+                        <input
+                            type="text"
+                            id="lastname"
+                            name="lastname"
+                            title="Last name"
+                            class="input-text required-entry"
+                            data-validate="{required:true}"
+                        >
+                    </div>
+                </div>
+                <div class="field required">
+                    <label for="email_address" class="label"><span><?php echo __("Email") ?></span></label>
+                    <div class="control">
+                        <input
+                            type="email"
+                            id="email_address"
+                            name="email"
+                            title="Email"
+                            class="input-text required-entry"
+                            data-validate="{required:true, 'validate-email':true}"
+                        >
+                    </div>
+                </div>
+                <div class="field telephone required">
+                    <label for="telephone" class="label">
+                        <span><?php echo __("Telephone") ?></span>
+                    </label>
+                    <div class="control">
+                        <input
+                            type="text"
+                            id="telephone"
+                            name="telephone"
+                            title="Phone Number"
+                            class="input-text required-entry"
+                            data-validate="{required:true}"
+                        >
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="action login primary" name="send">
+                <span><?php echo __("Send request"); ?></span>
+            </button>
+        </form>
+    </div>
+</div>

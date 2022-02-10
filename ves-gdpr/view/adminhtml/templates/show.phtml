@@ -1,0 +1,94 @@
+<?php /** @var Ves\Gdpr\Block\Adminhtml\Show $block */ ?>
+
+<?php
+
+$get = (array)$this->getRequest()->getParams();
+$id = $get['id'];
+
+if ($id) {
+    $gdprRequest = $block->getGdprRequest($id);
+
+    $concealUrl = $block->getUrl('gdpr/show/conceal', ['id' => $id]);
+    $deleteUrl = $block->getUrl('gdpr/show/delete', ['id' => $id]);
+
+    $disabled = $gdprRequest->getHandled() ? 'disabled="disabled"' : '';
+}
+?>
+
+<div class="page-main-actions">
+    <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+        <div class="page-actions-inner">
+            <div class="page-actions-buttons">
+                <button id="back" title="Back" type="button" class="action- scalable back" onclick="location.href = '<?php echo $block->getUrl('gdpr/listing'); ?>';" data-ui-id="back-button">
+                    <span><?php echo __("Back") ?></span>
+                </button>
+                <button id="addAttribute" title="Conceal data" type="button" class="action- scalable action-primary" <?php  echo $disabled; ?> onclick="location.href = '<?php echo $concealUrl; ?>';">
+                    <span><?php echo __("Conceal Data") ?></span>
+                </button>
+                <button id="deleteAttribute" title="Delete request" type="button" class="action- scalable action-secondary" <?php  echo $disabled; ?> onclick="location.href = '<?php echo $deleteUrl; ?>';">
+                    <span><?php echo __("Delete GDPR Request") ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fieldset-wrapper">
+    <div class="admin__fieldset-wrapper-content">
+        <fieldset class="admin__fieldset">
+            <div class="admin__field">
+                <div class="admin__field-label">
+                    <label><span><?php echo __('Created'); ?></span></label>
+                </div>
+                <div class="admin__field-control">
+                    <div class="admin__field admin__field-option">
+                        <?php echo date("d.m.Y H:i", strtotime($gdprRequest->getCreated())); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="admin__field">
+                <div class="admin__field-label">
+                    <label><span><?php echo __('Status'); ?></span></label>
+                </div>
+                <div class="admin__field-control">
+                    <div class="admin__field admin__field-option">
+                        <?php echo $gdprRequest->getHandled() ? "Handled " . date("d.m.Y H:i", strtotime($gdprRequest->getHandled())) : "Open"; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="admin__field">
+                <div class="admin__field-label">
+                    <label><span><?php echo __('Customer'); ?></span></label>
+                </div>
+                <div class="admin__field-control">
+                    <div class="admin__field admin__field-option">
+                        <?php echo $gdprRequest->getFirstName(); ?>
+                        <?php echo $gdprRequest->getLastName(); ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin__field">
+                <div class="admin__field-label">
+                    <label><span><?php echo __('Email'); ?></span></label>
+                </div>
+                <div class="admin__field-control">
+                    <div class="admin__field admin__field-option">
+                        <?php echo $gdprRequest->getEmail(); ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin__field">
+                <div class="admin__field-label">
+                    <label><span><?php echo __('Telephone'); ?></span></label>
+                </div>
+                <div class="admin__field-control">
+                    <div class="admin__field admin__field-option">
+                        <?php echo $gdprRequest->getPhone(); ?>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
