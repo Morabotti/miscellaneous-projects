@@ -1,0 +1,11 @@
+{
+  "title": "Lukujärjestys",
+  "department": "Valitse yksikkö",
+  "group": "Valitse luokka",
+  "open": "Avaa lukujärjestys",
+  "fi": "Suomi",
+  "en": "Englanti",
+  "eol-title": "Palvelun loppuminen",
+  "eol-description": "Uuden lukujärjestyksen johdosta tämä lukujärjestys lopettaa toiminnan. Kiitoksia käytöstä.",
+  "eol-open": "Uusi lukujärjestys"
+}

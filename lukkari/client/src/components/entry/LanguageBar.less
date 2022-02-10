@@ -1,0 +1,27 @@
+.language-bar {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2px;
+  color: #f3f3f3;
+  display: flex;
+  overflow: hidden;
+
+  .block {
+    padding: 0 10px;
+    cursor: pointer;
+    display: flex;
+
+    img {
+      display: inline-block;
+      height: 17px;
+      width: 17px;
+      margin-right: 5px;
+    }
+
+    &.active {
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}

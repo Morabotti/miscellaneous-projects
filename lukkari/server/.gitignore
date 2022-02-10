@@ -1,0 +1,9 @@
+*node_modules
+*dist
+*build
+*.env
+*.vscode
+*.notes.txt
+*.log
+
+db/**/*.json

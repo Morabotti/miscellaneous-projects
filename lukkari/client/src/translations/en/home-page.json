@@ -1,0 +1,11 @@
+{
+  "title": "Schedule",
+  "department": "Choose department",
+  "group": "Choose group",
+  "open": "Open schedule",
+  "fi": "Finnish",
+  "en": "English",
+  "eol-title": "End of life",
+  "eol-description": "After changes to official schedule software, this schedule will shutdown. Thanks for past usage",
+  "eol-open": "New schedule"
+}

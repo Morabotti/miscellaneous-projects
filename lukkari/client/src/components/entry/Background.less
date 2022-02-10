@@ -1,0 +1,124 @@
+.cloud-default(@CTOP, @CSCALE, @CDELAY, @CDUR) {
+  top: @CTOP;
+  transform: scale(@CSCALE);
+  animation-delay: @CDELAY;
+  animation-duration: @CDUR;
+}
+
+.moon-default(@SIZE, @TOP, @RIGHT){
+  border-radius: 50%;
+  position: absolute;
+  right: @RIGHT;
+  top: @TOP;
+  height: @SIZE;
+  width: @SIZE;
+}
+
+
+.selection1, .selection2 {
+  background-position: bottom center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.selection1{
+  background-image: url(/assets/entry/scene1.svg);
+  z-index: -1;
+  animation: menuFade 850ms;
+}
+
+.selection2{
+  background-image: url(/assets/entry/scene2.svg);
+  z-index: -2;
+  animation: menuFade 500ms;
+}
+
+.cloud {
+  position: absolute;
+  width: 70px;
+  height: 24px;
+  background: linear-gradient(to bottom, #f2f9fe 5%, #d6f0fd 100%);
+  border-radius: 20px;
+  top: 40px;
+  z-index: -1;
+  animation: cloudMove 18s linear infinite;
+
+  &.small{
+    .cloud-default(120px, 0.6, -1.5s, 11.5s);
+  }
+
+  &.medium{
+    .cloud-default(210px, 0.85, -25.5s, 16.5s);
+  }
+
+  &.small2{
+    .cloud-default(320px, 0.6, -16.5s,  9.5s);
+  }
+
+  &:before, &:after{
+    position: absolute;
+    content: "";
+    background: inherit;
+    z-index: -1;
+  }
+
+  &:before{
+    width: 36px;
+    height: 36px;
+    top: -18px;
+    right: 10px;
+    border-radius: 40px;
+  }
+
+  &:after{
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    left: 10px;
+    border-radius: 20px;
+  }
+}
+
+.moon {
+  border-radius: 50%;
+  height: 70px;
+  margin: auto;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 70px;
+  z-index: -3;
+
+  .moon-body {
+    height: 70px;
+    width: 70px;
+  }
+
+  .crater1 {
+    .moon-default(10px, 10px, 10px);
+  } 
+  .crater2 {
+    .moon-default(20px, 20px, 25px);
+  } 
+  .crater3 {
+    .moon-default(23px, 36px, 7px);
+  } 
+
+  &.moon-shadow {
+    height: 70px;
+    position: absolute;
+    width: 70px;
+  }
+}
+
+@keyframes menuFade {
+  from { top: 2000px; }
+  to   { top: 0; }
+}
+
+@keyframes cloudMove {
+    from {left: -140px; }
+    to { left: 100%; }
+}

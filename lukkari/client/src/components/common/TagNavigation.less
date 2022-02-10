@@ -1,0 +1,58 @@
+.tab-container{
+  .tab-wrap{
+    padding-top: 50px;
+    width: 100%;
+    overflow-y:scroll; 
+    position:relative;
+    height: 100vh;
+
+    @media screen and (min-width:770px){
+      width: 750px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &::-webkit-scrollbar{
+      display: none;
+    }
+  }
+}
+
+.tab-header{
+  position: fixed;
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  padding-left: 3px;
+  padding-right: 3px;
+  height: 52px;
+  width: 100%;
+  z-index: 21;
+
+  .tab-logo{
+    padding: 10px;
+
+    svg { width: 30px; height: 30px; }
+  }
+
+  div h3{
+    margin: 0;
+    line-height: 52px;
+    font-size: 2em;
+  }
+
+  .tab-exit{
+    padding: 10px;
+    cursor: pointer;
+
+    svg {
+      transition:300ms transform;
+      transform: scale(1);
+      width: 30px;
+      height: 30px;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}

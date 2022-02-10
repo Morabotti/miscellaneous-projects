@@ -1,0 +1,21 @@
+{
+  "short_name": "Lukkari",
+  "name": "VAMK Lukujärjestys",
+  "icons": [
+    {
+      "src": "/assets/favicon/favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/favicon/favicon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?utm_source=a2hs",
+  "background_color": "#a91580",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#a91580"
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "jubic-typescript",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "globals": {
+    "fetch": false,
+    "localStorage": false
+  }
+}
